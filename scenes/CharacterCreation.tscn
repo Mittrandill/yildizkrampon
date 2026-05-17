@@ -1,124 +1,437 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/CharacterCreationScene.cs" id="1_q0b5v"]
-[ext_resource type="Texture2D" path="res://assets/img/bedroom_bg.png" id="2_72kfo"]
+[ext_resource type="Script" path="res://scripts/CharacterCreationScene.cs" id="1_72kfo"]
+[ext_resource type="Texture2D" path="res://assets/img/neighborhood_bg.png" id="2_n7u77"]
+[ext_resource type="Texture2D" path="res://assets/img/player_sprite.png" id="3_4ll7m"]
 
-[node name="CharacterCreation" type="Control" unique_id=1879446979]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llayh"]
+bg_color = Color(0.1, 0.07, 0.04, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.5, 0.28, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aburx"]
+bg_color = Color(0.05, 0.14, 0.05, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.65, 0.3, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcpgp"]
+bg_color = Color(0.1, 0.07, 0.04, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.5, 0.28, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahg8a"]
+bg_color = Color(0.22, 0.15, 0.07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.45, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vur18"]
+bg_color = Color(0.22, 0.15, 0.07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.45, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os0u4"]
+bg_color = Color(0.12, 0.42, 0.12, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.8, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g55p3"]
+bg_color = Color(0.252, 0.50699997, 0.252, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.38, 0.8, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3rao"]
+bg_color = Color(0.42, 0.12, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.28, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xktm"]
+bg_color = Color(0.50699997, 0.252, 0.21800001, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.28, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="CharacterCreation" type="Control" unique_id=957858004]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_q0b5v")
+script = ExtResource("1_72kfo")
 
-[node name="Background" type="Sprite2D" parent="." unique_id=1867748252]
-z_index = -1
-position = Vector2(640, 360)
-texture = ExtResource("2_72kfo")
-
-[node name="Overlay" type="ColorRect" parent="." unique_id=1985957780]
+[node name="Background" type="TextureRect" parent="." unique_id=854834350]
+z_index = -10
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0, 0, 0.65)
+texture = ExtResource("2_n7u77")
 
-[node name="Panel" type="PanelContainer" parent="." unique_id=674845731]
+[node name="Overlay" type="ColorRect" parent="." unique_id=1432358691]
+z_index = -9
 layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 390.0
-offset_top = 100.0
-offset_right = 890.0
-offset_bottom = 620.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.52)
 
-[node name="VBox" type="VBoxContainer" parent="Panel" unique_id=199360378]
-layout_mode = 2
-theme_override_constants/separation = 18
+[node name="@Panel@2" type="Panel" parent="." unique_id=1083291809]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 378.0
+offset_bottom = 702.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_llayh")
 
-[node name="GameTitle" type="Label" parent="Panel/VBox" unique_id=504074653]
+[node name="@MarginContainer@3" type="MarginContainer" parent="@Panel@2" unique_id=1568007530]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="@VBoxContainer@4" type="VBoxContainer" parent="@Panel@2/@MarginContainer@3" unique_id=949834784]
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
-text = "YILDIZ KRAMPON"
+theme_override_constants/separation = 12
+
+[node name="@Label@5" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=407968065]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 0.85, 0.15, 1)
+text = "YILDIZ
+KRAMPON"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="Panel/VBox" unique_id=1523517187]
+[node name="@Label@6" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=530258216]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
-text = "Karakterini Oluştur"
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.7, 0.35, 1)
+text = "PIXEL PITCH"
 horizontal_alignment = 1
 
-[node name="@HSeparator@2" type="HSeparator" parent="Panel/VBox" unique_id=1706713091]
+[node name="@HSeparator@7" type="HSeparator" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=29183292]
 layout_mode = 2
 
-[node name="@Label@3" type="Label" parent="Panel/VBox" unique_id=1637394650]
+[node name="@Panel@8" type="Panel" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=214986380]
+custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Karakterinin Adı:"
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_aburx")
 
-[node name="NameInput" type="LineEdit" parent="Panel/VBox" unique_id=1072035936]
+[node name="CharSprite" type="TextureRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@Panel@8" unique_id=1520159253]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("3_4ll7m")
+stretch_mode = 5
+
+[node name="@ColorRect@9" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1114414730]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(1, 0.85, 0.15, 1)
+
+[node name="@ColorRect@10" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=709526643]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 0.6)
+
+[node name="@ColorRect@11" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1037861178]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 0.6)
+
+[node name="@ColorRect@12" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1828144156]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 0.6)
+
+[node name="@ColorRect@13" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1084548843]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 0.6)
+
+[node name="@HBoxContainer@14" type="HBoxContainer" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1852935584]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="@ColorRect@15" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1675683428]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(1, 0.85, 0.15, 1)
+
+[node name="@ColorRect@16" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=2047799778]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.45, 0.45, 0.45, 0.6)
+
+[node name="@ColorRect@17" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1870272299]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.45, 0.45, 0.45, 0.6)
+
+[node name="@ColorRect@18" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1012898531]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.45, 0.45, 0.45, 0.6)
+
+[node name="@ColorRect@19" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1789122465]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+color = Color(0.45, 0.45, 0.45, 0.6)
+
+[node name="DescLabel" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1704611943]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.8, 0.85, 0.75, 1)
+text = "Mahallede top seninle güzel!
+Kendi tarzını seç, sahada ve hayatta iz bırak!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="@Panel@20" type="Panel" parent="." unique_id=768214897]
+layout_mode = 0
+offset_left = 396.0
+offset_top = 18.0
+offset_right = 1262.0
+offset_bottom = 702.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dcpgp")
+
+[node name="@MarginContainer@21" type="MarginContainer" parent="@Panel@20" unique_id=819748718]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 14
+
+[node name="@VBoxContainer@22" type="VBoxContainer" parent="@Panel@20/@MarginContainer@21" unique_id=182830164]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="@HBoxContainer@23" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1436538518]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="@Label@24" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@23" unique_id=297040469]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
+text = "İsim"
+vertical_alignment = 1
+
+[node name="NameInput" type="LineEdit" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@23" unique_id=1147731363]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 placeholder_text = "Adını gir..."
 max_length = 16
 
-[node name="@Label@4" type="Label" parent="Panel/VBox" unique_id=758310509]
+[node name="@HSeparator@25" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1787203046]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Pozisyon Seç:"
 
-[node name="PositionButtons" type="HBoxContainer" parent="Panel/VBox" unique_id=671192645]
+[node name="@HBoxContainer@26" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=213930452]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 12
-alignment = 1
 
-[node name="BtnFW" type="Button" parent="Panel/VBox/PositionButtons" unique_id=698045502]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 60)
+[node name="@Label@27" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1166467943]
+custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
+text = "Karakter Tipi"
+vertical_alignment = 1
+
+[node name="BtnPrevType" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1855371993]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ahg8a")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
-text = "FW
-Forvet"
+text = "◄"
 
-[node name="BtnMF" type="Button" parent="Panel/VBox/PositionButtons" unique_id=1765280819]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 60)
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "MF
-Orta Saha"
-
-[node name="BtnDF" type="Button" parent="Panel/VBox/PositionButtons" unique_id=1596460975]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(120, 60)
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "DF
-Defans"
-
-[node name="PosDesc" type="Label" parent="Panel/VBox" unique_id=985207439]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
-text = "Forvet — Hızlı, golcü. Şut Gücü ve Sprint +bonus ile başlar."
-autowrap_mode = 3
-
-[node name="ErrorLabel" type="Label" parent="Panel/VBox" unique_id=969832228]
+[node name="TypeLabel" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1941992213]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 13
-theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(1, 0.9, 0.45, 1)
+text = "Hızlı Kanat"
 horizontal_alignment = 1
 
-[node name="BtnStart" type="Button" parent="Panel/VBox" unique_id=1229999578]
+[node name="BtnNextType" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1024258969]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Oyuna Başla"
+theme_override_styles/normal = SubResource("StyleBoxFlat_vur18")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "►"
+
+[node name="TypeDesc" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=79325716]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.72, 0.85, 0.95, 1)
+text = "Hızlı, golcü. Şut Gücü ve Sprint +bonus ile başlar."
+autowrap_mode = 2
+
+[node name="@HSeparator@28" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1684245073]
+layout_mode = 2
+
+[node name="@HBoxContainer@29" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=821714647]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="@Label@30" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@29" unique_id=107901910]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
+text = "Ten Rengi"
+vertical_alignment = 1
+
+[node name="SkinSwatches" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@29" unique_id=1968726771]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="@HBoxContainer@31" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=259324758]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="@Label@32" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@31" unique_id=2037163742]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
+text = "Saç Rengi"
+vertical_alignment = 1
+
+[node name="HairSwatches" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@31" unique_id=328669141]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="@HSeparator@33" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1828500273]
+layout_mode = 2
+
+[node name="ErrorLabel" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=429051149]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(1, 0.38, 0.38, 1)
+horizontal_alignment = 1
+
+[node name="@Control@34" type="Control" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=874605431]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="@Label@35" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1801345141]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.85, 0.8, 0.5, 1)
+text = "⚽  Hayalini kurduğun futbol hayatı seni bekliyor.  ★"
+horizontal_alignment = 1
+
+[node name="@HBoxContainer@36" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1367668919]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="BtnStart" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@36" unique_id=431682077]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_os0u4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_os0u4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g55p3")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "⚽  BAŞLA"
+
+[node name="BtnBack" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@36" unique_id=1675826709]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_e3rao")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_e3rao")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0xktm")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "◄  GERİ"

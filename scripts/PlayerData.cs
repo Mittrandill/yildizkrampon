@@ -6,9 +6,11 @@ public partial class PlayerData : Node
 {
     public static PlayerData Instance { get; private set; } = null!;
 
-    public string PlayerName { get; set; } = "";
-    public string Position  { get; set; } = "FW";   // FW | MF | DF
-    public bool   IsNew     { get; set; } = true;
+    public string PlayerName     { get; set; } = "";
+    public string Position       { get; set; } = "FW";   // FW | MF | DF
+    public bool   IsNew          { get; set; } = true;
+    public int    SkinColorIndex { get; set; } = 2;
+    public int    HairColorIndex { get; set; } = 0;
 
     private const string SavePath = "user://player_data.cfg";
 
@@ -21,9 +23,11 @@ public partial class PlayerData : Node
     public void Save()
     {
         var cfg = new ConfigFile();
-        cfg.SetValue("player", "name",     PlayerName);
-        cfg.SetValue("player", "position", Position);
-        cfg.SetValue("player", "is_new",   false);
+        cfg.SetValue("player", "name",       PlayerName);
+        cfg.SetValue("player", "position",   Position);
+        cfg.SetValue("player", "skin_color", SkinColorIndex);
+        cfg.SetValue("player", "hair_color", HairColorIndex);
+        cfg.SetValue("player", "is_new",     false);
         cfg.Save(SavePath);
         IsNew = false;
     }
@@ -33,9 +37,11 @@ public partial class PlayerData : Node
         var cfg = new ConfigFile();
         if (cfg.Load(SavePath) == Error.Ok)
         {
-            PlayerName = (string)cfg.GetValue("player", "name",     "");
-            Position   = (string)cfg.GetValue("player", "position", "FW");
-            IsNew      = (bool)  cfg.GetValue("player", "is_new",   true);
+            PlayerName     = (string)cfg.GetValue("player", "name",       "");
+            Position       = (string)cfg.GetValue("player", "position",   "FW");
+            SkinColorIndex = (int)   cfg.GetValue("player", "skin_color", 2);
+            HairColorIndex = (int)   cfg.GetValue("player", "hair_color", 0);
+            IsNew          = (bool)  cfg.GetValue("player", "is_new",     true);
         }
     }
 
