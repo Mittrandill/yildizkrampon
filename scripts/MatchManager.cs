@@ -10,7 +10,8 @@ public partial class MatchManager : Node
     public int PlayerScore { get; private set; } = 0;
     public int OpponentScore { get; private set; } = 0;
 
-    private float _matchDuration = 120f;  // 2 minutes
+    public static bool PresentationMode = false;
+    private float _matchDuration = 120f;
     private float _elapsed = 0f;
     private bool _matchActive = false;
     private Vector2 _ballStart = new(640, 360);
@@ -63,6 +64,7 @@ public partial class MatchManager : Node
 
     private void _StartMatch()
     {
+        if (PresentationMode) _matchDuration = 5f;
         _matchActive = true;
         _elapsed = 0f;
         _UpdateScore();

@@ -12,64 +12,25 @@ public partial class BuildNeighborhood : SceneBuilderBase
         root.Name = "Neighborhood";
         temp.AddChild(root);
 
-        // Sky
-        var sky = new ColorRect();
-        sky.Name = "Sky";
-        sky.Color = new Color(0.55f, 0.78f, 0.98f);
-        sky.Size = new Vector2(1280, 400);
-        root.AddChild(sky);
-
-        // Ground / cobblestone street
-        var ground = new ColorRect();
-        ground.Name = "Ground";
-        ground.Color = new Color(0.72f, 0.68f, 0.62f);
-        ground.Size = new Vector2(1280, 320);
-        ground.Position = new Vector2(0, 400);
-        root.AddChild(ground);
-
-        // Riza's shop building
-        var shopBuilding = new ColorRect();
-        shopBuilding.Name = "RizaShop";
-        shopBuilding.Color = new Color(0.92f, 0.78f, 0.58f);
-        shopBuilding.Size = new Vector2(220, 280);
-        shopBuilding.Position = new Vector2(900, 200);
-        root.AddChild(shopBuilding);
-
-        var shopSign = new Label();
-        shopSign.Name = "ShopSign";
-        shopSign.Text = "RIZA'NIN BAKKAL";
-        shopSign.Position = new Vector2(908, 220);
-        shopSign.AddThemeColorOverride("font_color", new Color(0.2f, 0.1f, 0.05f));
-        root.AddChild(shopSign);
-
-        // Riza Abi NPC
-        var riza = new ColorRect();
-        riza.Name = "RizaAbi";
-        riza.Color = new Color(0.6f, 0.45f, 0.3f);
-        riza.Size = new Vector2(48, 80);
-        riza.Position = new Vector2(860, 390);
-        root.AddChild(riza);
+        var bg = new Sprite2D();
+        bg.Name = "Background";
+        bg.Texture = GD.Load<Texture2D>("res://assets/img/neighborhood_bg.png");
+        bg.Position = new Vector2(640, 360);
+        bg.ZIndex = -1;
+        root.AddChild(bg);
 
         var rizaLabel = new Label();
         rizaLabel.Name = "RizaLabel";
         rizaLabel.Text = "Rıza Abi";
         rizaLabel.Position = new Vector2(848, 370);
-        rizaLabel.AddThemeColorOverride("font_color", new Color(0.2f, 0.1f, 0.05f));
+        rizaLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.92f, 0.85f));
         root.AddChild(rizaLabel);
-
-        // Player
-        var player = new ColorRect();
-        player.Name = "PlayerSprite";
-        player.Color = new Color(0.92f, 0.72f, 0.55f);
-        player.Size = new Vector2(40, 70);
-        player.Position = new Vector2(400, 400);
-        root.AddChild(player);
 
         var title = new Label();
         title.Name = "Title";
         title.Text = "Sabah — Mahalle";
         title.Position = new Vector2(20, 20);
-        title.AddThemeColorOverride("font_color", new Color(0.1f, 0.1f, 0.3f));
+        title.AddThemeColorOverride("font_color", Colors.White);
         root.AddChild(title);
 
         root.SetScript(GD.Load("res://scripts/NeighborhoodScene.cs"));

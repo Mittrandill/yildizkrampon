@@ -71,6 +71,8 @@ public partial class SequenceManager : Node
         _tween.TweenProperty(_fadeRect, "modulate:a", 1.0f, 0.4f);
         _tween.TweenCallback(Callable.From(() =>
         {
+            // Clear any pending dialogue state so stale callbacks don't fire in the new scene
+            DialogueManager.Instance.Hide();
             GetTree().ChangeSceneToFile(scenePath);
             _transitioning = false;
         }));

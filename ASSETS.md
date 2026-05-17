@@ -1,27 +1,30 @@
 # Assets
 
-**Art direction:** 2D top-down pixel art, warm Mediterranean palette (golden yellows, terracotta, deep greens, sky blue). 32x32 or 48x48 pixel characters with bold outlines. Environments use muted earthy tones for buildings, bright green for grass fields. UI panels: dark navy/brown background with warm cream text. Spritesheet-style characters with 4-directional facing. Consistent 2px outline on all sprites.
+**Art direction:** 2D top-down pixel art, warm Mediterranean palette (golden yellows, terracotta, deep greens, sky blue). Pixel characters with bold outlines. Environments use muted earthy tones for buildings, bright green for grass fields. UI panels: dark navy/brown background with warm cream text. Consistent thick outline on all sprites.
 
-## Sprite Assets Needed
+## Backgrounds
 
-| Asset | Size (px) | Role |
-|-------|-----------|------|
-| player_sheet.png | 192x128 | Player character top-down, 4 directions × 4 walk frames + idle |
-| npc_sheet_red.png | 192x128 | Red team AI players, same layout |
-| npc_sheet_blue.png | 192x128 | Blue team AI players, same layout |
-| npc_mom.png | 48x48 | Mom character, indoor scene |
-| npc_dad.png | 48x48 | Dad character, indoor scene |
-| npc_riza.png | 48x48 | Riza Abi shopkeeper |
-| npc_eren.png | 48x48 | Eren (childhood friend) |
-| npc_baran.png | 48x48 | Baran (rival) |
-| npc_kemal.png | 48x48 | Coach Kemal Hoca |
-| football.png | 16x16 | Football top-down view |
-| bedroom_bg.png | 1280x720 | Bedroom scene background |
-| kitchen_bg.png | 1280x720 | Kitchen scene background |
-| neighborhood_bg.png | 1280x720 | Street/neighborhood background |
-| pitch_bg.png | 1280x720 | Grass football pitch top-down |
-| shop_bg.png | 1280x720 | Corner shop interior |
-| ui_panel.png | 256x256 | Reusable dark panel for HUD |
-| energy_bar.png | 128x16 | Green stat bar fill |
-| goal_post.png | 64x32 | Goal post top-down |
-| training_target.png | 32x32 | Shooting target |
+All backgrounds generated with Gemini 2K 16:9, resized to 1280x720.
+
+| Name | Description | Size | Image |
+|------|-------------|------|-------|
+| bedroom_bg | Cozy Turkish boy bedroom, morning light, football posters | 1280x720 | assets/img/bedroom_bg.png |
+| kitchen_bg | Turkish family kitchen, breakfast table, blue-white tiles | 1280x720 | assets/img/kitchen_bg.png |
+| neighborhood_bg | Cobblestone Turkish coastal town street, BAKKAL shop, sea view | 1280x720 | assets/img/neighborhood_bg.png |
+| postmatch_bg | Football pitch edge at sunset, bleachers, goal post | 1280x720 | assets/img/postmatch_bg.png |
+| shop_bg | Corner bakkal interior, Turkish flag, shopkeeper, shelves | 1280x720 | assets/img/shop_bg.png |
+| training_bg | Coastal training field, cones, goal post, sea horizon | 1280x720 | assets/img/training_bg.png |
+| next_morning_bg | Dawn panorama, academy on hill, coastal town, winding road | 1280x720 | assets/img/next_morning_bg.png |
+| eod_summary_bg | Dark night sky, gold-bordered parchment, candlelight | 1280x720 | assets/img/eod_summary_bg.png |
+| pitch_bg | Top-down football pitch, white lines, bleachers, scoreboard | 1280x720 | assets/img/pitch_bg.png |
+
+## Sprites
+
+All sprites generated with Gemini 1K, magenta background removed, processed to final size.
+
+| Name | Description | Size | Image | In-game scale |
+|------|-------------|------|-------|---------------|
+| player_sprite | Pixel art footballer, red jersey, #7, front-facing | 256x256 px | assets/img/player_sprite.png | 0.20 → ~51px |
+| npc_red | Same as player (red team, same side as player) | 256x256 px | assets/img/npc_red.png | 0.18 → ~46px |
+| npc_blue | Blue jersey variant, opponent team | 256x256 px | assets/img/npc_blue.png | 0.18 → ~46px |
+| football | Classic black-and-white football, top-down view | 128x128 px | assets/img/football.png | 0.18 → ~23px |

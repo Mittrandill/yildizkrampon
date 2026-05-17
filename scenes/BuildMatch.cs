@@ -19,42 +19,12 @@ public partial class BuildMatch : SceneBuilderBase
         root.Name = "Match";
 
         // ---- Pitch background ----
-        var pitchBg = new ColorRect();
+        var pitchBg = new Sprite2D();
         pitchBg.Name = "PitchBG";
-        pitchBg.Color = new Color(0.22f, 0.58f, 0.22f);
-        pitchBg.Size = new Vector2(1280, 720);
+        pitchBg.Texture = GD.Load<Texture2D>("res://assets/img/pitch_bg.png");
+        pitchBg.Position = new Vector2(640, 360);
+        pitchBg.ZIndex = -1;
         root.AddChild(pitchBg);
-
-        // Center line (vertical)
-        var centerLine = new ColorRect();
-        centerLine.Name = "CenterLine";
-        centerLine.Color = new Color(1f, 1f, 1f, 0.5f);
-        centerLine.Size = new Vector2(4, PitchBottom - PitchTop);
-        centerLine.Position = new Vector2(638, PitchTop);
-        root.AddChild(centerLine);
-
-        // Center circle (approximated with ColorRect)
-        var centerCircle = new ColorRect();
-        centerCircle.Name = "CenterCircle";
-        centerCircle.Color = new Color(1f, 1f, 1f, 0.25f);
-        centerCircle.Size = new Vector2(160, 160);
-        centerCircle.Position = new Vector2(560, 280);
-        root.AddChild(centerCircle);
-
-        // Goal nets (visual)
-        var netLeft = new ColorRect();
-        netLeft.Name = "NetLeft";
-        netLeft.Color = new Color(0.9f, 0.9f, 0.9f, 0.4f);
-        netLeft.Size = new Vector2(80, GoalBottom - GoalTop);
-        netLeft.Position = new Vector2(20, GoalTop);
-        root.AddChild(netLeft);
-
-        var netRight = new ColorRect();
-        netRight.Name = "NetRight";
-        netRight.Color = new Color(0.9f, 0.9f, 0.9f, 0.4f);
-        netRight.Size = new Vector2(80, GoalBottom - GoalTop);
-        netRight.Position = new Vector2(1180, GoalTop);
-        root.AddChild(netRight);
 
         // ---- Static walls ----
         var walls = new StaticBody2D();
@@ -70,7 +40,6 @@ public partial class BuildMatch : SceneBuilderBase
         root.AddChild(walls);
 
         // ---- Goal areas ----
-        // GoalOpponent = left goal, opponent scores here
         var goalOpp = new Area2D();
         goalOpp.Name = "GoalOpponent";
         goalOpp.UniqueNameInOwner = true;
@@ -85,7 +54,6 @@ public partial class BuildMatch : SceneBuilderBase
         goalOpp.AddChild(goalOppShape);
         root.AddChild(goalOpp);
 
-        // GoalPlayer = right goal, player scores here
         var goalPlayer = new Area2D();
         goalPlayer.Name = "GoalPlayer";
         goalPlayer.UniqueNameInOwner = true;
@@ -112,11 +80,10 @@ public partial class BuildMatch : SceneBuilderBase
         ballCircle.Radius = 10f;
         ballShape.Shape = ballCircle;
         ball.AddChild(ballShape);
-        var ballSprite = new ColorRect();
+        var ballSprite = new Sprite2D();
         ballSprite.Name = "BallSprite";
-        ballSprite.Color = Colors.White;
-        ballSprite.Size = new Vector2(20, 20);
-        ballSprite.Position = new Vector2(-10, -10);
+        ballSprite.Texture = GD.Load<Texture2D>("res://assets/img/football.png");
+        ballSprite.Scale = new Vector2(0.18f, 0.18f);
         ball.AddChild(ballSprite);
         root.AddChild(ball);
         ball.SetScript(GD.Load("res://scripts/Football.cs"));
@@ -126,14 +93,13 @@ public partial class BuildMatch : SceneBuilderBase
         players.Name = "Players";
         root.AddChild(players);
 
-        // Player character — _MakePlayer adds to parent and calls SetScript last
         _SetupPlayer(players, new Vector2(350, 360));
 
         // Red team NPCs (slots 0-3)
         Vector2[] redPositions = { new(280, 250), new(280, 470), new(450, 220), new(450, 500) };
         for (int i = 0; i < 4; i++)
         {
-            var npc = _MakeNPC($"RedNPC{i}", new Color(0.85f, 0.15f, 0.1f), redPositions[i]);
+            var npc = _MakeNPC($"RedNPC{i}", "res://assets/img/npc_red.png", redPositions[i]);
             npc.AddToGroup("team_red");
             players.AddChild(npc);
             npc.SetScript(GD.Load("res://scripts/FootballAI.cs"));
@@ -145,7 +111,7 @@ public partial class BuildMatch : SceneBuilderBase
         };
         for (int i = 0; i < 5; i++)
         {
-            var npc = _MakeNPC($"BlueNPC{i}", new Color(0.1f, 0.3f, 0.85f), bluePositions[i]);
+            var npc = _MakeNPC($"BlueNPC{i}", "res://assets/img/npc_blue.png", bluePositions[i]);
             npc.AddToGroup("team_blue");
             players.AddChild(npc);
             npc.SetScript(GD.Load("res://scripts/FootballAI.cs"));
@@ -242,27 +208,24 @@ public partial class BuildMatch : SceneBuilderBase
         shape.Shape = circle;
         p.AddChild(shape);
 
-        var sprite = new ColorRect();
+        var sprite = new Sprite2D();
         sprite.Name = "Sprite";
-        sprite.Color = new Color(0.85f, 0.15f, 0.1f);
-        sprite.Size = new Vector2(32, 32);
-        sprite.Position = new Vector2(-16, -16);
+        sprite.Texture = GD.Load<Texture2D>("res://assets/img/player_sprite.png");
+        sprite.Scale = new Vector2(0.20f, 0.20f);
         p.AddChild(sprite);
 
-        // Arrow indicator on player
         var arrow = new Label();
         arrow.Name = "Arrow";
         arrow.Text = "★";
-        arrow.Position = new Vector2(-6, -28);
+        arrow.Position = new Vector2(-6, -40);
         arrow.AddThemeColorOverride("font_color", Colors.Yellow);
         p.AddChild(arrow);
 
         parent.AddChild(p);
         p.SetScript(GD.Load("res://scripts/PlayerController.cs"));
-        // p is disposed after SetScript — do not use p beyond this point
     }
 
-    private CharacterBody2D _MakeNPC(string name, Color color, Vector2 pos)
+    private CharacterBody2D _MakeNPC(string name, string texturePath, Vector2 pos)
     {
         var npc = new CharacterBody2D();
         npc.Name = name;
@@ -274,11 +237,10 @@ public partial class BuildMatch : SceneBuilderBase
         shape.Shape = circle;
         npc.AddChild(shape);
 
-        var sprite = new ColorRect();
+        var sprite = new Sprite2D();
         sprite.Name = "Sprite";
-        sprite.Color = color;
-        sprite.Size = new Vector2(28, 28);
-        sprite.Position = new Vector2(-14, -14);
+        sprite.Texture = GD.Load<Texture2D>(texturePath);
+        sprite.Scale = new Vector2(0.18f, 0.18f);
         npc.AddChild(sprite);
 
         return npc;

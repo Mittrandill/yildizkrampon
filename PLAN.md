@@ -1,73 +1,238 @@
-# Game Plan: Yildiz Krampon
+# Yıldız Krampon — Yeni Mimari Plan
 
-## Risk Tasks
+> **Hedef:** Stardew Valley tarzı yaşayan dünya + RPG futbol oyunu.
+> Lineer sahne zinciri tamamen kaldırılıyor; açık harita + serbest yürüyüş + NPC rutinleri + gelişmiş futbol maçı yapılıyor.
 
-### 1. 5v5 Top-Down Football Match AI
-- **Why isolated:** Basic steering AI for 9 NPC players + ball physics + collision in a confined pitch is the core technical unknown. Wrong approaches produce jittery, clumping, or ball-tunneling behavior that infects the rest of the build.
-- **Approach:** Separate team state machine (ATTACK/DEFEND/IDLE per player). Attacking team: nearest player chases ball, others spread to open positions. Defending team: nearest player pressures ball carrier, others mark open areas. Ball: RigidBody2D with linear damping. Player movement: CharacterBody2D steering toward target with max speed. No full-blown pathfinding — just target + separation force to prevent overlap.
-- **Verify:** Ball can be kicked by player (space bar or auto when in range), ball rolls to a stop, NPC players move toward ball and each other without clumping into same cell. Goals detected by Area2D behind each goal line. Match ends after score or timer. Player can switch between walking and sprinting.
+---
 
-### 2. Multi-Scene Day Sequence
-- **Why isolated:** 10-step linear sequence with cutscene-style transitions, dialogue boxes, choice menus, and stat state persisting across scene changes is high-coordination surface area. Wrong global state approach (no GameManager singleton) causes resets or crashes on scene changes.
-- **Approach:** GameManager autoload singleton persists all stats (Energy, Morale, Fatigue, ShotPower, Sprint, Technique, Overall). SequenceManager autoload tracks which step of the first-day sequence is active and handles scene transitions. Each scene reads from GameManager and writes back on exit. Transitions: simple fade to black using AnimationPlayer on a CanvasLayer overlay.
-- **Verify:** Progressing through bedroom → kitchen → neighborhood → pitch → shop → training → end-of-day preserves stat values across all scenes. Choices in one scene (breakfast) visibly affect stats in later scenes (energy bar on pitch).
+## Oyun Döngüsü
 
-## Main Build
+```
+Karakter Oluştur → Uyandır (ev yatak odası) → Serbest Keşif
+    ↓
+Günlük seçimler: Ye / Egzersiz / Maç Oyna / Antren / Sohbet / Oku / Uyu
+    ↓
+Stat kazanımı → Geceyi geç → Ertesi gün
+    ↓
+Kariyer: Mahalle → Gençlik Takımı → Akademi Denemesi → Pro
+```
 
-Build the full first-day sequence: all 10 steps playable from wake-up to end-of-day summary and next-morning teaser.
+---
 
-**Systems:**
-- GameManager singleton (Energy, Morale, Fatigue, ShotPower, Sprint, Technique, Overall)
-- SequenceManager singleton (day step, scene routing)
-- Day/time display (Morning → Afternoon → Evening)
-- DialogueSystem (speaker portrait + text box + choice buttons, advances on click/space)
-- Stats HUD (persistent energy/morale/fatigue bars during match and training)
-- End-of-day summary screen (stats gained, morale bar, fatigue bar, XP events list)
-- Training mini-game (shooting drill: click/space at right moment to hit target)
+## Temel Sistemler
 
-**Scenes:**
-1. Bedroom — wake-up cutscene, player sprite in bed, posters and ball visible
-2. Kitchen — breakfast choice (bread +15 Energy, protein bar +20 Energy +5 Technique XP)
-3. Neighborhood — walk to park, meet Riza Abi, transition to park
-4. Park/Pitch — meet Eren and Baran, trigger 5v5 match
-5. 5v5 Match — top-down live match (risk task)
-6. Post-match — Coach Kemal Hoca dialogue, option to go to shop
-7. Shop — buy protein bar (+training XP bonus) or skip
-8. Training — shooting drill mini-game
-9. End-of-day — stats summary screen
-10. Next morning preview — Academy tryout teaser (static scene, fade to black)
+### 1. Karakter Oluşturma (CharacterCreation)
+- İsim girişi (klavye, TextEdit)
+- Görünüm seçimi: ten rengi, saç rengi, forma rengi
+- PlayerData autoload'a kaydedilir, tüm sahnelerde kullanılır
+- Oyun ilk açıldığında 1 kez çalışır, kaydedilir
 
-**Assets needed:** Procedural placeholder sprites for characters (colored rectangles with directional indicator), tiled grass for pitch, simple colored backgrounds for indoor scenes. Full pixel art sprites after gameplay is verified.
+### 2. Dünya Haritası (WorldMap)
+- Top-down pixel art, TileMap tabanlı mahalle
+- Serbestçe yürünebilir sokaklar
+- **Konumlar (tıklanabilir bölgeler / kapılar):**
+  - Yıldız'ın Evi
+  - Rıza Bakkal
+  - Mahalle Sahası (sokak futbolu sahası)
+  - Atatürk İlkokulu
+  - Çınar Çay Bahçesi
+  - Fitness Salonu
+  - Yıldız Spor Tesisleri
+  - Deniz kenarı / iskele
+- Kapıya yaklaşınca "E: Gir" prompt → fade geçiş → iç mekan
 
-- **Verify:**
-  - All 10 first-day steps are reachable in sequence
-  - Stats persist correctly across scene transitions (GameManager never resets mid-day)
-  - Breakfast choice visibly changes Energy value on subsequent scenes
-  - 5v5 match: player can move, kick ball, NPC players move, goals are counted
-  - Training drill: timing mechanic works, XP bonus applies if protein bar bought
-  - End-of-day screen shows correct final stats
-  - Day/time display advances correctly through sequence
-  - Dialogue boxes show correct speaker name and text, choices advance correctly
-  - No missing resources, no crash on scene transitions
-  - Gameplay flow matches game description
-  - No visual glitches, clipping, or broken layouts
-  - **Presentation proof bundle:** `screenshots/result/1/` with `video.mp4` (450 frames @ 30fps) and raw frame sequence showing the full first-day loop from bedroom through end-of-day summary.
-  - Android debug APK: not requested
+### 3. Ev İç Mekanı (HomeInterior)
+- 4 oda gezilebilir: Yatak Odası, Mutfak, Salon, Banyo
+- Oda geçişleri kapılarla, fade yok (anlık)
+- **İnteraktif objeler:**
+  - Yatak: Uyu → sabah (enerji +60, fatigue sıfırla, gün geç)
+  - Çalışma masası: Oku → Teknik +1 (1 saat)
+  - Buzdolabı: Yemek seç → Enerji +
+  - Banyo: Duş al → Fatigue -10
+- Anne/Baba rutinlerine göre odada olup olmayabilir
+- Kapı → sokağa çıkış → WorldMap'e dön
 
-## Task Status
+### 4. Zaman Sistemi (GameTime autoload)
+```
+1 gerçek saniye = 10 oyun dakikası
+Başlangıç: 07:30
+Bitiş günü: 22:00 (uyuma zamanı)
+```
+- **Saat dilimleri:**
+  - 06:00–10:00 Sabah
+  - 10:00–14:00 Öğle
+  - 14:00–18:00 Öğleden sonra
+  - 18:00–22:00 Akşam
+  - 22:00+ Gece (uyuma zorla veya geç kalma cezası)
+- Aktiviteler zaman tüketir:
+  - Yemek yeme: 30 dakika
+  - Antrenman: 2 saat
+  - Mahalle maçı: 3 saat
+  - Uyuma: → 07:30 ertesi sabah
+  - Sohbet: 15 dakika
+- HUD'da saat + gün + hava durumu (ileride)
 
-| # | Task | Status |
-|---|------|--------|
-| 1 | Scaffold (project.godot, .csproj, scene stubs) | [ ] pending |
-| 2 | Risk: 5v5 match scene — ball + movement + AI | [ ] pending |
-| 3 | Risk: Multi-scene sequence + GameManager | [ ] pending |
-| 4 | Bedroom scene | [ ] pending |
-| 5 | Kitchen scene + breakfast choice | [ ] pending |
-| 6 | Neighborhood scene + NPC meetings | [ ] pending |
-| 7 | Park/Pitch scene + match trigger | [ ] pending |
-| 8 | Post-match + Coach Kemal Hoca scene | [ ] pending |
-| 9 | Shop scene + item purchase | [ ] pending |
-| 10 | Training drill mini-game | [ ] pending |
-| 11 | End-of-day summary screen | [ ] pending |
-| 12 | Next morning preview scene | [ ] pending |
-| 13 | Full integration pass + presentation bundle | [ ] pending |
+### 5. NPC Zamanlayıcı (NPCScheduler autoload)
+Her NPC'nin saatlik konumu ve durumu:
+
+| NPC | 06-08 | 08-12 | 12-14 | 14-18 | 18-22 |
+|-----|-------|-------|-------|-------|-------|
+| Anne | Mutfak | Market | Ev | Ev | Salon |
+| Baba | Ev | İş | İş | İş | Ev |
+| Eren | Ev | Okul | Okul | Mahalle Sahası | Ev |
+| Baran | Ev | Okul | Okul | Çay Bahçesi | Ev |
+| Kemal Hoca | Fitness | Fitness | Spor Tesisi | Mahalle Sahası | Ev |
+| Rıza Abi | Bakkal | Bakkal | Bakkal | Bakkal | Bakkal |
+
+- NPC mevcut konumda değilse → "şu an burada değil"
+- NPC'ye yaklaşıp E basınca → diyalog
+
+### 6. Aktivite Sistemi
+Oyuncu mekan/objeyle etkileşince aktivite başlar:
+
+| Aktivite | Mekan | Stat Etkisi | Süre |
+|----------|-------|-------------|------|
+| Uyuma | Yatak | Enerji +60, Fatigue -40 | Sabaha atlar |
+| Kahvaltı | Mutfak | Enerji +20, Morale +5 | 30 dk |
+| Protein bar | Bakkal/Mutfak | Enerji +25, ShotPower +1 | 15 dk |
+| Duş | Banyo | Fatigue -15, Morale +5 | 30 dk |
+| Ders çalışma | Masa | Teknik +1, Enerji -5 | 1 saat |
+| Fitness | Fitness Salonu | Sprint +1, Fatigue +20 | 2 saat |
+| Şut antreni | Spor Tesisi | ShotPower +2, Fatigue +15 | 2 saat |
+| Mahalle maçı | Mahalle Sahası | Overall +0.5, tüm statlar etkilenir | 3 saat |
+| Sohbet (Eren) | Her yerde | Morale +5 | 15 dk |
+| Sohbet (Baran) | Her yerde | Rakip ilişki +1 | 15 dk |
+| Sohbet (Kemal) | Saha/Spor Tesisi | İpucu + Antrenman bonus | 15 dk |
+| Çay bahçesi | Çay Bahçesi | Morale +10, Enerji -5 | 1 saat |
+
+### 7. Gelişmiş Futbol Maçı
+Mevcut 5v5 sistemi üzerine:
+
+**Yeni Kontroller:**
+- **WASD/Yön tuşları**: Hareket
+- **ŞUT (Space)**: Yakındaki topu fırlatır (güç = ShotPower stat)
+- **PAS (F)**: En iyi konumdaki takım arkadaşına pas ver
+- **DEPAR (Shift)**: Sprint (Stamina harcar)
+- **Taktik İpuçları**: Oyun durumuna göre "THROUGH PASS", "ŞUTA GEÇ" gibi öneriler
+
+**Yeni HUD:**
+- Skor + süre (üst merkez)
+- Mini harita (sol alt) — tüm oyuncuları gösterir, top sarı nokta
+- Oyuncu puanı (sağ üst, maç sonunda güncellenir) — 1.0-10.0
+- Sprint barı (alt)
+- Enerji barı (üst sol)
+
+**Maç Sonrası:**
+- Oyuncu puanı (7.2 gibi)
+- Öne çıkan aksiyon ("2 GOL ATTINIZ!", "MAÇIN ADAMI")
+- Stat kazanımı özeti
+
+### 8. Progression & Kariyer
+**Stat sistemi (mevcut + yeni):**
+- Enerji, Moral, Yorgunluk (günlük)
+- Şut Gücü, Sprint, Teknik, Dayanıklılık (yetenek — kalıcı)
+- Futbol IQ (yeni — takım arkadaşı AI kalitesini etkiler)
+- GENEL rating (0-100)
+- İlişki puanları: Anne, Baba, Eren, Baran, Kemal Hoca, Rıza Abi
+
+**Kariyer basamakları:**
+1. Mahalle çocuğu (Overall 0-45)
+2. Dikkat çekti (Overall 45-60, Kemal Hoca fark etti)
+3. Gençlik takımı (Overall 60-70)
+4. Akademi denemesi (Overall 70+, trigger event)
+5. Pro yol başlangıcı (uzun dönem hedef)
+
+---
+
+## Sahne Mimarisi
+
+```
+scenes/
+  CharacterCreation.tscn   ← İlk açılış, bir kez
+  WorldMap.tscn            ← Ana dünya, serbest yürüyüş
+  HomeInterior.tscn        ← 4 oda, kapı geçişleriyle
+  BakkalInterior.tscn      ← Rıza Abi'nin dükkanı
+  SporTesisiInterior.tscn  ← Antrenman tesisi
+  FitnessSalonu.tscn       ← Fitness salonu
+  CayBahcesi.tscn          ← Çay bahçesi, sohbet yeri
+  Match.tscn               ← Futbol maçı (yeniden yazılacak)
+```
+
+---
+
+## Autoload (Singleton) Listesi
+
+| Singleton | Dosya | Görev |
+|-----------|-------|-------|
+| PlayerData | scripts/PlayerData.cs | İsim, görünüm, kayıt sistemi |
+| GameManager | scripts/GameManager.cs | Statlar, envanter, ilişkiler |
+| GameTime | scripts/GameTime.cs | Saat, gün, zaman geçişi |
+| NPCScheduler | scripts/NPCScheduler.cs | NPC konumları ve rutinleri |
+| WorldManager | scripts/WorldManager.cs | Konum geçişleri (SequenceManager yerine) |
+| DialogueManager | scripts/DialogueManager.cs | Diyalog UI (mevcut, küçük güncelleme) |
+
+---
+
+## Mevcut Koddan Korunacaklar
+
+| Dosya | Durum |
+|-------|-------|
+| scripts/DialogueManager.cs | Korunuyor |
+| scripts/Football.cs | Korunuyor |
+| scripts/FootballAI.cs | Güncelleniyor (pas AI) |
+| scripts/PlayerController.cs | Güncelleniyor (sprint, pas) |
+| scripts/GameManager.cs | Güncelleniyor (ilişkiler, envanter) |
+| assets/img/* | Tüm görseller korunuyor |
+
+## Silinecekler
+
+| Dosya | Neden |
+|-------|-------|
+| scripts/SequenceManager.cs | WorldManager ile değiştiriliyor |
+| scripts/BedroomScene.cs | HomeInteriorScene ile birleşiyor |
+| scripts/KitchenScene.cs | HomeInteriorScene ile birleşiyor |
+| scripts/NeighborhoodScene.cs | WorldMap'a entegre oluyor |
+| scripts/PostMatchScene.cs | Maç sonrası sistem değişiyor |
+| scripts/ShopScene.cs | BakkalInterior'a dönüşüyor |
+| scripts/TrainingScene.cs | SporTesisi aktivite sistemine dönüşüyor |
+| scripts/EodSummaryScene.cs | GameTime + gece sistemiyle değiştiriliyor |
+| scripts/NextMorningScene.cs | Gün geçişi sistemiyle değiştiriliyor |
+| scenes/Build*.cs (hepsi) | Yeni builder'larla değiştiriliyor |
+
+---
+
+## İnşa Sırası (Risk → Core → Polish)
+
+| # | Görev | Öncelik | Tahmini Karmaşıklık |
+|---|-------|---------|---------------------|
+| 1 | PlayerData + CharacterCreation sahnesi | Kritik | Orta |
+| 2 | GameTime sistemi | Kritik | Düşük |
+| 3 | WorldManager (WorldMap geçişleri) | Kritik | Orta |
+| 4 | WorldMap.tscn (mahalle haritası, yürüyüş) | Kritik | Yüksek |
+| 5 | HomeInterior.tscn (4 oda, etkileşimler) | Yüksek | Orta |
+| 6 | NPCScheduler + NPC karakterleri | Yüksek | Orta |
+| 7 | Aktivite sistemi (uy, ye, antren) | Yüksek | Orta |
+| 8 | Gelişmiş futbol maçı (PAS/ŞUT/DEPAR + mini harita) | Yüksek | Yüksek |
+| 9 | Diğer iç mekanlar (bakkal, spor tesisi, fitness, çay bahçesi) | Orta | Orta |
+| 10 | Kariyer sistemi + progression events | Orta | Orta |
+| 11 | Kayıt/yükleme sistemi | Orta | Düşük |
+| 12 | Müzik + SFX | Düşük | Düşük |
+
+---
+
+## Task Durumu
+
+| # | Görev | Durum |
+|---|-------|-------|
+| 1 | PlayerData + CharacterCreation | [ ] bekliyor |
+| 2 | GameTime sistemi | [ ] bekliyor |
+| 3 | WorldManager | [ ] bekliyor |
+| 4 | WorldMap.tscn | [ ] bekliyor |
+| 5 | HomeInterior.tscn | [ ] bekliyor |
+| 6 | NPCScheduler | [ ] bekliyor |
+| 7 | Aktivite sistemi | [ ] bekliyor |
+| 8 | Gelişmiş futbol maçı | [ ] bekliyor |
+| 9 | Diğer iç mekanlar | [ ] bekliyor |
+| 10 | Kariyer + events | [ ] bekliyor |
+| 11 | Kayıt/yükleme | [ ] bekliyor |
+| 12 | Müzik + SFX | [ ] bekliyor |

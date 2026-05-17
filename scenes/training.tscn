@@ -1,72 +1,40 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/TrainingScene.cs" id="1_p87tf"]
+[ext_resource type="Script" path="res://scripts/TrainingScene.cs" id="1_y6hlf"]
+[ext_resource type="Texture2D" path="res://assets/img/training_bg.png" id="2_v2b7k"]
 
-[node name="Training" type="Node2D" unique_id=869258402]
-script = ExtResource("1_p87tf")
+[node name="Training" type="Node2D" unique_id=1480980877]
+script = ExtResource("1_y6hlf")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1720372026]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.22, 0.5, 0.22, 1)
+[node name="Background" type="Sprite2D" parent="." unique_id=247361209]
+z_index = -1
+position = Vector2(640, 360)
+texture = ExtResource("2_v2b7k")
 
-[node name="Sky" type="ColorRect" parent="." unique_id=1858540117]
-offset_right = 1280.0
-offset_bottom = 240.0
-color = Color(0.98, 0.68, 0.38, 1)
-
-[node name="Goal" type="ColorRect" parent="." unique_id=1742052179]
-offset_left = 1180.0
-offset_top = 280.0
-offset_right = 1196.0
-offset_bottom = 440.0
-color = Color(0.9, 0.9, 0.9, 0.8)
-
-[node name="GoalTop" type="ColorRect" parent="." unique_id=1119042387]
-offset_left = 1116.0
-offset_top = 280.0
-offset_right = 1196.0
-offset_bottom = 296.0
-color = Color(0.9, 0.9, 0.9, 0.8)
-
-[node name="CoachSprite" type="ColorRect" parent="." unique_id=2117849221]
-offset_left = 200.0
-offset_top = 350.0
-offset_right = 250.0
-offset_bottom = 432.0
-color = Color(0.3, 0.3, 0.55, 1)
-
-[node name="CoachLabel" type="Label" parent="." unique_id=1912195746]
+[node name="CoachLabel" type="Label" parent="." unique_id=51610561]
 offset_left = 182.0
 offset_top = 330.0
 offset_right = 182.0
 offset_bottom = 330.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 0, 1)
 text = "Kemal Hoca"
 
-[node name="PlayerSprite" type="ColorRect" parent="." unique_id=202468517]
-offset_left = 400.0
-offset_top = 355.0
-offset_right = 440.0
-offset_bottom = 425.0
-color = Color(0.92, 0.72, 0.55, 1)
-
-[node name="BarBackground" type="ColorRect" parent="." unique_id=1417370921]
+[node name="BarBackground" type="ColorRect" parent="." unique_id=435760949]
 offset_left = 400.0
 offset_top = 540.0
 offset_right = 880.0
 offset_bottom = 570.0
-color = Color(0.15, 0.15, 0.15, 0.85)
+color = Color(0.05, 0.05, 0.05, 0.9)
 
-[node name="TargetZone" type="ColorRect" parent="." unique_id=1172331091]
+[node name="TargetZone" type="ColorRect" parent="." unique_id=2143369204]
 unique_name_in_owner = true
 offset_left = 582.4
 offset_top = 540.0
 offset_right = 697.60004
 offset_bottom = 570.0
-color = Color(0.2, 0.85, 0.2, 0.6)
+color = Color(0.2, 0.85, 0.2, 0.7)
 
-[node name="Marker" type="ColorRect" parent="." unique_id=1722263007]
+[node name="Marker" type="ColorRect" parent="." unique_id=43648945]
 unique_name_in_owner = true
 offset_left = 400.0
 offset_top = 540.0
@@ -74,7 +42,7 @@ offset_right = 410.0
 offset_bottom = 570.0
 color = Color(1, 0.85, 0.1, 1)
 
-[node name="InstructionLabel" type="Label" parent="." unique_id=559211488]
+[node name="InstructionLabel" type="Label" parent="." unique_id=1403323391]
 unique_name_in_owner = true
 offset_left = 440.0
 offset_top = 505.0
@@ -83,7 +51,7 @@ offset_bottom = 505.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Şut antrenmanı! SPACE'e bas."
 
-[node name="ResultLabel" type="Label" parent="." unique_id=135444029]
+[node name="ResultLabel" type="Label" parent="." unique_id=1212036773]
 unique_name_in_owner = true
 offset_left = 580.0
 offset_top = 580.0
@@ -91,7 +59,7 @@ offset_right = 580.0
 offset_bottom = 580.0
 theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
 
-[node name="ShotsLabel" type="Label" parent="." unique_id=1272678415]
+[node name="ShotsLabel" type="Label" parent="." unique_id=836531304]
 unique_name_in_owner = true
 offset_left = 580.0
 offset_top = 610.0
@@ -100,7 +68,7 @@ offset_bottom = 610.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Şutlar: 5 kaldı"
 
-[node name="Title" type="Label" parent="." unique_id=858659458]
+[node name="Title" type="Label" parent="." unique_id=881499641]
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 20.0

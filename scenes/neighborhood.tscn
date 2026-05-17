@@ -1,62 +1,28 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/NeighborhoodScene.cs" id="1_ejhqo"]
+[ext_resource type="Script" path="res://scripts/NeighborhoodScene.cs" id="1_nrakx"]
+[ext_resource type="Texture2D" path="res://assets/img/neighborhood_bg.png" id="2_tqujx"]
 
-[node name="Neighborhood" type="Node2D" unique_id=1903896264]
-script = ExtResource("1_ejhqo")
+[node name="Neighborhood" type="Node2D" unique_id=761157649]
+script = ExtResource("1_nrakx")
 
-[node name="Sky" type="ColorRect" parent="." unique_id=842284864]
-offset_right = 1280.0
-offset_bottom = 400.0
-color = Color(0.55, 0.78, 0.98, 1)
+[node name="Background" type="Sprite2D" parent="." unique_id=1518265043]
+z_index = -1
+position = Vector2(640, 360)
+texture = ExtResource("2_tqujx")
 
-[node name="Ground" type="ColorRect" parent="." unique_id=1051756947]
-offset_top = 400.0
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.72, 0.68, 0.62, 1)
-
-[node name="RizaShop" type="ColorRect" parent="." unique_id=1442110255]
-offset_left = 900.0
-offset_top = 200.0
-offset_right = 1120.0
-offset_bottom = 480.0
-color = Color(0.92, 0.78, 0.58, 1)
-
-[node name="ShopSign" type="Label" parent="." unique_id=1099711435]
-offset_left = 908.0
-offset_top = 220.0
-offset_right = 908.0
-offset_bottom = 220.0
-theme_override_colors/font_color = Color(0.2, 0.1, 0.05, 1)
-text = "RIZA'NIN BAKKAL"
-
-[node name="RizaAbi" type="ColorRect" parent="." unique_id=594774429]
-offset_left = 860.0
-offset_top = 390.0
-offset_right = 908.0
-offset_bottom = 470.0
-color = Color(0.6, 0.45, 0.3, 1)
-
-[node name="RizaLabel" type="Label" parent="." unique_id=1706300204]
+[node name="RizaLabel" type="Label" parent="." unique_id=585813044]
 offset_left = 848.0
 offset_top = 370.0
 offset_right = 848.0
 offset_bottom = 370.0
-theme_override_colors/font_color = Color(0.2, 0.1, 0.05, 1)
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
 text = "Rıza Abi"
 
-[node name="PlayerSprite" type="ColorRect" parent="." unique_id=1646889958]
-offset_left = 400.0
-offset_top = 400.0
-offset_right = 440.0
-offset_bottom = 470.0
-color = Color(0.92, 0.72, 0.55, 1)
-
-[node name="Title" type="Label" parent="." unique_id=642945488]
+[node name="Title" type="Label" parent="." unique_id=393353280]
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 20.0
 offset_bottom = 20.0
-theme_override_colors/font_color = Color(0.1, 0.1, 0.3, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "Sabah — Mahalle"

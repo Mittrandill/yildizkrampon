@@ -12,28 +12,12 @@ public partial class BuildKitchen : SceneBuilderBase
         root.Name = "Kitchen";
         temp.AddChild(root);
 
-        // Background — warm yellow kitchen
-        var bg = new ColorRect();
+        var bg = new Sprite2D();
         bg.Name = "Background";
-        bg.Color = new Color(0.98f, 0.92f, 0.72f);
-        bg.Size = new Vector2(1280, 720);
+        bg.Texture = GD.Load<Texture2D>("res://assets/img/kitchen_bg.png");
+        bg.Position = new Vector2(640, 360);
+        bg.ZIndex = -1;
         root.AddChild(bg);
-
-        // Table
-        var table = new ColorRect();
-        table.Name = "Table";
-        table.Color = new Color(0.72f, 0.48f, 0.28f);
-        table.Size = new Vector2(400, 80);
-        table.Position = new Vector2(440, 420);
-        root.AddChild(table);
-
-        // Mom NPC placeholder
-        var mom = new ColorRect();
-        mom.Name = "Mom";
-        mom.Color = new Color(0.85f, 0.6f, 0.8f);
-        mom.Size = new Vector2(48, 80);
-        mom.Position = new Vector2(300, 330);
-        root.AddChild(mom);
 
         var momLabel = new Label();
         momLabel.Name = "MomLabel";
@@ -42,14 +26,6 @@ public partial class BuildKitchen : SceneBuilderBase
         momLabel.AddThemeColorOverride("font_color", new Color(0.3f, 0.1f, 0.3f));
         root.AddChild(momLabel);
 
-        // Dad NPC placeholder
-        var dad = new ColorRect();
-        dad.Name = "Dad";
-        dad.Color = new Color(0.5f, 0.65f, 0.85f);
-        dad.Size = new Vector2(48, 80);
-        dad.Position = new Vector2(900, 330);
-        root.AddChild(dad);
-
         var dadLabel = new Label();
         dadLabel.Name = "DadLabel";
         dadLabel.Text = "Baba";
@@ -57,19 +33,11 @@ public partial class BuildKitchen : SceneBuilderBase
         dadLabel.AddThemeColorOverride("font_color", new Color(0.1f, 0.2f, 0.5f));
         root.AddChild(dadLabel);
 
-        // Player sprite
-        var player = new ColorRect();
-        player.Name = "PlayerSprite";
-        player.Color = new Color(0.92f, 0.72f, 0.55f);
-        player.Size = new Vector2(40, 70);
-        player.Position = new Vector2(620, 340);
-        root.AddChild(player);
-
         var title = new Label();
         title.Name = "Title";
         title.Text = "Sabah — Mutfak";
         title.Position = new Vector2(20, 20);
-        title.AddThemeColorOverride("font_color", new Color(0.3f, 0.2f, 0.1f));
+        title.AddThemeColorOverride("font_color", new Color(0.15f, 0.1f, 0.05f));
         root.AddChild(title);
 
         root.SetScript(GD.Load("res://scripts/KitchenScene.cs"));

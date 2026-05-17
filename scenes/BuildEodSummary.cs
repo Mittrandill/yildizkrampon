@@ -12,28 +12,27 @@ public partial class BuildEodSummary : SceneBuilderBase
         root.Name = "EodSummary";
         temp.AddChild(root);
 
-        // Dark background
-        var bg = new ColorRect();
+        var bg = new Sprite2D();
         bg.Name = "Background";
-        bg.Color = new Color(0.06f, 0.06f, 0.12f);
-        bg.Size = new Vector2(1280, 720);
+        bg.Texture = GD.Load<Texture2D>("res://assets/img/eod_summary_bg.png");
+        bg.Position = new Vector2(640, 360);
+        bg.ZIndex = -1;
         root.AddChild(bg);
 
-        // Header
+        // Semi-transparent stat panel so text is readable over the parchment
+        var statsPanel = new ColorRect();
+        statsPanel.Name = "StatsPanel";
+        statsPanel.Color = new Color(0.05f, 0.04f, 0.02f, 0.72f);
+        statsPanel.Size = new Vector2(340, 340);
+        statsPanel.Position = new Vector2(80, 105);
+        root.AddChild(statsPanel);
+
         var header = new Label();
         header.Name = "Header";
         header.Text = "GÜN SONU ÖZETİ";
         header.Position = new Vector2(480, 40);
         header.AddThemeColorOverride("font_color", new Color(1f, 0.85f, 0.2f));
         root.AddChild(header);
-
-        // Stats panel
-        var statsPanel = new ColorRect();
-        statsPanel.Name = "StatsPanel";
-        statsPanel.Color = new Color(0.1f, 0.1f, 0.2f);
-        statsPanel.Size = new Vector2(340, 320);
-        statsPanel.Position = new Vector2(80, 110);
-        root.AddChild(statsPanel);
 
         _AddStatRow(root, "Enerji", "EnergyValue", new Vector2(100, 130));
         _AddStatRow(root, "Moral", "MoraleValue", new Vector2(100, 165));
@@ -43,19 +42,18 @@ public partial class BuildEodSummary : SceneBuilderBase
         _AddStatRow(root, "Teknik", "TechValue", new Vector2(100, 315));
         _AddStatRow(root, "GENEL", "OverallValue", new Vector2(100, 360));
 
-        // Events panel
         var eventsPanel = new ColorRect();
         eventsPanel.Name = "EventsPanel";
-        eventsPanel.Color = new Color(0.08f, 0.12f, 0.08f);
+        eventsPanel.Color = new Color(0.02f, 0.06f, 0.02f, 0.72f);
         eventsPanel.Size = new Vector2(560, 380);
-        eventsPanel.Position = new Vector2(460, 110);
+        eventsPanel.Position = new Vector2(460, 105);
         root.AddChild(eventsPanel);
 
         var eventsHeader = new Label();
         eventsHeader.Name = "EventsHeader";
         eventsHeader.Text = "BUGÜN NE OLDU:";
         eventsHeader.Position = new Vector2(480, 120);
-        eventsHeader.AddThemeColorOverride("font_color", new Color(0.6f, 0.9f, 0.6f));
+        eventsHeader.AddThemeColorOverride("font_color", new Color(0.6f, 0.95f, 0.6f));
         root.AddChild(eventsHeader);
 
         var eventsLabel = new Label();
@@ -73,7 +71,7 @@ public partial class BuildEodSummary : SceneBuilderBase
         continueLabel.UniqueNameInOwner = true;
         continueLabel.Text = "Enter'a bas — devam et";
         continueLabel.Position = new Vector2(500, 660);
-        continueLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.9f));
+        continueLabel.AddThemeColorOverride("font_color", new Color(0.7f, 0.7f, 1f));
         root.AddChild(continueLabel);
 
         root.SetScript(GD.Load("res://scripts/EodSummaryScene.cs"));
@@ -91,7 +89,7 @@ public partial class BuildEodSummary : SceneBuilderBase
         nameLabel.Name = $"{uniqueValueName}Name";
         nameLabel.Text = $"{statName}:";
         nameLabel.Position = pos;
-        nameLabel.AddThemeColorOverride("font_color", new Color(0.7f, 0.7f, 0.9f));
+        nameLabel.AddThemeColorOverride("font_color", new Color(0.8f, 0.78f, 0.95f));
         root.AddChild(nameLabel);
 
         var valueLabel = new Label();
