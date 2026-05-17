@@ -224,15 +224,15 @@ scenes/
 
 | # | Görev | Durum |
 |---|-------|-------|
-| 1 | PlayerData + CharacterCreation | [ ] bekliyor |
-| 2 | GameTime sistemi | [ ] bekliyor |
-| 3 | WorldManager | [ ] bekliyor |
-| 4 | WorldMap.tscn | [ ] bekliyor |
-| 5 | HomeInterior.tscn | [ ] bekliyor |
-| 6 | NPCScheduler | [ ] bekliyor |
-| 7 | Aktivite sistemi | [ ] bekliyor |
+| 1 | PlayerData + CharacterCreation | [x] tamamlandı |
+| 2 | GameTime sistemi | [x] tamamlandı |
+| 3 | WorldManager | [x] tamamlandı |
+| 4 | WorldMap.tscn | [x] tamamlandı |
+| 5 | HomeInterior.tscn | [x] tamamlandı |
+| 6 | NPCScheduler | [x] tamamlandı |
+| 7 | Aktivite sistemi | [x] tamamlandı (ev + tüm mekanlar) |
 | 8 | Gelişmiş futbol maçı | [ ] bekliyor |
-| 9 | Diğer iç mekanlar | [ ] bekliyor |
+| 9 | Diğer iç mekanlar | [x] tamamlandı (Bakkal, SporTesisi, Fitness, CayBahcesi) |
 | 10 | Kariyer + events | [ ] bekliyor |
 | 11 | Kayıt/yükleme | [ ] bekliyor |
 | 12 | Müzik + SFX | [ ] bekliyor |

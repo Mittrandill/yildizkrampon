@@ -12,10 +12,12 @@ public partial class GameManager : Node
     public int Fatigue { get; set; } = 20;
 
     // Football attributes
-    public int ShotPower { get; set; } = 38;
-    public int Sprint { get; set; } = 36;
-    public int Technique { get; set; } = 35;
-    public int Overall { get; set; } = 38;
+    public int ShotPower  { get; set; } = 38;
+    public int Sprint     { get; set; } = 36;
+    public int Technique  { get; set; } = 35;
+    public int Stamina    { get; set; } = 35;
+    public int FootballIQ { get; set; } = 30;
+    public int Overall    { get; set; } = 38;
 
     // Day state
     public int DayStep { get; set; } = 0;  // 0=morning, 1=afternoon, 2=evening
@@ -36,14 +38,16 @@ public partial class GameManager : Node
         Energy = Mathf.Clamp(Energy, 0, 100);
         Morale = Mathf.Clamp(Morale, 0, 100);
         Fatigue = Mathf.Clamp(Fatigue, 0, 100);
-        ShotPower = Mathf.Clamp(ShotPower, 0, 99);
-        Sprint = Mathf.Clamp(Sprint, 0, 99);
-        Technique = Mathf.Clamp(Technique, 0, 99);
+        ShotPower  = Mathf.Clamp(ShotPower,  0, 99);
+        Sprint     = Mathf.Clamp(Sprint,     0, 99);
+        Technique  = Mathf.Clamp(Technique,  0, 99);
+        Stamina    = Mathf.Clamp(Stamina,    0, 99);
+        FootballIQ = Mathf.Clamp(FootballIQ, 0, 99);
     }
 
     public void RecalcOverall()
     {
-        Overall = (ShotPower + Sprint + Technique) / 3;
+        Overall = (ShotPower + Sprint + Technique + Stamina + FootballIQ) / 5;
     }
 
     public void AddEvent(string description)
