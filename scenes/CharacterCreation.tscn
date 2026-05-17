@@ -1,8 +1,31 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/CharacterCreationScene.cs" id="1_72kfo"]
-[ext_resource type="Texture2D" path="res://assets/img/neighborhood_bg.png" id="2_n7u77"]
-[ext_resource type="Texture2D" path="res://assets/img/player_sprite.png" id="3_4ll7m"]
+[ext_resource type="Script" path="res://scripts/CharacterCreationScene.cs" id="1_q0b5v"]
+[ext_resource type="Texture2D" path="res://assets/img/neighborhood_bg.png" id="2_72kfo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7u77"]
+bg_color = Color(0.1, 0.07, 0.04, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.65, 0.5, 0.28, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ll7m"]
+bg_color = Color(0.05, 0.14, 0.05, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.65, 0.3, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llayh"]
 bg_color = Color(0.1, 0.07, 0.04, 0.88)
@@ -17,54 +40,30 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aburx"]
-bg_color = Color(0.05, 0.14, 0.05, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.35, 0.65, 0.3, 0.8)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+bg_color = Color(0.22, 0.15, 0.07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.45, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcpgp"]
-bg_color = Color(0.1, 0.07, 0.04, 0.88)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.65, 0.5, 0.28, 0.8)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+bg_color = Color(0.22, 0.15, 0.07, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.6, 0.45, 0.25, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahg8a"]
-bg_color = Color(0.22, 0.15, 0.07, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.6, 0.45, 0.25, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vur18"]
-bg_color = Color(0.22, 0.15, 0.07, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.6, 0.45, 0.25, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os0u4"]
 bg_color = Color(0.12, 0.42, 0.12, 1)
 border_width_left = 2
 border_width_top = 2
@@ -76,7 +75,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g55p3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vur18"]
 bg_color = Color(0.252, 0.50699997, 0.252, 1)
 border_width_left = 2
 border_width_top = 2
@@ -88,7 +87,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e3rao"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os0u4"]
 bg_color = Color(0.42, 0.12, 0.08, 1)
 border_width_left = 2
 border_width_top = 2
@@ -100,7 +99,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xktm"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g55p3"]
 bg_color = Color(0.50699997, 0.252, 0.21800001, 1)
 border_width_left = 2
 border_width_top = 2
@@ -112,36 +111,36 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="CharacterCreation" type="Control" unique_id=957858004]
+[node name="CharacterCreation" type="Control" unique_id=1510892516]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource("1_72kfo")
+script = ExtResource("1_q0b5v")
 
-[node name="Background" type="TextureRect" parent="." unique_id=854834350]
+[node name="Background" type="TextureRect" parent="." unique_id=601516103]
 z_index = -10
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource("2_n7u77")
+texture = ExtResource("2_72kfo")
 
-[node name="Overlay" type="ColorRect" parent="." unique_id=1432358691]
+[node name="Overlay" type="ColorRect" parent="." unique_id=2132658850]
 z_index = -9
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color(0, 0, 0, 0.52)
 
-[node name="@Panel@2" type="Panel" parent="." unique_id=1083291809]
+[node name="@Panel@2" type="Panel" parent="." unique_id=824288916]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 18.0
 offset_right = 378.0
 offset_bottom = 702.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_llayh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_n7u77")
 
-[node name="@MarginContainer@3" type="MarginContainer" parent="@Panel@2" unique_id=1568007530]
+[node name="@MarginContainer@3" type="MarginContainer" parent="@Panel@2" unique_id=731463765]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -150,11 +149,11 @@ theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 14
 
-[node name="@VBoxContainer@4" type="VBoxContainer" parent="@Panel@2/@MarginContainer@3" unique_id=949834784]
+[node name="@VBoxContainer@4" type="VBoxContainer" parent="@Panel@2/@MarginContainer@3" unique_id=1045479124]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="@Label@5" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=407968065]
+[node name="@Label@5" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=2033571020]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 theme_override_colors/font_color = Color(1, 0.85, 0.15, 1)
@@ -162,86 +161,85 @@ text = "YILDIZ
 KRAMPON"
 horizontal_alignment = 1
 
-[node name="@Label@6" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=530258216]
+[node name="@Label@6" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=784344153]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.85, 0.7, 0.35, 1)
 text = "PIXEL PITCH"
 horizontal_alignment = 1
 
-[node name="@HSeparator@7" type="HSeparator" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=29183292]
+[node name="@HSeparator@7" type="HSeparator" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1606823452]
 layout_mode = 2
 
-[node name="@Panel@8" type="Panel" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=214986380]
+[node name="@Panel@8" type="Panel" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1859988993]
 custom_minimum_size = Vector2(0, 280)
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_aburx")
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ll7m")
 
-[node name="CharSprite" type="TextureRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@Panel@8" unique_id=1520159253]
+[node name="CharSprite" type="TextureRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@Panel@8" unique_id=1803404532]
 unique_name_in_owner = true
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource("3_4ll7m")
 stretch_mode = 5
 
-[node name="@ColorRect@9" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1114414730]
+[node name="@ColorRect@9" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1465021308]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(1, 0.85, 0.15, 1)
 
-[node name="@ColorRect@10" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=709526643]
+[node name="@ColorRect@10" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1629772456]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.5, 0.5, 0.5, 0.6)
 
-[node name="@ColorRect@11" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1037861178]
+[node name="@ColorRect@11" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=366247645]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.5, 0.5, 0.5, 0.6)
 
-[node name="@ColorRect@12" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1828144156]
+[node name="@ColorRect@12" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1745437744]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.5, 0.5, 0.5, 0.6)
 
-[node name="@ColorRect@13" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1084548843]
+[node name="@ColorRect@13" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=262463257]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.5, 0.5, 0.5, 0.6)
 
-[node name="@HBoxContainer@14" type="HBoxContainer" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1852935584]
+[node name="@HBoxContainer@14" type="HBoxContainer" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=143021491]
 layout_mode = 2
 theme_override_constants/separation = 6
 alignment = 1
 
-[node name="@ColorRect@15" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1675683428]
+[node name="@ColorRect@15" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1561121510]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(1, 0.85, 0.15, 1)
 
-[node name="@ColorRect@16" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=2047799778]
+[node name="@ColorRect@16" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1631894038]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.45, 0.45, 0.45, 0.6)
 
-[node name="@ColorRect@17" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1870272299]
+[node name="@ColorRect@17" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=203306593]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.45, 0.45, 0.45, 0.6)
 
-[node name="@ColorRect@18" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1012898531]
+[node name="@ColorRect@18" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=762646094]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.45, 0.45, 0.45, 0.6)
 
-[node name="@ColorRect@19" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=1789122465]
+[node name="@ColorRect@19" type="ColorRect" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4/@HBoxContainer@14" unique_id=145510714]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 color = Color(0.45, 0.45, 0.45, 0.6)
 
-[node name="DescLabel" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=1704611943]
+[node name="DescLabel" type="Label" parent="@Panel@2/@MarginContainer@3/@VBoxContainer@4" unique_id=160910513]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
@@ -251,15 +249,15 @@ Kendi tarzını seç, sahada ve hayatta iz bırak!"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="@Panel@20" type="Panel" parent="." unique_id=768214897]
+[node name="@Panel@20" type="Panel" parent="." unique_id=1392619062]
 layout_mode = 0
 offset_left = 396.0
 offset_top = 18.0
 offset_right = 1262.0
 offset_bottom = 702.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_dcpgp")
+theme_override_styles/panel = SubResource("StyleBoxFlat_llayh")
 
-[node name="@MarginContainer@21" type="MarginContainer" parent="@Panel@20" unique_id=819748718]
+[node name="@MarginContainer@21" type="MarginContainer" parent="@Panel@20" unique_id=420495505]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -268,16 +266,16 @@ theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 14
 
-[node name="@VBoxContainer@22" type="VBoxContainer" parent="@Panel@20/@MarginContainer@21" unique_id=182830164]
+[node name="@VBoxContainer@22" type="VBoxContainer" parent="@Panel@20/@MarginContainer@21" unique_id=1175563384]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="@HBoxContainer@23" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1436538518]
+[node name="@HBoxContainer@23" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=686502576]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="@Label@24" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@23" unique_id=297040469]
+[node name="@Label@24" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@23" unique_id=1663309626]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -285,7 +283,7 @@ theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
 text = "İsim"
 vertical_alignment = 1
 
-[node name="NameInput" type="LineEdit" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@23" unique_id=1147731363]
+[node name="NameInput" type="LineEdit" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@23" unique_id=1705736393]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -294,15 +292,15 @@ theme_override_font_sizes/font_size = 16
 placeholder_text = "Adını gir..."
 max_length = 16
 
-[node name="@HSeparator@25" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1787203046]
+[node name="@HSeparator@25" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=902263556]
 layout_mode = 2
 
-[node name="@HBoxContainer@26" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=213930452]
+[node name="@HBoxContainer@26" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=252163999]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="@Label@27" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1166467943]
+[node name="@Label@27" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1624212933]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -310,16 +308,16 @@ theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
 text = "Karakter Tipi"
 vertical_alignment = 1
 
-[node name="BtnPrevType" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1855371993]
+[node name="BtnPrevType" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=563745764]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_ahg8a")
+theme_override_styles/normal = SubResource("StyleBoxFlat_aburx")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "◄"
 
-[node name="TypeLabel" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1941992213]
+[node name="TypeLabel" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1949855305]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -328,16 +326,16 @@ theme_override_colors/font_color = Color(1, 0.9, 0.45, 1)
 text = "Hızlı Kanat"
 horizontal_alignment = 1
 
-[node name="BtnNextType" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1024258969]
+[node name="BtnNextType" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@26" unique_id=1857261326]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(38, 38)
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_vur18")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dcpgp")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "►"
 
-[node name="TypeDesc" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=79325716]
+[node name="TypeDesc" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=868287662]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
@@ -345,15 +343,15 @@ theme_override_colors/font_color = Color(0.72, 0.85, 0.95, 1)
 text = "Hızlı, golcü. Şut Gücü ve Sprint +bonus ile başlar."
 autowrap_mode = 2
 
-[node name="@HSeparator@28" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1684245073]
+[node name="@HSeparator@28" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=324061314]
 layout_mode = 2
 
-[node name="@HBoxContainer@29" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=821714647]
+[node name="@HBoxContainer@29" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1514260986]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="@Label@30" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@29" unique_id=107901910]
+[node name="@Label@30" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@29" unique_id=1268504750]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -361,18 +359,18 @@ theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
 text = "Ten Rengi"
 vertical_alignment = 1
 
-[node name="SkinSwatches" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@29" unique_id=1968726771]
+[node name="SkinSwatches" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@29" unique_id=1424902875]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="@HBoxContainer@31" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=259324758]
+[node name="@HBoxContainer@31" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1472024360]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="@Label@32" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@31" unique_id=2037163742]
+[node name="@Label@32" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@31" unique_id=1059997366]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -380,39 +378,51 @@ theme_override_colors/font_color = Color(0.9, 0.85, 0.68, 1)
 text = "Saç Rengi"
 vertical_alignment = 1
 
-[node name="HairSwatches" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@31" unique_id=328669141]
+[node name="HairSwatches" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@31" unique_id=1222458534]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="@HSeparator@33" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1828500273]
+[node name="@HSeparator@33" type="HSeparator" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1115494676]
 layout_mode = 2
 
-[node name="ErrorLabel" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=429051149]
+[node name="ErrorLabel" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=898288877]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(1, 0.38, 0.38, 1)
 horizontal_alignment = 1
 
-[node name="@Control@34" type="Control" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=874605431]
+[node name="@Control@34" type="Control" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=82407672]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="@Label@35" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1801345141]
+[node name="@Label@35" type="Label" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1809893798]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.85, 0.8, 0.5, 1)
 text = "⚽  Hayalini kurduğun futbol hayatı seni bekliyor.  ★"
 horizontal_alignment = 1
 
-[node name="@HBoxContainer@36" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=1367668919]
+[node name="@HBoxContainer@36" type="HBoxContainer" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22" unique_id=766688702]
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="BtnStart" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@36" unique_id=431682077]
+[node name="BtnStart" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@36" unique_id=1012220773]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_ahg8a")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ahg8a")
+theme_override_styles/hover = SubResource("StyleBoxFlat_vur18")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "⚽  BAŞLA"
+
+[node name="BtnBack" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@36" unique_id=663982]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
@@ -420,18 +430,6 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_os0u4")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_os0u4")
 theme_override_styles/hover = SubResource("StyleBoxFlat_g55p3")
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 20
-text = "⚽  BAŞLA"
-
-[node name="BtnBack" type="Button" parent="@Panel@20/@MarginContainer@21/@VBoxContainer@22/@HBoxContainer@36" unique_id=1675826709]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 54)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_e3rao")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_e3rao")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0xktm")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 20
 text = "◄  GERİ"

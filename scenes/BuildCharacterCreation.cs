@@ -82,7 +82,7 @@ public partial class BuildCharacterCreation : SceneBuilderBase
         var charTex = new TextureRect();
         charTex.Name = "CharSprite";
         charTex.UniqueNameInOwner = true;
-        charTex.Texture = GD.Load<Texture2D>("res://assets/img/player_sprite.png");
+        charTex.Texture = GD.Load<Texture2D>("res://assets/img/hero_sprite.png");
         charTex.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
         charTex.SetAnchorsPreset(Control.LayoutPreset.FullRect);
         frame.AddChild(charTex);

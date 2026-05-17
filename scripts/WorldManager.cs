@@ -8,11 +8,12 @@ public partial class WorldManager : Node
 {
     public static WorldManager Instance { get; private set; } = null!;
 
-    public string CurrentLocation  { get; private set; } = "CharacterCreation";
+    public string CurrentLocation  { get; private set; } = "TitleScreen";
     public string PreviousLocation { get; private set; } = "";
 
     private static readonly Dictionary<string, string> LocationPaths = new()
     {
+        { "TitleScreen",        "res://scenes/TitleScreen.tscn"         },
         { "CharacterCreation",  "res://scenes/CharacterCreation.tscn"   },
         { "WorldMap",           "res://scenes/WorldMap.tscn"            },
         { "HomeInterior",       "res://scenes/HomeInterior.tscn"        },
