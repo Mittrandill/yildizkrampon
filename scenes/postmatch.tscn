@@ -1,0 +1,60 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/PostMatchScene.cs" id="1_mvfl4"]
+
+[node name="PostMatch" type="Node2D" unique_id=500737743]
+script = ExtResource("1_mvfl4")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1825536619]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.3, 0.65, 0.3, 1)
+
+[node name="Sky" type="ColorRect" parent="." unique_id=1850891444]
+offset_right = 1280.0
+offset_bottom = 260.0
+color = Color(0.6, 0.82, 0.98, 1)
+
+[node name="CoachSprite" type="ColorRect" parent="." unique_id=1163740601]
+offset_left = 300.0
+offset_top = 350.0
+offset_right = 355.0
+offset_bottom = 440.0
+color = Color(0.3, 0.3, 0.55, 1)
+
+[node name="CoachLabel" type="Label" parent="." unique_id=269299294]
+offset_left = 282.0
+offset_top = 328.0
+offset_right = 282.0
+offset_bottom = 328.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Kemal Hoca"
+
+[node name="PlayerSprite" type="ColorRect" parent="." unique_id=2133110465]
+offset_left = 750.0
+offset_top = 370.0
+offset_right = 790.0
+offset_bottom = 440.0
+color = Color(0.92, 0.72, 0.55, 1)
+
+[node name="Eren" type="ColorRect" parent="." unique_id=1904678532]
+offset_left = 880.0
+offset_top = 390.0
+offset_right = 916.0
+offset_bottom = 452.0
+color = Color(0.7, 0.5, 0.3, 1)
+
+[node name="Baran" type="ColorRect" parent="." unique_id=1352061314]
+offset_left = 950.0
+offset_top = 390.0
+offset_right = 986.0
+offset_bottom = 452.0
+color = Color(0.4, 0.35, 0.6, 1)
+
+[node name="Title" type="Label" parent="." unique_id=1404466079]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Öğleden Sonra — Saha Kenarı"

@@ -1,0 +1,91 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ShopScene.cs" id="1_lx5au"]
+
+[node name="Shop" type="Node2D" unique_id=1870275369]
+script = ExtResource("1_lx5au")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1236096554]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.88, 0.82, 0.7, 1)
+
+[node name="Counter" type="ColorRect" parent="." unique_id=912424431]
+offset_left = 340.0
+offset_top = 420.0
+offset_right = 940.0
+offset_bottom = 470.0
+color = Color(0.55, 0.4, 0.25, 1)
+
+[node name="Shelf0" type="ColorRect" parent="." unique_id=1518538686]
+offset_left = 880.0
+offset_top = 180.0
+offset_right = 1180.0
+offset_bottom = 194.0
+color = Color(0.65, 0.5, 0.32, 1)
+
+[node name="Shelf1" type="ColorRect" parent="." unique_id=848554049]
+offset_left = 880.0
+offset_top = 250.0
+offset_right = 1180.0
+offset_bottom = 264.0
+color = Color(0.65, 0.5, 0.32, 1)
+
+[node name="Shelf2" type="ColorRect" parent="." unique_id=191531380]
+offset_left = 880.0
+offset_top = 320.0
+offset_right = 1180.0
+offset_bottom = 334.0
+color = Color(0.65, 0.5, 0.32, 1)
+
+[node name="Shelf3" type="ColorRect" parent="." unique_id=1639697397]
+offset_left = 880.0
+offset_top = 390.0
+offset_right = 1180.0
+offset_bottom = 404.0
+color = Color(0.65, 0.5, 0.32, 1)
+
+[node name="RizaSprite" type="ColorRect" parent="." unique_id=1675826666]
+offset_left = 580.0
+offset_top = 310.0
+offset_right = 635.0
+offset_bottom = 400.0
+color = Color(0.6, 0.45, 0.3, 1)
+
+[node name="RizaLabel" type="Label" parent="." unique_id=958676054]
+offset_left = 570.0
+offset_top = 290.0
+offset_right = 570.0
+offset_bottom = 290.0
+theme_override_colors/font_color = Color(0.2, 0.1, 0.05, 1)
+text = "Rıza Abi"
+
+[node name="PlayerSprite" type="ColorRect" parent="." unique_id=1228979442]
+offset_left = 320.0
+offset_top = 330.0
+offset_right = 360.0
+offset_bottom = 400.0
+color = Color(0.92, 0.72, 0.55, 1)
+
+[node name="ProteinBar" type="ColorRect" parent="." unique_id=1943416482]
+offset_left = 900.0
+offset_top = 260.0
+offset_right = 960.0
+offset_bottom = 290.0
+color = Color(0.4, 0.8, 0.4, 1)
+
+[node name="ProteinBarLabel" type="Label" parent="." unique_id=1388576715]
+offset_left = 895.0
+offset_top = 245.0
+offset_right = 895.0
+offset_bottom = 245.0
+theme_override_colors/font_color = Color(0.1, 0.3, 0.1, 1)
+text = "Protein Bar"
+
+[node name="Title" type="Label" parent="." unique_id=571008300]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 20.0
+theme_override_colors/font_color = Color(0.2, 0.1, 0.05, 1)
+text = "Öğleden Sonra — Rıza'nın Bakkal"

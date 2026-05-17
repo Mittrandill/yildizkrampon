@@ -1,0 +1,8 @@
+.claude
+CLAUDE.md
+assets/
+screenshots/
+.godot/
+*.import
+bin/
+obj/

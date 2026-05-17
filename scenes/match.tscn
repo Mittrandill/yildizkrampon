@@ -1,0 +1,389 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/Football.cs" id="1_su80s"]
+[ext_resource type="Script" path="res://scripts/PlayerController.cs" id="2_dtxuj"]
+[ext_resource type="Script" path="res://scripts/FootballAI.cs" id="3_mv342"]
+[ext_resource type="Script" path="res://scripts/MatchManager.cs" id="4_6dstc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_et4mf"]
+size = Vector2(1080, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4bnf7"]
+size = Vector2(1080, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d32o3"]
+size = Vector2(12, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlbdm"]
+size = Vector2(12, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wji1o"]
+size = Vector2(12, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ti6c"]
+size = Vector2(12, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2re8"]
+size = Vector2(90, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7i3ei"]
+size = Vector2(90, 160)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yqc4m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jatkr"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ajgpd"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o6laj"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6dqyn"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seq6g"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gjxav"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rj88t"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5jhy2"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3wimu"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j4d7k"]
+radius = 16.0
+
+[node name="Match" type="Node2D" unique_id=1446594502]
+
+[node name="PitchBG" type="ColorRect" parent="." unique_id=1584329364]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.22, 0.58, 0.22, 1)
+
+[node name="CenterLine" type="ColorRect" parent="." unique_id=1819357443]
+offset_left = 638.0
+offset_top = 80.0
+offset_right = 642.0
+offset_bottom = 640.0
+color = Color(1, 1, 1, 0.5)
+
+[node name="CenterCircle" type="ColorRect" parent="." unique_id=325704367]
+offset_left = 560.0
+offset_top = 280.0
+offset_right = 720.0
+offset_bottom = 440.0
+color = Color(1, 1, 1, 0.25)
+
+[node name="NetLeft" type="ColorRect" parent="." unique_id=1060589714]
+offset_left = 20.0
+offset_top = 280.0
+offset_right = 100.0
+offset_bottom = 440.0
+color = Color(0.9, 0.9, 0.9, 0.4)
+
+[node name="NetRight" type="ColorRect" parent="." unique_id=1078261837]
+offset_left = 1180.0
+offset_top = 280.0
+offset_right = 1260.0
+offset_bottom = 440.0
+color = Color(0.9, 0.9, 0.9, 0.4)
+
+[node name="Walls" type="StaticBody2D" parent="." unique_id=1304697621]
+collision_layer = 16
+collision_mask = 0
+
+[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="Walls" unique_id=1989584085]
+position = Vector2(640, 80)
+shape = SubResource("RectangleShape2D_et4mf")
+
+[node name="@CollisionShape2D@3" type="CollisionShape2D" parent="Walls" unique_id=25698490]
+position = Vector2(640, 640)
+shape = SubResource("RectangleShape2D_4bnf7")
+
+[node name="@CollisionShape2D@4" type="CollisionShape2D" parent="Walls" unique_id=112278828]
+position = Vector2(100, 180)
+shape = SubResource("RectangleShape2D_d32o3")
+
+[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="Walls" unique_id=579020954]
+position = Vector2(100, 540)
+shape = SubResource("RectangleShape2D_mlbdm")
+
+[node name="@CollisionShape2D@6" type="CollisionShape2D" parent="Walls" unique_id=711446898]
+position = Vector2(1180, 180)
+shape = SubResource("RectangleShape2D_wji1o")
+
+[node name="@CollisionShape2D@7" type="CollisionShape2D" parent="Walls" unique_id=1374214307]
+position = Vector2(1180, 540)
+shape = SubResource("RectangleShape2D_6ti6c")
+
+[node name="GoalOpponent" type="Area2D" parent="." unique_id=1501823545]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 4
+
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="GoalOpponent" unique_id=1263284077]
+position = Vector2(55, 360)
+shape = SubResource("RectangleShape2D_h2re8")
+
+[node name="GoalPlayer" type="Area2D" parent="." unique_id=680002106]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 4
+
+[node name="@CollisionShape2D@9" type="CollisionShape2D" parent="GoalPlayer" unique_id=714528104]
+position = Vector2(1225, 360)
+shape = SubResource("RectangleShape2D_7i3ei")
+
+[node name="Ball" type="RigidBody2D" parent="." unique_id=647713188]
+position = Vector2(640, 360)
+collision_layer = 4
+collision_mask = 19
+gravity_scale = 0.0
+script = ExtResource("1_su80s")
+
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Ball" unique_id=407330241]
+shape = SubResource("CircleShape2D_yqc4m")
+
+[node name="BallSprite" type="ColorRect" parent="Ball" unique_id=627345942]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+
+[node name="Players" type="Node2D" parent="." unique_id=337903522]
+
+[node name="Player" type="CharacterBody2D" parent="Players" unique_id=1743594175]
+position = Vector2(350, 360)
+collision_mask = 19
+script = ExtResource("2_dtxuj")
+
+[node name="@CollisionShape2D@11" type="CollisionShape2D" parent="Players/Player" unique_id=1246557671]
+shape = SubResource("CircleShape2D_jatkr")
+
+[node name="Sprite" type="ColorRect" parent="Players/Player" unique_id=720293891]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(0.85, 0.15, 0.1, 1)
+
+[node name="Arrow" type="Label" parent="Players/Player" unique_id=1012799876]
+offset_left = -6.0
+offset_top = -28.0
+offset_right = -6.0
+offset_bottom = -28.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "★"
+
+[node name="RedNPC0" type="CharacterBody2D" parent="Players" unique_id=396825570]
+position = Vector2(280, 250)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Players/RedNPC0" unique_id=369634444]
+shape = SubResource("CircleShape2D_ajgpd")
+
+[node name="Sprite" type="ColorRect" parent="Players/RedNPC0" unique_id=1681621610]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.85, 0.15, 0.1, 1)
+
+[node name="RedNPC1" type="CharacterBody2D" parent="Players" unique_id=1772908321]
+position = Vector2(280, 470)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@13" type="CollisionShape2D" parent="Players/RedNPC1" unique_id=192462141]
+shape = SubResource("CircleShape2D_o6laj")
+
+[node name="Sprite" type="ColorRect" parent="Players/RedNPC1" unique_id=163603200]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.85, 0.15, 0.1, 1)
+
+[node name="RedNPC2" type="CharacterBody2D" parent="Players" unique_id=209927829]
+position = Vector2(450, 220)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Players/RedNPC2" unique_id=840279716]
+shape = SubResource("CircleShape2D_6dqyn")
+
+[node name="Sprite" type="ColorRect" parent="Players/RedNPC2" unique_id=1396213771]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.85, 0.15, 0.1, 1)
+
+[node name="RedNPC3" type="CharacterBody2D" parent="Players" unique_id=519803316]
+position = Vector2(450, 500)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@15" type="CollisionShape2D" parent="Players/RedNPC3" unique_id=894785604]
+shape = SubResource("CircleShape2D_seq6g")
+
+[node name="Sprite" type="ColorRect" parent="Players/RedNPC3" unique_id=1888639019]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.85, 0.15, 0.1, 1)
+
+[node name="BlueNPC0" type="CharacterBody2D" parent="Players" unique_id=1362262059]
+position = Vector2(930, 360)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Players/BlueNPC0" unique_id=1603461806]
+shape = SubResource("CircleShape2D_gjxav")
+
+[node name="Sprite" type="ColorRect" parent="Players/BlueNPC0" unique_id=1595595861]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.1, 0.3, 0.85, 1)
+
+[node name="BlueNPC1" type="CharacterBody2D" parent="Players" unique_id=2001858320]
+position = Vector2(1000, 250)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@17" type="CollisionShape2D" parent="Players/BlueNPC1" unique_id=1680391441]
+shape = SubResource("CircleShape2D_rj88t")
+
+[node name="Sprite" type="ColorRect" parent="Players/BlueNPC1" unique_id=405963042]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.1, 0.3, 0.85, 1)
+
+[node name="BlueNPC2" type="CharacterBody2D" parent="Players" unique_id=129498040]
+position = Vector2(1000, 470)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@18" type="CollisionShape2D" parent="Players/BlueNPC2" unique_id=287752132]
+shape = SubResource("CircleShape2D_5jhy2")
+
+[node name="Sprite" type="ColorRect" parent="Players/BlueNPC2" unique_id=101141584]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.1, 0.3, 0.85, 1)
+
+[node name="BlueNPC3" type="CharacterBody2D" parent="Players" unique_id=807407383]
+position = Vector2(830, 220)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@19" type="CollisionShape2D" parent="Players/BlueNPC3" unique_id=928520448]
+shape = SubResource("CircleShape2D_3wimu")
+
+[node name="Sprite" type="ColorRect" parent="Players/BlueNPC3" unique_id=1931626865]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.1, 0.3, 0.85, 1)
+
+[node name="BlueNPC4" type="CharacterBody2D" parent="Players" unique_id=437765934]
+position = Vector2(830, 500)
+script = ExtResource("3_mv342")
+
+[node name="@CollisionShape2D@20" type="CollisionShape2D" parent="Players/BlueNPC4" unique_id=1712309545]
+shape = SubResource("CircleShape2D_j4d7k")
+
+[node name="Sprite" type="ColorRect" parent="Players/BlueNPC4" unique_id=1281670970]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0.1, 0.3, 0.85, 1)
+
+[node name="MatchManager" type="Node" parent="." unique_id=1095590640]
+script = ExtResource("4_6dstc")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=423261656]
+layer = 10
+
+[node name="HUDControl" type="Control" parent="HUD" unique_id=1935211960]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScorePanel" type="Panel" parent="HUD/HUDControl" unique_id=603371685]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 10.0
+offset_right = 740.0
+offset_bottom = 60.0
+
+[node name="ScoreLabel" type="Label" parent="HUD/HUDControl/ScorePanel" unique_id=957597755]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 60.0
+offset_top = 12.0
+offset_right = 60.0
+offset_bottom = 12.0
+text = "0 - 0"
+
+[node name="TimerLabel" type="Label" parent="HUD/HUDControl/ScorePanel" unique_id=584494637]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 80.0
+offset_top = 30.0
+offset_right = 80.0
+offset_bottom = 30.0
+text = "02:00"
+
+[node name="StatsPanel" type="Panel" parent="HUD/HUDControl" unique_id=1924817108]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 170.0
+offset_bottom = 90.0
+
+[node name="EnergyHUD" type="Label" parent="HUD/HUDControl/StatsPanel" unique_id=1974423268]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.2, 0.9, 0.2, 1)
+text = "Enerji: 60"
+
+[node name="MoraleHUD" type="Label" parent="HUD/HUDControl/StatsPanel" unique_id=1465075610]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 30.0
+offset_right = 8.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0.9, 0.9, 0.2, 1)
+text = "Moral: 70"
+
+[node name="FatigueHUD" type="Label" parent="HUD/HUDControl/StatsPanel" unique_id=1923413579]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 52.0
+offset_right = 8.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(0.9, 0.3, 0.2, 1)
+text = "Yorgunluk: 20"
+
+[node name="PlayerIndicator" type="Label" parent="." unique_id=263115469]
+offset_left = 330.0
+offset_top = 340.0
+offset_right = 330.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "▲ SEN"
