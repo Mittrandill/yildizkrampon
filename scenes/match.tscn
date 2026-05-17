@@ -1,334 +1,828 @@
 [gd_scene format=3]
 
-[ext_resource type="Texture2D" path="res://assets/img/pitch_bg.png" id="1_4bnf7"]
-[ext_resource type="Script" path="res://scripts/Football.cs" id="2_d32o3"]
-[ext_resource type="Texture2D" path="res://assets/img/football.png" id="3_mlbdm"]
-[ext_resource type="Script" path="res://scripts/PlayerController.cs" id="4_wji1o"]
-[ext_resource type="Texture2D" path="res://assets/img/player_sprite.png" id="5_6ti6c"]
-[ext_resource type="Script" path="res://scripts/FootballAI.cs" id="6_h2re8"]
-[ext_resource type="Texture2D" path="res://assets/img/npc_red.png" id="7_7i3ei"]
-[ext_resource type="Texture2D" path="res://assets/img/npc_blue.png" id="8_yqc4m"]
-[ext_resource type="Script" path="res://scripts/MatchManager.cs" id="9_jatkr"]
+[ext_resource type="Script" path="res://scripts/MatchManager.cs" id="1_et4mf"]
+[ext_resource type="Script" path="res://scripts/GoalkeeperAI.cs" id="2_4bnf7"]
+[ext_resource type="Texture2D" path="res://assets/img/player_sprite.png" id="3_d32o3"]
+[ext_resource type="Script" path="res://scripts/FieldPlayer.cs" id="4_mlbdm"]
+[ext_resource type="Texture2D" path="res://assets/img/npc_blue.png" id="5_wji1o"]
+[ext_resource type="Script" path="res://scripts/Football.cs" id="6_6ti6c"]
+[ext_resource type="Texture2D" path="res://assets/img/football.png" id="7_h2re8"]
+[ext_resource type="Script" path="res://scripts/MiniMap.cs" id="8_7i3ei"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqc4m"]
+size = Vector2(2120, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jatkr"]
+size = Vector2(2120, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ajgpd"]
-size = Vector2(1080, 12)
+size = Vector2(30, 210)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6laj"]
-size = Vector2(1080, 12)
+size = Vector2(30, 210)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6dqyn"]
-size = Vector2(12, 200)
+size = Vector2(40, 279)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_seq6g"]
-size = Vector2(12, 200)
+size = Vector2(40, 279)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gjxav"]
-size = Vector2(12, 200)
+size = Vector2(40, 279)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rj88t"]
-size = Vector2(12, 200)
+size = Vector2(40, 279)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5jhy2"]
-size = Vector2(90, 160)
+size = Vector2(80, 210)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wimu"]
-size = Vector2(90, 160)
+size = Vector2(80, 210)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_j4d7k"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j4d7k"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_exhw8"]
-radius = 18.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_exhw8"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qmiif"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qmiif"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4645x"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4645x"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2om54"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2om54"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_slo71"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_slo71"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tcije"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tcije"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gctux"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gctux"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ta8u0"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ta8u0"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_405c2"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_405c2"]
+radius = 14.0
+height = 28.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_j1jnp"]
-radius = 16.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j1jnp"]
+radius = 14.0
+height = 28.0
 
-[node name="Match" type="Node2D" unique_id=1221672282]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_50ee1"]
+radius = 14.0
+height = 28.0
 
-[node name="PitchBG" type="Sprite2D" parent="." unique_id=42803019]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5e8yy"]
+radius = 14.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f2k0c"]
+radius = 14.0
+height = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6tvwi"]
+
+[node name="Match" type="Node2D" unique_id=119363801]
+script = ExtResource("1_et4mf")
+
+[node name="Grass" type="ColorRect" parent="." unique_id=2101209022]
+z_index = -5
+offset_right = 1920.0
+offset_bottom = 768.0
+color = Color(0.13, 0.52, 0.13, 1)
+
+[node name="S0" type="ColorRect" parent="." unique_id=1373600901]
+z_index = -4
+offset_right = 192.0
+offset_bottom = 768.0
+color = Color(0.11, 0.48, 0.11, 1)
+
+[node name="S2" type="ColorRect" parent="." unique_id=1603050666]
+z_index = -4
+offset_left = 384.0
+offset_right = 576.0
+offset_bottom = 768.0
+color = Color(0.11, 0.48, 0.11, 1)
+
+[node name="S4" type="ColorRect" parent="." unique_id=325713392]
+z_index = -4
+offset_left = 768.0
+offset_right = 960.0
+offset_bottom = 768.0
+color = Color(0.11, 0.48, 0.11, 1)
+
+[node name="S6" type="ColorRect" parent="." unique_id=492590046]
+z_index = -4
+offset_left = 1152.0
+offset_right = 1344.0
+offset_bottom = 768.0
+color = Color(0.11, 0.48, 0.11, 1)
+
+[node name="S8" type="ColorRect" parent="." unique_id=1398922888]
+z_index = -4
+offset_left = 1536.0
+offset_right = 1728.0
+offset_bottom = 768.0
+color = Color(0.11, 0.48, 0.11, 1)
+
+[node name="LT" type="Line2D" parent="." unique_id=76996806]
+z_index = -3
+points = PackedVector2Array(0, 0, 1920, 0)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="LB" type="Line2D" parent="." unique_id=484382422]
+z_index = -3
+points = PackedVector2Array(0, 768, 1920, 768)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="LL" type="Line2D" parent="." unique_id=1948054569]
+z_index = -3
+points = PackedVector2Array(0, 0, 0, 768)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="LR" type="Line2D" parent="." unique_id=220374597]
+z_index = -3
+points = PackedVector2Array(1920, 0, 1920, 768)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="LM" type="Line2D" parent="." unique_id=275188088]
+z_index = -3
+points = PackedVector2Array(960, 0, 960, 768)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="CC" type="Line2D" parent="." unique_id=1928886213]
+z_index = -3
+points = PackedVector2Array(1040, 384, 1038.4628, 399.60724, 1033.9104, 414.6147, 1026.5176, 428.44562, 1016.56854, 440.56854, 1004.4456, 450.51758, 990.6147, 457.91037, 975.60724, 462.46283, 960, 464, 944.39276, 462.46283, 929.3853, 457.91037, 915.5544, 450.51758, 903.43146, 440.56854, 893.4824, 428.44562, 886.0896, 414.61465, 881.5372, 399.60724, 880, 384, 881.5372, 368.39276, 886.08966, 353.3853, 893.4824, 339.55438, 903.43146, 327.43146, 915.5544, 317.48242, 929.3854, 310.08963, 944.39276, 305.53717, 960, 304, 975.60724, 305.53717, 990.6147, 310.08966, 1004.4456, 317.48245, 1016.56854, 327.4315, 1026.5176, 339.55438, 1033.9104, 353.3853, 1038.4628, 368.3928, 1040, 384)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="CD" type="ColorRect" parent="." unique_id=774081488]
 z_index = -1
-position = Vector2(640, 360)
-texture = ExtResource("1_4bnf7")
+offset_left = 956.0
+offset_top = 380.0
+offset_right = 964.0
+offset_bottom = 388.0
+color = Color(1, 1, 1, 0.85)
 
-[node name="Walls" type="StaticBody2D" parent="." unique_id=1080473039]
+[node name="PLT" type="Line2D" parent="." unique_id=1004228898]
+z_index = -3
+points = PackedVector2Array(0, 194, 240, 194)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PLB" type="Line2D" parent="." unique_id=2077754503]
+z_index = -3
+points = PackedVector2Array(0, 574, 240, 574)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PLL" type="Line2D" parent="." unique_id=818454754]
+z_index = -3
+points = PackedVector2Array(0, 194, 0, 574)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PLR" type="Line2D" parent="." unique_id=1602789606]
+z_index = -3
+points = PackedVector2Array(240, 194, 240, 574)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PRT" type="Line2D" parent="." unique_id=738398719]
+z_index = -3
+points = PackedVector2Array(1680, 194, 1920, 194)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PRB" type="Line2D" parent="." unique_id=54852917]
+z_index = -3
+points = PackedVector2Array(1680, 574, 1920, 574)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PRL" type="Line2D" parent="." unique_id=988249761]
+z_index = -3
+points = PackedVector2Array(1680, 194, 1680, 574)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PRR" type="Line2D" parent="." unique_id=903746602]
+z_index = -3
+points = PackedVector2Array(1920, 194, 1920, 574)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GALT" type="Line2D" parent="." unique_id=524150790]
+z_index = -3
+points = PackedVector2Array(0, 249, 60, 249)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GALB" type="Line2D" parent="." unique_id=254082439]
+z_index = -3
+points = PackedVector2Array(0, 519, 60, 519)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GALL" type="Line2D" parent="." unique_id=500898576]
+z_index = -3
+points = PackedVector2Array(0, 249, 0, 519)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GALR" type="Line2D" parent="." unique_id=1868018385]
+z_index = -3
+points = PackedVector2Array(60, 249, 60, 519)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GART" type="Line2D" parent="." unique_id=1019872471]
+z_index = -3
+points = PackedVector2Array(1860, 249, 1920, 249)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GARB" type="Line2D" parent="." unique_id=1639263362]
+z_index = -3
+points = PackedVector2Array(1860, 519, 1920, 519)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GARL" type="Line2D" parent="." unique_id=582894840]
+z_index = -3
+points = PackedVector2Array(1860, 249, 1860, 519)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="GARR" type="Line2D" parent="." unique_id=953476201]
+z_index = -3
+points = PackedVector2Array(1920, 249, 1920, 519)
+width = 3.0
+default_color = Color(1, 1, 1, 0.85)
+
+[node name="PDL" type="ColorRect" parent="." unique_id=101132624]
+z_index = -1
+offset_left = 176.0
+offset_top = 380.0
+offset_right = 184.0
+offset_bottom = 388.0
+color = Color(1, 1, 1, 0.85)
+
+[node name="PDR" type="ColorRect" parent="." unique_id=1457732065]
+z_index = -1
+offset_left = 1736.0
+offset_top = 380.0
+offset_right = 1744.0
+offset_bottom = 388.0
+color = Color(1, 1, 1, 0.85)
+
+[node name="GNL" type="ColorRect" parent="." unique_id=675841477]
+z_index = -2
+offset_left = -52.0
+offset_top = 279.0
+offset_bottom = 489.0
+color = Color(1, 1, 1, 0.1)
+
+[node name="GNR" type="ColorRect" parent="." unique_id=1750116262]
+z_index = -2
+offset_left = 1920.0
+offset_top = 279.0
+offset_right = 1972.0
+offset_bottom = 489.0
+color = Color(1, 1, 1, 0.1)
+
+[node name="PTL" type="ColorRect" parent="." unique_id=1666715026]
+z_index = -1
+offset_left = -4.0
+offset_top = 276.0
+offset_right = 4.0
+offset_bottom = 282.0
+
+[node name="PBL" type="ColorRect" parent="." unique_id=1277062353]
+z_index = -1
+offset_left = -4.0
+offset_top = 486.0
+offset_right = 4.0
+offset_bottom = 492.0
+
+[node name="PTR" type="ColorRect" parent="." unique_id=2081834105]
+z_index = -1
+offset_left = 1916.0
+offset_top = 276.0
+offset_right = 1924.0
+offset_bottom = 282.0
+
+[node name="PBR" type="ColorRect" parent="." unique_id=1208599904]
+z_index = -1
+offset_left = 1916.0
+offset_top = 486.0
+offset_right = 1924.0
+offset_bottom = 492.0
+
+[node name="Walls" type="Node2D" parent="." unique_id=551579535]
+
+[node name="WT" type="StaticBody2D" parent="Walls" unique_id=1953802846]
 collision_layer = 16
-collision_mask = 0
+collision_mask = 4
 
-[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="Walls" unique_id=465777215]
-position = Vector2(640, 80)
+[node name="@CollisionShape2D@2" type="CollisionShape2D" parent="Walls/WT" unique_id=289171862]
+position = Vector2(960, -15)
+shape = SubResource("RectangleShape2D_yqc4m")
+
+[node name="WB" type="StaticBody2D" parent="Walls" unique_id=1118889639]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@3" type="CollisionShape2D" parent="Walls/WB" unique_id=204014169]
+position = Vector2(960, 783)
+shape = SubResource("RectangleShape2D_jatkr")
+
+[node name="GBL" type="StaticBody2D" parent="Walls" unique_id=2073547261]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@4" type="CollisionShape2D" parent="Walls/GBL" unique_id=1783069184]
+position = Vector2(-65, 384)
 shape = SubResource("RectangleShape2D_ajgpd")
 
-[node name="@CollisionShape2D@3" type="CollisionShape2D" parent="Walls" unique_id=1105802562]
-position = Vector2(640, 640)
+[node name="GBR" type="StaticBody2D" parent="Walls" unique_id=1809381093]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="Walls/GBR" unique_id=39119828]
+position = Vector2(1985, 384)
 shape = SubResource("RectangleShape2D_o6laj")
 
-[node name="@CollisionShape2D@4" type="CollisionShape2D" parent="Walls" unique_id=1941474255]
-position = Vector2(100, 180)
+[node name="PL1" type="StaticBody2D" parent="Walls" unique_id=929008294]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@6" type="CollisionShape2D" parent="Walls/PL1" unique_id=1665375128]
+position = Vector2(-20, 139.5)
 shape = SubResource("RectangleShape2D_6dqyn")
 
-[node name="@CollisionShape2D@5" type="CollisionShape2D" parent="Walls" unique_id=1454615328]
-position = Vector2(100, 540)
+[node name="PL2" type="StaticBody2D" parent="Walls" unique_id=213355045]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@7" type="CollisionShape2D" parent="Walls/PL2" unique_id=390834602]
+position = Vector2(-20, 628.5)
 shape = SubResource("RectangleShape2D_seq6g")
 
-[node name="@CollisionShape2D@6" type="CollisionShape2D" parent="Walls" unique_id=926801573]
-position = Vector2(1180, 180)
+[node name="PR1" type="StaticBody2D" parent="Walls" unique_id=1611551013]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="Walls/PR1" unique_id=982928809]
+position = Vector2(1940, 139.5)
 shape = SubResource("RectangleShape2D_gjxav")
 
-[node name="@CollisionShape2D@7" type="CollisionShape2D" parent="Walls" unique_id=874707683]
-position = Vector2(1180, 540)
+[node name="PR2" type="StaticBody2D" parent="Walls" unique_id=894909607]
+collision_layer = 16
+collision_mask = 4
+
+[node name="@CollisionShape2D@9" type="CollisionShape2D" parent="Walls/PR2" unique_id=1638666942]
+position = Vector2(1940, 628.5)
 shape = SubResource("RectangleShape2D_rj88t")
 
-[node name="GoalOpponent" type="Area2D" parent="." unique_id=436772963]
+[node name="GoalLeft" type="Area2D" parent="." unique_id=1922732544]
 unique_name_in_owner = true
-collision_layer = 8
+position = Vector2(-40, 384)
+collision_layer = 0
 collision_mask = 4
 
-[node name="@CollisionShape2D@8" type="CollisionShape2D" parent="GoalOpponent" unique_id=2118721456]
-position = Vector2(55, 360)
+[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="GoalLeft" unique_id=1618361914]
 shape = SubResource("RectangleShape2D_5jhy2")
 
-[node name="GoalPlayer" type="Area2D" parent="." unique_id=641510110]
+[node name="GoalRight" type="Area2D" parent="." unique_id=373480967]
 unique_name_in_owner = true
-collision_layer = 8
+position = Vector2(1960, 384)
+collision_layer = 0
 collision_mask = 4
 
-[node name="@CollisionShape2D@9" type="CollisionShape2D" parent="GoalPlayer" unique_id=1611488284]
-position = Vector2(1225, 360)
+[node name="@CollisionShape2D@11" type="CollisionShape2D" parent="GoalRight" unique_id=78233980]
 shape = SubResource("RectangleShape2D_3wimu")
 
-[node name="Ball" type="RigidBody2D" parent="." unique_id=198578468]
-position = Vector2(640, 360)
+[node name="Players" type="Node2D" parent="." unique_id=2136038367]
+
+[node name="GKRed" type="CharacterBody2D" parent="Players" unique_id=758998114]
+position = Vector2(55, 384)
+script = ExtResource("2_4bnf7")
+metadata/team = "Red"
+metadata/start_pos = Vector2(55, 384)
+
+[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Players/GKRed" unique_id=1014377068]
+shape = SubResource("CapsuleShape2D_j4d7k")
+
+[node name="@Sprite2D@13" type="Sprite2D" parent="Players/GKRed" unique_id=1402314029]
+modulate = Color(1, 0.7, 0.2, 1)
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="DefRed1" type="CharacterBody2D" parent="Players" unique_id=262901380]
+position = Vector2(320, 230)
+script = ExtResource("4_mlbdm")
+metadata/team = "Red"
+metadata/role = "DEF"
+metadata/slot_index = 0
+metadata/slot_x = 0.18
+metadata/slot_y = 0.3
+metadata/start_pos = Vector2(320, 230)
+
+[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Players/DefRed1" unique_id=469015060]
+shape = SubResource("CapsuleShape2D_exhw8")
+
+[node name="@Sprite2D@15" type="Sprite2D" parent="Players/DefRed1" unique_id=1404680150]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="DefRed2" type="CharacterBody2D" parent="Players" unique_id=755438865]
+position = Vector2(320, 490)
+script = ExtResource("4_mlbdm")
+metadata/team = "Red"
+metadata/role = "DEF"
+metadata/slot_index = 1
+metadata/slot_x = 0.18
+metadata/slot_y = 0.64
+metadata/start_pos = Vector2(320, 490)
+
+[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Players/DefRed2" unique_id=102417149]
+shape = SubResource("CapsuleShape2D_qmiif")
+
+[node name="@Sprite2D@17" type="Sprite2D" parent="Players/DefRed2" unique_id=1078202126]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="MidRed1" type="CharacterBody2D" parent="Players" unique_id=1929921354]
+position = Vector2(630, 270)
+script = ExtResource("4_mlbdm")
+metadata/team = "Red"
+metadata/role = "MID"
+metadata/slot_index = 2
+metadata/slot_x = 0.38
+metadata/slot_y = 0.35
+metadata/start_pos = Vector2(630, 270)
+
+[node name="@CollisionShape2D@18" type="CollisionShape2D" parent="Players/MidRed1" unique_id=2083525493]
+shape = SubResource("CapsuleShape2D_4645x")
+
+[node name="@Sprite2D@19" type="Sprite2D" parent="Players/MidRed1" unique_id=1838803407]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="MidRed2" type="CharacterBody2D" parent="Players" unique_id=2088420996]
+position = Vector2(630, 450)
+script = ExtResource("4_mlbdm")
+metadata/team = "Red"
+metadata/role = "MID"
+metadata/slot_index = 3
+metadata/slot_x = 0.38
+metadata/slot_y = 0.59
+metadata/start_pos = Vector2(630, 450)
+
+[node name="@CollisionShape2D@20" type="CollisionShape2D" parent="Players/MidRed2" unique_id=646248060]
+shape = SubResource("CapsuleShape2D_2om54")
+
+[node name="@Sprite2D@21" type="Sprite2D" parent="Players/MidRed2" unique_id=308815585]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="FwdRed1" type="CharacterBody2D" parent="Players" unique_id=1073303518]
+position = Vector2(890, 290)
+script = ExtResource("4_mlbdm")
+metadata/team = "Red"
+metadata/role = "FWD"
+metadata/slot_index = 4
+metadata/slot_x = 0.56
+metadata/slot_y = 0.38
+metadata/start_pos = Vector2(890, 290)
+
+[node name="@CollisionShape2D@22" type="CollisionShape2D" parent="Players/FwdRed1" unique_id=1965723845]
+shape = SubResource("CapsuleShape2D_slo71")
+
+[node name="@Sprite2D@23" type="Sprite2D" parent="Players/FwdRed1" unique_id=114939483]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="FwdRed2" type="CharacterBody2D" parent="Players" unique_id=1627392049]
+position = Vector2(890, 440)
+script = ExtResource("4_mlbdm")
+metadata/team = "Red"
+metadata/role = "FWD"
+metadata/slot_index = 5
+metadata/slot_x = 0.56
+metadata/slot_y = 0.57
+metadata/start_pos = Vector2(890, 440)
+
+[node name="@CollisionShape2D@24" type="CollisionShape2D" parent="Players/FwdRed2" unique_id=1209106436]
+shape = SubResource("CapsuleShape2D_tcije")
+
+[node name="@Sprite2D@25" type="Sprite2D" parent="Players/FwdRed2" unique_id=1303299892]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("3_d32o3")
+
+[node name="GKBlue" type="CharacterBody2D" parent="Players" unique_id=1031339516]
+position = Vector2(1865, 384)
+script = ExtResource("2_4bnf7")
+metadata/team = "Blue"
+metadata/start_pos = Vector2(1865, 384)
+
+[node name="@CollisionShape2D@26" type="CollisionShape2D" parent="Players/GKBlue" unique_id=1700277873]
+shape = SubResource("CapsuleShape2D_gctux")
+
+[node name="@Sprite2D@27" type="Sprite2D" parent="Players/GKBlue" unique_id=1440077545]
+modulate = Color(0.7, 0.7, 1, 1)
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="DefBlu1" type="CharacterBody2D" parent="Players" unique_id=1844987958]
+position = Vector2(1600, 230)
+script = ExtResource("4_mlbdm")
+metadata/team = "Blue"
+metadata/role = "DEF"
+metadata/slot_index = 0
+metadata/slot_x = 0.18
+metadata/slot_y = 0.3
+metadata/start_pos = Vector2(1600, 230)
+
+[node name="@CollisionShape2D@28" type="CollisionShape2D" parent="Players/DefBlu1" unique_id=493168084]
+shape = SubResource("CapsuleShape2D_ta8u0")
+
+[node name="@Sprite2D@29" type="Sprite2D" parent="Players/DefBlu1" unique_id=728635901]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="DefBlu2" type="CharacterBody2D" parent="Players" unique_id=2088742606]
+position = Vector2(1600, 490)
+script = ExtResource("4_mlbdm")
+metadata/team = "Blue"
+metadata/role = "DEF"
+metadata/slot_index = 1
+metadata/slot_x = 0.18
+metadata/slot_y = 0.64
+metadata/start_pos = Vector2(1600, 490)
+
+[node name="@CollisionShape2D@30" type="CollisionShape2D" parent="Players/DefBlu2" unique_id=1383541632]
+shape = SubResource("CapsuleShape2D_405c2")
+
+[node name="@Sprite2D@31" type="Sprite2D" parent="Players/DefBlu2" unique_id=1313727231]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="MidBlu1" type="CharacterBody2D" parent="Players" unique_id=758107603]
+position = Vector2(1290, 270)
+script = ExtResource("4_mlbdm")
+metadata/team = "Blue"
+metadata/role = "MID"
+metadata/slot_index = 2
+metadata/slot_x = 0.38
+metadata/slot_y = 0.35
+metadata/start_pos = Vector2(1290, 270)
+
+[node name="@CollisionShape2D@32" type="CollisionShape2D" parent="Players/MidBlu1" unique_id=2114782492]
+shape = SubResource("CapsuleShape2D_j1jnp")
+
+[node name="@Sprite2D@33" type="Sprite2D" parent="Players/MidBlu1" unique_id=785875367]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="MidBlu2" type="CharacterBody2D" parent="Players" unique_id=1761340553]
+position = Vector2(1290, 450)
+script = ExtResource("4_mlbdm")
+metadata/team = "Blue"
+metadata/role = "MID"
+metadata/slot_index = 3
+metadata/slot_x = 0.38
+metadata/slot_y = 0.59
+metadata/start_pos = Vector2(1290, 450)
+
+[node name="@CollisionShape2D@34" type="CollisionShape2D" parent="Players/MidBlu2" unique_id=1544568012]
+shape = SubResource("CapsuleShape2D_50ee1")
+
+[node name="@Sprite2D@35" type="Sprite2D" parent="Players/MidBlu2" unique_id=108138675]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="FwdBlu1" type="CharacterBody2D" parent="Players" unique_id=875682082]
+position = Vector2(1030, 290)
+script = ExtResource("4_mlbdm")
+metadata/team = "Blue"
+metadata/role = "FWD"
+metadata/slot_index = 4
+metadata/slot_x = 0.56
+metadata/slot_y = 0.38
+metadata/start_pos = Vector2(1030, 290)
+
+[node name="@CollisionShape2D@36" type="CollisionShape2D" parent="Players/FwdBlu1" unique_id=336470636]
+shape = SubResource("CapsuleShape2D_5e8yy")
+
+[node name="@Sprite2D@37" type="Sprite2D" parent="Players/FwdBlu1" unique_id=1188755675]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="FwdBlu2" type="CharacterBody2D" parent="Players" unique_id=703771749]
+position = Vector2(1030, 440)
+script = ExtResource("4_mlbdm")
+metadata/team = "Blue"
+metadata/role = "FWD"
+metadata/slot_index = 5
+metadata/slot_x = 0.56
+metadata/slot_y = 0.57
+metadata/start_pos = Vector2(1030, 440)
+
+[node name="@CollisionShape2D@38" type="CollisionShape2D" parent="Players/FwdBlu2" unique_id=1544531281]
+shape = SubResource("CapsuleShape2D_f2k0c")
+
+[node name="@Sprite2D@39" type="Sprite2D" parent="Players/FwdBlu2" unique_id=1772496589]
+position = Vector2(0, -6)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("5_wji1o")
+
+[node name="Ball" type="RigidBody2D" parent="." unique_id=1888042438]
+position = Vector2(960, 384)
 collision_layer = 4
-collision_mask = 19
+collision_mask = 16
 gravity_scale = 0.0
-script = ExtResource("2_d32o3")
+linear_damp = 2.2
+angular_damp = 6.0
+script = ExtResource("6_6ti6c")
 
-[node name="@CollisionShape2D@10" type="CollisionShape2D" parent="Ball" unique_id=1669528766]
-shape = SubResource("CircleShape2D_j4d7k")
+[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="Ball" unique_id=1082006982]
+shape = SubResource("CircleShape2D_6tvwi")
 
-[node name="BallSprite" type="Sprite2D" parent="Ball" unique_id=494044296]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("3_mlbdm")
+[node name="@Sprite2D@41" type="Sprite2D" parent="Ball" unique_id=594133518]
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("7_h2re8")
 
-[node name="Players" type="Node2D" parent="." unique_id=1564558108]
+[node name="MatchCamera" type="Camera2D" parent="." unique_id=95426552]
+unique_name_in_owner = true
+position = Vector2(960, 384)
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 768
+position_smoothing_enabled = true
 
-[node name="Player" type="CharacterBody2D" parent="Players" unique_id=81000212]
-position = Vector2(350, 360)
-collision_mask = 19
-script = ExtResource("4_wji1o")
-
-[node name="@CollisionShape2D@11" type="CollisionShape2D" parent="Players/Player" unique_id=1670409423]
-shape = SubResource("CircleShape2D_exhw8")
-
-[node name="Sprite" type="Sprite2D" parent="Players/Player" unique_id=1753659315]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("5_6ti6c")
-
-[node name="Arrow" type="Label" parent="Players/Player" unique_id=98260737]
-offset_left = -6.0
-offset_top = -40.0
-offset_right = -6.0
-offset_bottom = -40.0
-theme_override_colors/font_color = Color(1, 1, 0, 1)
-text = "★"
-
-[node name="RedNPC0" type="CharacterBody2D" parent="Players" unique_id=650630721]
-position = Vector2(280, 250)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@12" type="CollisionShape2D" parent="Players/RedNPC0" unique_id=1975952783]
-shape = SubResource("CircleShape2D_qmiif")
-
-[node name="Sprite" type="Sprite2D" parent="Players/RedNPC0" unique_id=1669083705]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("7_7i3ei")
-
-[node name="RedNPC1" type="CharacterBody2D" parent="Players" unique_id=821378456]
-position = Vector2(280, 470)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@13" type="CollisionShape2D" parent="Players/RedNPC1" unique_id=1329970028]
-shape = SubResource("CircleShape2D_4645x")
-
-[node name="Sprite" type="Sprite2D" parent="Players/RedNPC1" unique_id=1773987328]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("7_7i3ei")
-
-[node name="RedNPC2" type="CharacterBody2D" parent="Players" unique_id=109300478]
-position = Vector2(450, 220)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@14" type="CollisionShape2D" parent="Players/RedNPC2" unique_id=157592740]
-shape = SubResource("CircleShape2D_2om54")
-
-[node name="Sprite" type="Sprite2D" parent="Players/RedNPC2" unique_id=1117747363]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("7_7i3ei")
-
-[node name="RedNPC3" type="CharacterBody2D" parent="Players" unique_id=1688495966]
-position = Vector2(450, 500)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@15" type="CollisionShape2D" parent="Players/RedNPC3" unique_id=1694991919]
-shape = SubResource("CircleShape2D_slo71")
-
-[node name="Sprite" type="Sprite2D" parent="Players/RedNPC3" unique_id=1595202862]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("7_7i3ei")
-
-[node name="BlueNPC0" type="CharacterBody2D" parent="Players" unique_id=13304277]
-position = Vector2(930, 360)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@16" type="CollisionShape2D" parent="Players/BlueNPC0" unique_id=1860810179]
-shape = SubResource("CircleShape2D_tcije")
-
-[node name="Sprite" type="Sprite2D" parent="Players/BlueNPC0" unique_id=1591282905]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("8_yqc4m")
-
-[node name="BlueNPC1" type="CharacterBody2D" parent="Players" unique_id=1206587520]
-position = Vector2(1000, 250)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@17" type="CollisionShape2D" parent="Players/BlueNPC1" unique_id=1547851809]
-shape = SubResource("CircleShape2D_gctux")
-
-[node name="Sprite" type="Sprite2D" parent="Players/BlueNPC1" unique_id=214311494]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("8_yqc4m")
-
-[node name="BlueNPC2" type="CharacterBody2D" parent="Players" unique_id=1774946033]
-position = Vector2(1000, 470)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@18" type="CollisionShape2D" parent="Players/BlueNPC2" unique_id=1505354409]
-shape = SubResource("CircleShape2D_ta8u0")
-
-[node name="Sprite" type="Sprite2D" parent="Players/BlueNPC2" unique_id=1437757776]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("8_yqc4m")
-
-[node name="BlueNPC3" type="CharacterBody2D" parent="Players" unique_id=1294852807]
-position = Vector2(830, 220)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@19" type="CollisionShape2D" parent="Players/BlueNPC3" unique_id=488626913]
-shape = SubResource("CircleShape2D_405c2")
-
-[node name="Sprite" type="Sprite2D" parent="Players/BlueNPC3" unique_id=1044604272]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("8_yqc4m")
-
-[node name="BlueNPC4" type="CharacterBody2D" parent="Players" unique_id=1123739969]
-position = Vector2(830, 500)
-script = ExtResource("6_h2re8")
-
-[node name="@CollisionShape2D@20" type="CollisionShape2D" parent="Players/BlueNPC4" unique_id=1766356334]
-shape = SubResource("CircleShape2D_j1jnp")
-
-[node name="Sprite" type="Sprite2D" parent="Players/BlueNPC4" unique_id=1885649869]
-scale = Vector2(0.18, 0.18)
-texture = ExtResource("8_yqc4m")
-
-[node name="MatchManager" type="Node" parent="." unique_id=2104541329]
-script = ExtResource("9_jatkr")
-
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1359571108]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1715731718]
 layer = 10
 
-[node name="HUDControl" type="Control" parent="HUD" unique_id=748851736]
-layout_mode = 3
-anchors_preset = 15
+[node name="@ColorRect@42" type="ColorRect" parent="HUD" unique_id=1030840440]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1280.0
+offset_bottom = 44.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="ScoreLabel" type="Label" parent="HUD" unique_id=1746686878]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 4.0
+offset_bottom = 4.0
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "0  -  0"
+horizontal_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="HUD" unique_id=120401116]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -110.0
+offset_top = 8.0
+offset_right = -110.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+text = "00:00"
+
+[node name="StateLabel" type="Label" parent="HUD" unique_id=1698131841]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -40.0
+offset_right = -200.0
+offset_bottom = -40.0
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+horizontal_alignment = 1
+
+[node name="@ColorRect@43" type="ColorRect" parent="HUD" unique_id=1715848734]
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -52.0
+offset_right = 1280.0
+color = Color(0, 0, 0, 0.55)
 
-[node name="ScorePanel" type="Panel" parent="HUD/HUDControl" unique_id=574201385]
-layout_mode = 0
-offset_left = 540.0
-offset_top = 10.0
-offset_right = 740.0
-offset_bottom = 60.0
-
-[node name="ScoreLabel" type="Label" parent="HUD/HUDControl/ScorePanel" unique_id=852768482]
+[node name="StaminaBar" type="ProgressBar" parent="HUD" unique_id=1044040937]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 60.0
-offset_top = 12.0
-offset_right = 60.0
-offset_bottom = 12.0
-text = "0 - 0"
-
-[node name="TimerLabel" type="Label" parent="HUD/HUDControl/ScorePanel" unique_id=144729056]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 80.0
-offset_top = 30.0
-offset_right = 80.0
-offset_bottom = 30.0
-text = "02:00"
-
-[node name="StatsPanel" type="Panel" parent="HUD/HUDControl" unique_id=1543133402]
-layout_mode = 0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 10.0
-offset_top = 10.0
-offset_right = 170.0
-offset_bottom = 90.0
+offset_top = -34.0
+offset_right = 210.0
+offset_bottom = -7.0
+value = 100.0
 
-[node name="EnergyHUD" type="Label" parent="HUD/HUDControl/StatsPanel" unique_id=616529985]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 8.0
-offset_bottom = 8.0
-theme_override_colors/font_color = Color(0.2, 0.9, 0.2, 1)
-text = "Enerji: 60"
+[node name="@Label@44" type="Label" parent="HUD" unique_id=596160303]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -50.0
+offset_right = 10.0
+offset_bottom = -50.0
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+text = "Kondisyon"
 
-[node name="MoraleHUD" type="Label" parent="HUD/HUDControl/StatsPanel" unique_id=1068532432]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 30.0
-offset_right = 8.0
-offset_bottom = 30.0
-theme_override_colors/font_color = Color(0.9, 0.9, 0.2, 1)
-text = "Moral: 70"
+[node name="PowerBar" type="ProgressBar" parent="HUD" unique_id=657746604]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 490.0
+offset_top = -34.0
+offset_right = 790.0
+offset_bottom = -7.0
 
-[node name="FatigueHUD" type="Label" parent="HUD/HUDControl/StatsPanel" unique_id=626131013]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 52.0
-offset_right = 8.0
-offset_bottom = 52.0
-theme_override_colors/font_color = Color(0.9, 0.3, 0.2, 1)
-text = "Yorgunluk: 20"
+[node name="@Label@45" type="Label" parent="HUD" unique_id=783949951]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+offset_bottom = -50.0
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+text = "Sut Gucu"
+horizontal_alignment = 1
 
-[node name="PlayerIndicator" type="Label" parent="." unique_id=1175971101]
-offset_left = 330.0
-offset_top = 340.0
-offset_right = 330.0
-offset_bottom = 340.0
-theme_override_colors/font_color = Color(1, 1, 0, 1)
-text = "▲ SEN"
+[node name="@Label@46" type="Label" parent="HUD" unique_id=492305072]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 220.0
+offset_top = -50.0
+offset_right = 220.0
+offset_bottom = -50.0
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+text = "WASD:Hareket  SHIFT:Sprint  F:Pas  SPACE(tut):Sut  E:Faul"
+
+[node name="MiniMap" type="Control" parent="HUD" unique_id=902477195]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -252.0
+offset_top = -104.0
+offset_right = -12.0
+offset_bottom = -8.0
+script = ExtResource("8_7i3ei")
