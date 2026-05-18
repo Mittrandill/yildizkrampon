@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/WorldScene.cs" id="1_kqs1s"]
+
+[node name="World" type="Node2D" unique_id=323515517]
+script = ExtResource("1_kqs1s")

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -o pipefail
+NOISE="leaked RID|Leaked instance|ObjectDB instances|RID allocations"
+cmd=(godot --path .)
+"${cmd[@]}" "$@" 2>&1 | { grep -v "$NOISE" || true; }

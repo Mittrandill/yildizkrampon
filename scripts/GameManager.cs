@@ -1,57 +1,31 @@
 using Godot;
 
-/// res://scripts/GameManager.cs
-/// Autoload singleton — persists all player stats across scene transitions.
+/// Global oyun durumu — enerji, para, gün, istatistikler.
 public partial class GameManager : Node
 {
     public static GameManager Instance { get; private set; } = null!;
 
-    // Core stats (0-100)
-    public int Energy { get; set; } = 60;
-    public int Morale { get; set; } = 70;
-    public int Fatigue { get; set; } = 20;
+    // Oyuncu stats
+    public int   Day     { get; set; } = 1;
+    public float Energy  { get; set; } = 100f;
+    public int   Money   { get; set; } = 0;
+    public int   Speed   { get; set; } = 30;
+    public int   Stamina { get; set; } = 30;
+    public int   Skill   { get; set; } = 30;
+    public int   Overall => (Speed + Stamina + Skill) / 3;
 
-    // Football attributes
-    public int ShotPower  { get; set; } = 38;
-    public int Sprint     { get; set; } = 36;
-    public int Technique  { get; set; } = 35;
-    public int Stamina    { get; set; } = 35;
-    public int FootballIQ { get; set; } = 30;
-    public int Overall    { get; set; } = 38;
-
-    // Day state
-    public int DayStep { get; set; } = 0;  // 0=morning, 1=afternoon, 2=evening
-    public bool BoughtProteinBar { get; set; } = false;
-    public bool WatchedByCoach { get; set; } = false;
-    public int MatchGoalsScored { get; set; } = 0;
-
-    // XP events for end-of-day display
-    public System.Collections.Generic.List<string> DayEvents { get; } = new();
+    // Oyuncu adı
+    public string PlayerName { get; set; } = "Kahraman";
 
     public override void _Ready()
     {
         Instance = this;
+        ProcessMode = ProcessModeEnum.Always;
     }
 
-    public void ClampStats()
-    {
-        Energy = Mathf.Clamp(Energy, 0, 100);
-        Morale = Mathf.Clamp(Morale, 0, 100);
-        Fatigue = Mathf.Clamp(Fatigue, 0, 100);
-        ShotPower  = Mathf.Clamp(ShotPower,  0, 99);
-        Sprint     = Mathf.Clamp(Sprint,     0, 99);
-        Technique  = Mathf.Clamp(Technique,  0, 99);
-        Stamina    = Mathf.Clamp(Stamina,    0, 99);
-        FootballIQ = Mathf.Clamp(FootballIQ, 0, 99);
-    }
+    public void SpendEnergy(float amount)
+        => Energy = Mathf.Max(0f, Energy - amount);
 
-    public void RecalcOverall()
-    {
-        Overall = (ShotPower + Sprint + Technique + Stamina + FootballIQ) / 5;
-    }
-
-    public void AddEvent(string description)
-    {
-        DayEvents.Add(description);
-    }
+    public void EarnMoney(int amount)
+        => Money += amount;
 }

@@ -1,143 +1,92 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
-/// res://scripts/DialogueManager.cs
-/// Autoload singleton — displays dialogue boxes and choice menus over any scene.
-public partial class DialogueManager : Node
+/// Basit diyalog sistemi — metni kutu içinde göster, callback ile kapat.
+public partial class DialogueManager : CanvasLayer
 {
-    [Signal] public delegate void DialogueFinishedEventHandler();
-    [Signal] public delegate void ChoiceSelectedEventHandler(int index);
-
     public static DialogueManager Instance { get; private set; } = null!;
 
-    private Panel _panel = null!;
-    private Label _speakerLabel = null!;
-    private Label _textLabel = null!;
-    private VBoxContainer _choicesContainer = null!;
-    private CanvasLayer _canvas = null!;
-
-    private Queue<(string speaker, string text)> _queue = new();
-    private Action? _onFinished;
-    private bool _waitingForInput = false;
+    private Panel?   _box;
+    private Label?   _nameLabel;
+    private Label?   _bodyLabel;
+    private Button?  _continueBtn;
+    private Action?  _onClose;
 
     public override void _Ready()
     {
         Instance = this;
-        _BuildUI();
+        Layer = 100;
+        _Build();
+        _box!.Visible = false;
     }
 
-    private void _BuildUI()
+    private void _Build()
     {
-        _canvas = new CanvasLayer();
-        _canvas.Layer = 50;
-        AddChild(_canvas);
-
-        _panel = new Panel();
-        _panel.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.BottomWide);
-        _panel.OffsetTop = -180;
-        _panel.OffsetLeft = 20;
-        _panel.OffsetRight = -20;
-        _panel.OffsetBottom = -20;
-        _panel.Visible = false;
-        _canvas.AddChild(_panel);
-
-        var vbox = new VBoxContainer();
-        vbox.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-        vbox.AddThemeConstantOverride("margin_left", 16);
-        vbox.AddThemeConstantOverride("margin_right", 16);
-        vbox.AddThemeConstantOverride("margin_top", 12);
-        vbox.AddThemeConstantOverride("margin_bottom", 12);
-        _panel.AddChild(vbox);
-
-        _speakerLabel = new Label();
-        _speakerLabel.AddThemeColorOverride("font_color", new Color(1f, 0.85f, 0.3f));
-        vbox.AddChild(_speakerLabel);
-
-        _textLabel = new Label();
-        _textLabel.AutowrapMode = TextServer.AutowrapMode.Word;
-        vbox.AddChild(_textLabel);
-
-        _choicesContainer = new VBoxContainer();
-        vbox.AddChild(_choicesContainer);
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (_waitingForInput && _choicesContainer.GetChildCount() == 0
-            && @event.IsActionPressed("action"))
+        _box = new Panel();
+        _box.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
+        _box.Position = new Vector2(0, -180);
+        _box.Size = new Vector2(1280, 180);
+        var sf = new StyleBoxFlat
         {
-            _Advance();
-        }
-    }
+            BgColor = new Color(0.08f, 0.06f, 0.04f, 0.94f),
+            CornerRadiusTopLeft = 10, CornerRadiusTopRight = 10,
+            BorderColor = new Color(0.75f, 0.60f, 0.30f, 0.90f)
+        };
+        sf.BorderWidthTop = sf.BorderWidthLeft = sf.BorderWidthRight = sf.BorderWidthBottom = 2;
+        _box.AddThemeStyleboxOverride("panel", sf);
+        AddChild(_box);
 
-    public void Show(string speaker, string text, Action? onFinished = null)
-    {
-        _queue.Clear();
-        _queue.Enqueue((speaker, text));
-        _onFinished = onFinished;
-        _ShowNext();
-    }
-
-    public void ShowSequence(List<(string speaker, string text)> lines, Action? onFinished = null)
-    {
-        _queue.Clear();
-        foreach (var line in lines) _queue.Enqueue(line);
-        _onFinished = onFinished;
-        _ShowNext();
-    }
-
-    public void ShowChoice(string speaker, string text, List<string> options, Action<int> onChoice)
-    {
-        _panel.Visible = true;
-        _speakerLabel.Text = speaker;
-        _textLabel.Text = text;
-        _waitingForInput = false;
-
-        foreach (var child in _choicesContainer.GetChildren())
-            child.QueueFree();
-
-        for (int i = 0; i < options.Count; i++)
+        _nameLabel = new Label
         {
-            var btn = new Button();
-            btn.Text = options[i];
-            int captured = i;
-            btn.Pressed += () =>
-            {
-                foreach (var c in _choicesContainer.GetChildren()) c.QueueFree();
-                _panel.Visible = false;
-                onChoice(captured);
-            };
-            _choicesContainer.AddChild(btn);
-        }
-    }
+            Text = "", Position = new Vector2(28, 14)
+        };
+        _nameLabel.AddThemeFontSizeOverride("font_size", 20);
+        _nameLabel.AddThemeColorOverride("font_color", new Color(1f, 0.85f, 0.20f));
+        _box.AddChild(_nameLabel);
 
-    public void Hide()
-    {
-        _panel.Visible = false;
-        _queue.Clear();
-        _waitingForInput = false;
-    }
-
-    private void _ShowNext()
-    {
-        if (_queue.Count == 0)
+        _bodyLabel = new Label
         {
-            _panel.Visible = false;
-            _waitingForInput = false;
-            _onFinished?.Invoke();
-            return;
-        }
-        var (speaker, text) = _queue.Dequeue();
-        _panel.Visible = true;
-        _speakerLabel.Text = speaker;
-        _textLabel.Text = text;
-        _waitingForInput = true;
+            Text = "", Position = new Vector2(28, 46),
+            AutowrapMode = TextServer.AutowrapMode.Word,
+            Size = new Vector2(1180, 100)
+        };
+        _bodyLabel.AddThemeFontSizeOverride("font_size", 17);
+        _bodyLabel.AddThemeColorOverride("font_color", Colors.White);
+        _box.AddChild(_bodyLabel);
+
+        _continueBtn = new Button
+        {
+            Text = "Devam (E)",
+            Position = new Vector2(1130, 140),
+            Size = new Vector2(120, 30)
+        };
+        _continueBtn.AddThemeFontSizeOverride("font_size", 13);
+        _continueBtn.Pressed += _Close;
+        _box.AddChild(_continueBtn);
     }
 
-    private void _Advance()
+    public void Show(string speaker, string body, Action? onClose = null)
     {
-        _waitingForInput = false;
-        _ShowNext();
+        _nameLabel!.Text = speaker;
+        _bodyLabel!.Text = body;
+        _onClose = onClose;
+        _box!.Visible = true;
+        GetTree().Paused = true;
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (_box?.Visible != true) return;
+        if (@event is InputEventKey k && k.Pressed && !k.Echo
+            && (k.Keycode == Key.E || k.Keycode == Key.Enter || k.Keycode == Key.Space))
+            _Close();
+    }
+
+    private void _Close()
+    {
+        _box!.Visible = false;
+        GetTree().Paused = false;
+        _onClose?.Invoke();
+        _onClose = null;
     }
 }
