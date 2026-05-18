@@ -59,6 +59,11 @@ public partial class WorldMapScene : Node2D
     {
         if (@event.IsActionPressed("interact") && _nearbyLocation != "")
             WorldManager.Instance.GoTo(_nearbyLocation);
+
+        // M = hızlı maç kısayolu
+        if (@event is InputEventKey key && key.Pressed && !key.Echo
+            && key.Keycode == Key.M)
+            WorldManager.Instance.GoTo("Match");
     }
 
     private void _OnNearLocation(string locKey, string displayName)

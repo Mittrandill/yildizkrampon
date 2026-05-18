@@ -75,10 +75,26 @@ public partial class FieldPlayer : CharacterBody2D
         _aiTarget = _GetFormationPos(new Vector2(PITCH_W / 2f, PITCH_H / 2f));
     }
 
+    public override void _Draw()
+    {
+        bool human = MatchManager.Instance?.IsHumanControlled(this) ?? false;
+        if (!human) return;
+
+        // Yeşil aşağı ok — oyuncunun başı üzerinde
+        DrawPolygon(
+            new Vector2[] { new Vector2(0, -30), new Vector2(-9, -46), new Vector2(9, -46) },
+            new Color[] { new Color(0.15f, 1f, 0.3f), new Color(0.15f, 1f, 0.3f), new Color(0.15f, 1f, 0.3f) }
+        );
+        // İnce beyaz çerçeve çizgisi
+        DrawLine(new Vector2(-9, -46), new Vector2(9, -46), new Color(1,1,1,0.8f), 1.5f);
+    }
+
     public override void _PhysicsProcess(double delta)
     {
         if (_kickCooldown > 0f) _kickCooldown -= (float)delta;
         _aiDecTimer = Mathf.Max(0f, _aiDecTimer - (float)delta);
+
+        QueueRedraw(); // gösterge ok her frame güncellenir
 
         var ball = Football.Instance;
 
@@ -511,12 +527,13 @@ public partial class FieldPlayer : CharacterBody2D
 
     private float _AISpeedFactor()
     {
-        // Zor = player Overall yüksek → rakip YZ de güçlü
-        return Mathf.Lerp(0.72f, 1.08f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
+        // Kolay başlangıç (Overall 38) → AI %70 hız; Overall 99 → %100 hız
+        return Mathf.Lerp(0.62f, 1.0f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
     }
 
     private float _AIDecisionInterval()
     {
-        return Mathf.Lerp(0.55f, 0.18f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
+        // Daha yavaş kararlar başlangıçta (0.7s → 0.25s)
+        return Mathf.Lerp(0.70f, 0.25f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
     }
 }

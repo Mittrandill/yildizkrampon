@@ -20,16 +20,25 @@ public partial class TitleScreenScene : Control
         tw.TweenProperty(this, "modulate:a", 1f, 0.6f);
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        // M tuşu = hızlı maç testi (geliştirici kısayolu)
+        if (@event is InputEventKey key && key.Pressed && !key.Echo
+            && key.Keycode == Key.M)
+        {
+            PlayerData.Instance.Reset();
+            WorldManager.Instance.GoTo("Match");
+        }
+    }
+
     private void _OnNewGame()
     {
-        // Eski kaydı sıfırla, karakter oluşturmaya git
         PlayerData.Instance.Reset();
         WorldManager.Instance.GoTo("CharacterCreation");
     }
 
     private void _OnLoadGame()
     {
-        // Kayıtlı oyun varsa doğrudan WorldMap'e
         WorldManager.Instance.GoTo("WorldMap");
     }
 

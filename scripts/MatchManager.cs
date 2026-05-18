@@ -85,6 +85,14 @@ public partial class MatchManager : Node2D
         _camera      = GetNodeOrNull<Camera2D>("%MatchCamera");
         _miniMap     = GetNodeOrNull<MiniMap>("%MiniMap");
 
+        // Maç başlarken enerjiyi taze tut
+        if (GameManager.Instance.Energy < 80)
+            GameManager.Instance.Energy = 80;
+
+        // Kamerayı saha ortasına başlat
+        if (_camera != null)
+            _camera.Position = CENTER;
+
         _UpdateScoreUI();
         _SetState(MatchState.KickOff);
 
@@ -382,9 +390,22 @@ public partial class MatchManager : Node2D
 
     private void _UpdateCamera(Football? ball)
     {
-        if (_camera == null || ball == null) return;
-        // Kamera topu düzgünce takip etsin
-        _camera.Position = _camera.Position.Lerp(ball.GlobalPosition, 0.08f);
+        if (_camera == null) return;
+
+        Vector2 focus;
+        if (ball != null && _humanPlayer != null)
+        {
+            // Topu ve oyuncuyu çerçevele — top ağırlıklı ama oyuncu ekrandan çıkmasın
+            focus = _humanPlayer.GlobalPosition * 0.45f + ball.GlobalPosition * 0.55f;
+        }
+        else if (_humanPlayer != null)
+            focus = _humanPlayer.GlobalPosition;
+        else if (ball != null)
+            focus = ball.GlobalPosition;
+        else
+            return;
+
+        _camera.Position = _camera.Position.Lerp(focus, 0.11f);
     }
 
     private void _UpdateScoreUI()
@@ -397,7 +418,7 @@ public partial class MatchManager : Node2D
     {
         _state = s;
         if (s == MatchState.KickOff && _stateLabel != null)
-            _stateLabel.Text = "Başlamak için E'ye bas";
+            _stateLabel.Text = "▶  BAŞLAMAK İÇİN  SPACE  VEYA  E  'YE  BAS  ◀";
         else if (s == MatchState.Playing && _stateLabel != null)
             _stateLabel.Text = "";
     }
