@@ -1,80 +1,88 @@
 using Godot;
 
 /// res://scripts/GoalkeeperAI.cs
-/// Kaleci YZ — açı bisektörü pozisyonlama, şut dalışı, top dağıtımı.
+/// Kaleci YZ — açı bisektörü konumlanma, dalış, dağıtım.
 public partial class GoalkeeperAI : CharacterBody2D
 {
     public enum Team { Red, Blue }
     [Export] public Team GKTeam = Team.Red;
 
-    // Kalecinin gol direği önündeki x pozisyonu
     private float _goalX;
-    private float _goalCenterY = (FieldPlayer.GOAL_TOP + FieldPlayer.GOAL_BOT) / 2f;
-
-    // Dalış durumu
-    private bool  _isDiving   = false;
-    private Vector2 _diveTarget = Vector2.Zero;
-    private float _diveTimer  = 0f;
-    private float _cooldown   = 0f;
-
-    // Normal pozisyon limitleri
+    private float _goalCY = (FieldPlayer.GOAL_TOP + FieldPlayer.GOAL_BOT) / 2f;
     private float _minX, _maxX;
-    private const float GK_SPEED  = 145f;
-    private const float DIVE_SPEED = 400f;
+
+    private bool    _isDiving  = false;
+    private Vector2 _diveTo    = Vector2.Zero;
+    private float   _diveTimer = 0f;
+    private float   _cooldown  = 0f;
+
+    private const float GK_SPEED  = 148f;
+    private const float DIVE_SPEED = 420f;
     private const float GK_DEPTH  = 55f;
 
     private AnimatedSprite2D? _anim;
+    private Vector2 _facingDir = Vector2.Right;
+    private const float SPRITE_OFFSET = -Mathf.Pi / 2f;
 
     public override void _Ready()
     {
-        if (HasMeta("team")) GKTeam = ((string)GetMeta("team")) == "Red" ? Team.Red : Team.Blue;
+        if (HasMeta("team")) GKTeam = (string)GetMeta("team") == "Red" ? Team.Red : Team.Blue;
 
         if (GKTeam == Team.Red)
         {
-            _goalX = GK_DEPTH;
-            _minX  = 15f;
-            _maxX  = GK_DEPTH + 40f;
+            _goalX = GK_DEPTH; _minX = 15f; _maxX = GK_DEPTH + 40f;
+            _facingDir = Vector2.Right;
         }
         else
         {
             _goalX = FieldPlayer.PITCH_W - GK_DEPTH;
             _minX  = FieldPlayer.PITCH_W - GK_DEPTH - 40f;
             _maxX  = FieldPlayer.PITCH_W - 15f;
+            _facingDir = Vector2.Left;
         }
 
         CollisionLayer = GKTeam == Team.Red ? 1u : 2u;
         CollisionMask  = 1 | 2 | 16;
         AddToGroup(GKTeam == Team.Red ? "team_red" : "team_blue");
         AddToGroup("goalkeepers");
-        _SetupGKAnimation();
+        _SetupSprite();
     }
 
-    private void _SetupGKAnimation()
+    private void _SetupSprite()
     {
         var old = GetNodeOrNull<Sprite2D>("Sprite2D");
-        var sc  = old?.Scale    ?? new Vector2(0.16f, 0.16f);
-        var pos = old?.Position ?? new Vector2(0, -6);
+        var sc  = old?.Scale ?? new Vector2(0.30f, 0.30f);
         old?.QueueFree();
 
-        string prefix   = GKTeam == Team.Red ? "player" : "blue";
-        string idlePath = GKTeam == Team.Red ? "res://assets/img/player_sprite.png" : "res://assets/img/npc_blue.png";
-        string walkPath = $"res://assets/img/anim/{prefix}_walk1.png";
-
-        var idleTex = GD.Load<Texture2D>(idlePath);
-        var walkTex = ResourceLoader.Exists(walkPath) ? GD.Load<Texture2D>(walkPath) : idleTex;
+        string idlePath = GKTeam == Team.Red
+            ? "res://assets/img/player_sprite.png" : "res://assets/img/npc_blue.png";
+        var idle = GD.Load<Texture2D>(idlePath);
+        string prefix = GKTeam == Team.Red ? "player" : "blue";
+        string w1P = $"res://assets/img/anim/{prefix}_walk1.png";
+        var walk1 = ResourceLoader.Exists(w1P) ? GD.Load<Texture2D>(w1P) : idle;
 
         var frames = new SpriteFrames();
-        frames.AddAnimation("idle");      frames.SetAnimationSpeed("idle", 4f);  frames.SetAnimationLoop("idle", true);  frames.AddFrame("idle", idleTex);
-        frames.AddAnimation("walk");      frames.SetAnimationSpeed("walk", 7f);  frames.SetAnimationLoop("walk", true);  frames.AddFrame("walk", idleTex); frames.AddFrame("walk", walkTex);
-        frames.AddAnimation("dive");      frames.SetAnimationSpeed("dive", 6f);  frames.SetAnimationLoop("dive", true);  frames.AddFrame("dive", walkTex);
+        _A(frames, "idle", 4f,  true,  idle);
+        _A(frames, "walk", 7f,  true,  idle, walk1);
+        _A(frames, "dive", 6f,  false, walk1);
 
-        _anim = new AnimatedSprite2D();
-        _anim.Name = "AnimSprite"; _anim.SpriteFrames = frames;
-        _anim.Scale = sc; _anim.Position = pos;
-        // Kaleci renk tonu (mevcut BuildMatch modülasyonunu koru)
-        _anim.Modulate = GKTeam == Team.Red ? new Color(1f, 0.7f, 0.2f) : new Color(0.7f, 0.7f, 1f);
+        _anim = new AnimatedSprite2D
+        {
+            Name         = "AnimSprite",
+            SpriteFrames = frames,
+            Scale        = sc,
+            Position     = new Vector2(0, -8),
+            Modulate     = GKTeam == Team.Red ? new Color(1f, 0.7f, 0.2f) : new Color(0.7f, 0.7f, 1f),
+            Rotation     = _facingDir.Angle() + SPRITE_OFFSET
+        };
         AddChild(_anim);
         _anim.Play("idle");
+    }
+
+    private static void _A(SpriteFrames f, string n, float fps, bool loop, params Texture2D[] tx)
+    {
+        f.AddAnimation(n); f.SetAnimationSpeed(n, fps); f.SetAnimationLoop(n, loop);
+        foreach (var t in tx) f.AddFrame(n, t);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -84,179 +92,131 @@ public partial class GoalkeeperAI : CharacterBody2D
         var ball = Football.Instance;
         if (ball == null) { MoveAndSlide(); return; }
 
-        if (_isDiving)
+        if (_isDiving) { _Dive(delta, ball); return; }
+
+        // Yakındaki topu kap
+        if (_cooldown <= 0f && !ball.IsControlled
+            && GlobalPosition.DistanceTo(ball.GlobalPosition) < 38f)
         {
-            _ProcessDive(delta);
-            return;
+            _Distribute(ball); return;
         }
 
-        // Topu kalecinin yakınında kap
-        if (_cooldown <= 0f && !ball.IsControlled)
-        {
-            float dist = GlobalPosition.DistanceTo(ball.GlobalPosition);
-            if (dist < 36f)
-            {
-                // Topu al, dağıt
-                _Distribute(ball);
-                return;
-            }
-        }
-
-        // Şutu tespit et → dalış
+        // Dalış tetikle
         if (!ball.IsControlled && _ShouldDive(ball))
         {
-            _StartDive(ball);
-            return;
+            _StartDive(ball); return;
         }
 
-        // Normal pozisyonlama
-        Vector2 target = _GetPositioningTarget(ball);
-        Vector2 dir    = (target - GlobalPosition);
-        float   dist2  = dir.Length();
-        if (dist2 > 4f)
+        // Normal konumlanma
+        Vector2 target = _GetPos(ball);
+        Vector2 dir    = target - GlobalPosition;
+        float   dist   = dir.Length();
+
+        if (dist > 4f)
         {
             Velocity = dir.Normalized() * GK_SPEED;
+            _facingDir = dir.Normalized();
         }
-        else
-        {
-            Velocity = Vector2.Zero;
-        }
+        else Velocity = Vector2.Zero;
+
         MoveAndSlide();
+        _UpdateSprite(Velocity.Length() > 10f ? "walk" : "idle");
     }
 
-    private Vector2 _GetPositioningTarget(Football ball)
+    private Vector2 _GetPos(Football ball)
     {
-        // Açı bisektörü: top ve gol merkezi arasında yay üzerinde dur
-        Vector2 goalLine = new Vector2(_goalX, _goalCenterY);
-        Vector2 toBall   = (ball.GlobalPosition - goalLine).Normalized();
-
-        // Gol çizgisinden GK_DEPTH kadar içeride, top yönüne göre Y ayarla
-        float targetY = Mathf.Clamp(
-            _goalCenterY + (ball.GlobalPosition.Y - _goalCenterY) * 0.55f,
-            FieldPlayer.GOAL_TOP + 20f,
-            FieldPlayer.GOAL_BOT - 20f
-        );
-
-        float targetX = Mathf.Clamp(_goalX, _minX, _maxX);
-        return new Vector2(targetX, targetY);
+        float ty = Mathf.Clamp(
+            _goalCY + (ball.GlobalPosition.Y - _goalCY) * 0.55f,
+            FieldPlayer.GOAL_TOP + 20f, FieldPlayer.GOAL_BOT - 20f);
+        return new Vector2(Mathf.Clamp(_goalX, _minX, _maxX), ty);
     }
 
     private bool _ShouldDive(Football ball)
     {
-        if (_isDiving) return false;
-        // Top kalemi tehdit ediyor mu?
-        Vector2 vel = ball.LinearVelocity;
-        if (vel.Length() < 200f) return false;
-
-        // Top yolunu hesapla — gol çizgisini geçiyor mu?
-        float t = _TimeToReachX(ball.GlobalPosition, vel, _goalX);
-        if (t < 0f || t > 1.2f) return false; // ulaşamaz
-
-        float arrivalY = ball.GlobalPosition.Y + vel.Y * t;
-        return arrivalY >= FieldPlayer.GOAL_TOP - 40f && arrivalY <= FieldPlayer.GOAL_BOT + 40f;
+        if (ball.LinearVelocity.Length() < 200f) return false;
+        float t = _TimeX(ball.GlobalPosition, ball.LinearVelocity, _goalX);
+        if (t < 0f || t > 1.3f) return false;
+        float ay = ball.GlobalPosition.Y + ball.LinearVelocity.Y * t;
+        return ay >= FieldPlayer.GOAL_TOP - 45f && ay <= FieldPlayer.GOAL_BOT + 45f;
     }
 
     private void _StartDive(Football ball)
     {
-        _isDiving = true;
-        _diveTimer = 0.7f;
-
-        Vector2 vel = ball.LinearVelocity;
-        float t     = _TimeToReachX(ball.GlobalPosition, vel, _goalX);
-        float arrY  = t > 0 ? ball.GlobalPosition.Y + vel.Y * t : _goalCenterY;
-        _diveTarget = new Vector2(_goalX, Mathf.Clamp(arrY, FieldPlayer.GOAL_TOP - 20f, FieldPlayer.GOAL_BOT + 20f));
+        _isDiving   = true;
+        _diveTimer  = 0.75f;
+        float t     = _TimeX(ball.GlobalPosition, ball.LinearVelocity, _goalX);
+        float arrY  = t > 0 ? ball.GlobalPosition.Y + ball.LinearVelocity.Y * t : _goalCY;
+        _diveTo     = new Vector2(_goalX, Mathf.Clamp(arrY, FieldPlayer.GOAL_TOP - 22f, FieldPlayer.GOAL_BOT + 22f));
+        _UpdateSprite("dive");
     }
 
-    private void _ProcessDive(double delta)
+    private void _Dive(double delta, Football ball)
     {
         _diveTimer -= (float)delta;
-        Vector2 dir  = (_diveTarget - GlobalPosition);
-        float   dist = dir.Length();
-
-        if (dist > 6f)
-        {
-            Velocity = dir.Normalized() * DIVE_SPEED;
-        }
-        else
-        {
-            Velocity = Vector2.Zero;
-        }
+        Vector2 d = _diveTo - GlobalPosition;
+        Velocity = d.Length() > 6f ? d.Normalized() * DIVE_SPEED : Vector2.Zero;
         MoveAndSlide();
 
-        // Topu yakaladı mı?
-        var ball = Football.Instance;
-        if (ball != null && !ball.IsControlled && GlobalPosition.DistanceTo(ball.GlobalPosition) < 40f)
+        if (!ball.IsControlled && GlobalPosition.DistanceTo(ball.GlobalPosition) < 42f)
         {
-            _Distribute(ball);
-            _isDiving = false;
-            _diveTimer = 0f;
-            return;
+            _Distribute(ball); _isDiving = false; _diveTimer = 0f; return;
         }
-
-        if (_diveTimer <= 0f)
-            _isDiving = false;
+        if (_diveTimer <= 0f) _isDiving = false;
     }
 
     private void _Distribute(Football ball)
     {
-        // En açık takım arkadaşına at
-        FieldPlayer? target = _FindOpenTeammate();
+        FieldPlayer? t  = _FindOpen();
         Vector2 throwDir;
-        float   speed;
-
-        if (target != null)
+        float speed;
+        if (t != null)
         {
-            throwDir = (target.GlobalPosition - GlobalPosition).Normalized();
-            speed    = Mathf.Clamp(GlobalPosition.DistanceTo(target.GlobalPosition) * 1.5f, 300f, 600f);
+            throwDir = (t.GlobalPosition - GlobalPosition).Normalized();
+            speed    = Mathf.Clamp(GlobalPosition.DistanceTo(t.GlobalPosition) * 1.5f, 300f, 620f);
         }
         else
         {
-            // Güvenli ata (çıkış yönüne)
             throwDir = GKTeam == Team.Red ? Vector2.Right : Vector2.Left;
-            speed    = 350f;
+            speed    = 380f;
         }
-
         ball.Kick(throwDir * speed);
-        _cooldown = 2.0f;
-        _isDiving = false;
+        _cooldown = 2.0f; _isDiving = false;
     }
 
-    private FieldPlayer? _FindOpenTeammate()
+    private FieldPlayer? _FindOpen()
     {
-        string group = GKTeam == Team.Red ? "team_red" : "team_blue";
-        FieldPlayer? best = null;
-        float bestScore  = -9999f;
-
-        foreach (Node n in GetTree().GetNodesInGroup(group))
+        string g = GKTeam == Team.Red ? "team_red" : "team_blue";
+        FieldPlayer? best = null; float bs = -9999f;
+        foreach (Node n in GetTree().GetNodesInGroup(g))
         {
             if (n is not FieldPlayer fp) continue;
-
-            // Baskı altında değil ve makul mesafede
-            float dist = GlobalPosition.DistanceTo(fp.GlobalPosition);
-            if (dist < 80f || dist > 700f) continue;
-
-            // İleri yönde mi?
-            float forwardness = GKTeam == Team.Red ? fp.GlobalPosition.X : FieldPlayer.PITCH_W - fp.GlobalPosition.X;
-
-            // Baskı az mı?
+            float d = GlobalPosition.DistanceTo(fp.GlobalPosition);
+            if (d < 80f || d > 700f) continue;
+            float fwd = GKTeam == Team.Red ? fp.GlobalPosition.X : FieldPlayer.PITCH_W - fp.GlobalPosition.X;
             string opp = GKTeam == Team.Red ? "team_blue" : "team_red";
-            float pressure = 0f;
+            float press = 0f;
             foreach (Node on in GetTree().GetNodesInGroup(opp))
             {
                 if (on is not FieldPlayer of2) continue;
-                float d = fp.GlobalPosition.DistanceTo(of2.GlobalPosition);
-                if (d < 100f) pressure += 1f - d / 100f;
+                float od = fp.GlobalPosition.DistanceTo(of2.GlobalPosition);
+                if (od < 100f) press += 1f - od / 100f;
             }
-
-            float score = forwardness * 0.5f - pressure * 50f;
-            if (score > bestScore) { bestScore = score; best = fp; }
+            float s = fwd * 0.5f - press * 50f;
+            if (s > bs) { bs = s; best = fp; }
         }
         return best;
     }
 
-    private float _TimeToReachX(Vector2 pos, Vector2 vel, float targetX)
+    private void _UpdateSprite(string anim)
     {
-        float dx = targetX - pos.X;
+        if (_anim == null) return;
+        if (_anim.Animation != anim) _anim.Play(anim);
+        _anim.Rotation = _facingDir.Angle() + SPRITE_OFFSET;
+    }
+
+    private float _TimeX(Vector2 pos, Vector2 vel, float tx)
+    {
+        float dx = tx - pos.X;
         if (Mathf.Abs(vel.X) < 0.01f) return -1f;
         float t = dx / vel.X;
         return t > 0 ? t : -1f;
