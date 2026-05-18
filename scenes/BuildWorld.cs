@@ -190,7 +190,7 @@ public partial class BuildWorld : SceneBuilderBase
         {
             Name                    = "Camera",
             UniqueNameInOwner       = true,
-            Zoom                    = new Vector2(3f, 3f),   // Stardew Valley yakın çekim
+            Zoom                    = new Vector2(0.75f, 0.75f),
             PositionSmoothingEnabled = true,
             PositionSmoothingSpeed   = 8f,
             LimitLeft   = 0,

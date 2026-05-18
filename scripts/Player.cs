@@ -4,19 +4,16 @@ using Godot;
 /// Stardew Valley tarzı 4 yönlü hareket + animasyon + etkileşim.
 public partial class Player : CharacterBody2D
 {
-    // ─── Sabitler ───────────────────────────────────────────────
     private const float WALK_SPEED   = 90f;
     private const float SPRINT_SPEED = 145f;
 
-    // ─── Yön ────────────────────────────────────────────────────
     public enum Dir { Down, Up, Left, Right }
     public Dir FaceDir { get; private set; } = Dir.Down;
 
-    // ─── Sprite ─────────────────────────────────────────────────
     private AnimatedSprite2D? _anim;
-
-    // ─── Gölge ──────────────────────────────────────────────────
     private Sprite2D? _shadow;
+    private float _walkCycle = 0f;
+    private const float _BASE_Y = -14f;
 
     public override void _Ready()
     {
@@ -24,31 +21,24 @@ public partial class Player : CharacterBody2D
         _BuildShadow();
     }
 
-    // ─── Sprite kurulum ─────────────────────────────────────────
-
     private void _BuildSprite()
     {
-        _anim = new AnimatedSprite2D();
-        _anim.Name = "Anim";
-        _anim.Position = new Vector2(0, -14);
+        _anim = new AnimatedSprite2D { Name = "Anim", Position = new Vector2(0, _BASE_Y) };
 
         var frames = new SpriteFrames();
-
-        // Her yön için: idle (1 kare) + walk (3 kare)
-        // Şimdilik tüm animasyonları aynı texture ile kur —
-        // texture yüklendiğinde _RefreshFrames() günceller
-        string[] anims = { "idle_down","walk_down","idle_up","walk_up","idle_left","walk_left","idle_right","walk_right" };
+        string[] anims = {
+            "idle_down","walk_down","idle_up","walk_up",
+            "idle_left","walk_left","idle_right","walk_right"
+        };
         foreach (var a in anims)
         {
             frames.AddAnimation(a);
             frames.SetAnimationLoop(a, true);
-            frames.SetAnimationSpeed(a, a.StartsWith("walk") ? 8f : 4f);
+            frames.SetAnimationSpeed(a, a.StartsWith("walk") ? 8f : 2f);
         }
 
         _anim.SpriteFrames = frames;
         AddChild(_anim);
-
-        // Texture yüklendikten sonra frameları doldur
         _RefreshFrames();
         _anim.Play("idle_down");
     }
@@ -58,38 +48,45 @@ public partial class Player : CharacterBody2D
         if (_anim == null) return;
         var frames = _anim.SpriteFrames;
 
-        string refPath  = "res://assets/characters/player_south.png";
-        string northPath = "res://assets/characters/player_north.png";
-        string sidePath  = "res://assets/characters/player_side.png";
-        string walkAPath = "res://assets/characters/player_walk_a.png";
-        string walkBPath = "res://assets/characters/player_walk_b.png";
+        // Temel duruş sprite'ları
+        Texture2D south = _Tex("res://assets/characters/player_south.png",      new Color(0.9f, 0.2f, 0.2f));
+        Texture2D north = _Tex("res://assets/characters/player_north.png",      new Color(0.6f, 0.2f, 0.2f));
+        Texture2D side  = _Tex("res://assets/characters/player_side.png",       new Color(0.8f, 0.2f, 0.2f));
 
-        // Sadece var olan dosyaları yükle — yoksa fallback
-        Texture2D south  = ResourceLoader.Exists(refPath)   ? GD.Load<Texture2D>(refPath)   : _MakePlaceholder(new Color(0.9f, 0.2f, 0.2f));
-        Texture2D north  = ResourceLoader.Exists(northPath) ? GD.Load<Texture2D>(northPath) : _MakePlaceholder(new Color(0.6f, 0.2f, 0.2f));
-        Texture2D side   = ResourceLoader.Exists(sidePath)  ? GD.Load<Texture2D>(sidePath)  : _MakePlaceholder(new Color(0.8f, 0.2f, 0.2f));
-        Texture2D walkA  = ResourceLoader.Exists(walkAPath) ? GD.Load<Texture2D>(walkAPath) : south;
-        Texture2D walkB  = ResourceLoader.Exists(walkBPath) ? GD.Load<Texture2D>(walkBPath) : side;
+        // Yürüyüş kareleri — her yön için A ve B adım
+        Texture2D downA = _Tex("res://assets/characters/player_walk_south_a.png", south);
+        Texture2D downB = _Tex("res://assets/characters/player_walk_south_b.png", south);
+        Texture2D upA   = _Tex("res://assets/characters/player_walk_north_a.png", north);
+        Texture2D upB   = _Tex("res://assets/characters/player_walk_north_b.png", north);
+        Texture2D sideA = _Tex("res://assets/characters/player_walk_a.png",       side);
+        Texture2D sideB = _Tex("res://assets/characters/player_walk_side_b.png",  side);
 
-        _FillAnim(frames, "idle_down",  4f, south);
-        _FillAnim(frames, "walk_down",  8f, south, walkA, south, walkB);
-        _FillAnim(frames, "idle_up",    4f, north);
-        _FillAnim(frames, "walk_up",    8f, north, walkA, north, walkB);
-        _FillAnim(frames, "idle_left",  4f, side);
-        _FillAnim(frames, "walk_left",  8f, side, walkA, side, walkB);
-        _FillAnim(frames, "idle_right", 4f, side);
-        _FillAnim(frames, "walk_right", 8f, side, walkA, side, walkB);
+        // 4-kare akıcı döngü: duruş → adım A → duruş → adım B
+        _Fill(frames, "idle_down",  2f, south);
+        _Fill(frames, "walk_down",  8f, south, downA, south, downB);
+        _Fill(frames, "idle_up",    2f, north);
+        _Fill(frames, "walk_up",    8f, north, upA, north, upB);
+        // Sol/sağ aynı frame seti, FlipH ile yön ayrılır
+        _Fill(frames, "idle_left",  2f, side);
+        _Fill(frames, "walk_left",  8f, side, sideA, side, sideB);
+        _Fill(frames, "idle_right", 2f, side);
+        _Fill(frames, "walk_right", 8f, side, sideA, side, sideB);
     }
 
-    private static void _FillAnim(SpriteFrames f, string name, float fps, params Texture2D[] texs)
+    private static Texture2D _Tex(string path, Color fallback)
+        => ResourceLoader.Exists(path) ? GD.Load<Texture2D>(path) : _Placeholder(fallback);
+
+    private static Texture2D _Tex(string path, Texture2D fallback)
+        => ResourceLoader.Exists(path) ? GD.Load<Texture2D>(path) : fallback;
+
+    private static void _Fill(SpriteFrames f, string name, float fps, params Texture2D[] texs)
     {
-        // Önce eski kareleri sil
         while (f.GetFrameCount(name) > 0) f.RemoveFrame(name, 0);
         f.SetAnimationSpeed(name, fps);
         foreach (var t in texs) f.AddFrame(name, t);
     }
 
-    private static ImageTexture _MakePlaceholder(Color c)
+    private static ImageTexture _Placeholder(Color c)
     {
         var img = Image.CreateEmpty(48, 72, false, Image.Format.Rgba8);
         img.Fill(c);
@@ -98,45 +95,55 @@ public partial class Player : CharacterBody2D
 
     private void _BuildShadow()
     {
-        var shadowImg = Image.CreateEmpty(32, 12, false, Image.Format.Rgba8);
-        shadowImg.Fill(new Color(0f, 0f, 0f, 0.30f));
-        var shadowTex = ImageTexture.CreateFromImage(shadowImg);
-
-        _shadow = new Sprite2D { Texture = shadowTex, Position = new Vector2(0, 6), ZIndex = -1 };
+        var img = Image.CreateEmpty(32, 10, false, Image.Format.Rgba8);
+        img.Fill(new Color(0f, 0f, 0f, 0.25f));
+        _shadow = new Sprite2D
+        {
+            Texture  = ImageTexture.CreateFromImage(img),
+            Position = new Vector2(0, 8),
+            ZIndex   = -1
+        };
         AddChild(_shadow);
     }
 
-    // ─── Fizik ──────────────────────────────────────────────────
-
     public override void _PhysicsProcess(double delta)
     {
-        var input = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        var input  = Input.GetVector("move_left", "move_right", "move_up", "move_down");
         bool sprint = Input.IsActionPressed("sprint");
-
-        float spd = sprint ? SPRINT_SPEED : WALK_SPEED;
-        Velocity = input * spd;
+        Velocity   = input * (sprint ? SPRINT_SPEED : WALK_SPEED);
         MoveAndSlide();
-
         _UpdateFacing(input);
-        _UpdateAnim(input);
+        _UpdateAnim(input, (float)delta);
     }
 
     private void _UpdateFacing(Vector2 input)
     {
         if (input.LengthSquared() < 0.01f) return;
-
-        if (Mathf.Abs(input.X) > Mathf.Abs(input.Y))
-            FaceDir = input.X > 0 ? Dir.Right : Dir.Left;
-        else
-            FaceDir = input.Y > 0 ? Dir.Down : Dir.Up;
+        FaceDir = Mathf.Abs(input.X) > Mathf.Abs(input.Y)
+            ? (input.X > 0 ? Dir.Right : Dir.Left)
+            : (input.Y > 0 ? Dir.Down  : Dir.Up);
     }
 
-    private void _UpdateAnim(Vector2 input)
+    private void _UpdateAnim(Vector2 input, float delta)
     {
         if (_anim == null) return;
 
         bool moving = input.LengthSquared() > 0.01f;
-        string prefix = moving ? "walk" : "idle";
+
+        // Hafif dikey bob — tüm yönlerde tutarlı, uçma hissi yok
+        if (moving)
+        {
+            _walkCycle += delta * 10f;
+            _anim.Position = new Vector2(0, _BASE_Y + Mathf.Sin(_walkCycle * Mathf.Pi) * 1.2f);
+        }
+        else
+        {
+            _walkCycle = 0f;
+            _anim.Position = new Vector2(0, _BASE_Y);
+        }
+
+        // Sol yürüyüş: aynı frame seti, sadece yatay çevrilmiş
+        _anim.FlipH = FaceDir == Dir.Left;
 
         string dir = FaceDir switch
         {
@@ -146,19 +153,9 @@ public partial class Player : CharacterBody2D
             _         => "down"
         };
 
-        // Sol-sağ aynalama: sadece side sprite var
-        if (FaceDir == Dir.Left)
-            _anim.FlipH = true;
-        else if (FaceDir == Dir.Right)
-            _anim.FlipH = false;
-        else
-            _anim.FlipH = false;
-
-        string animName = $"{prefix}_{dir}";
+        string animName = (moving ? "walk_" : "idle_") + dir;
         if (_anim.Animation != animName) _anim.Play(animName);
     }
-
-    // ─── Etkileşim ──────────────────────────────────────────────
 
     public override void _UnhandledInput(InputEvent @event)
     {
@@ -168,7 +165,6 @@ public partial class Player : CharacterBody2D
 
     private void _TryInteract()
     {
-        // Önde bir Area2D var mı?
         Vector2 checkPos = GlobalPosition + _FaceDirVec() * 24f;
         // TODO: Area2D overlap check for NPC/object interaction
     }
