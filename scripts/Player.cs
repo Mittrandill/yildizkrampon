@@ -157,16 +157,13 @@ public partial class Player : CharacterBody2D
         if (_anim.Animation != animName) _anim.Play(animName);
     }
 
+    [Signal]
+    public delegate void InteractedEventHandler();
+
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventKey k && k.Pressed && !k.Echo && k.Keycode == Key.E)
-            _TryInteract();
-    }
-
-    private void _TryInteract()
-    {
-        Vector2 checkPos = GlobalPosition + _FaceDirVec() * 24f;
-        // TODO: Area2D overlap check for NPC/object interaction
+            EmitSignal(SignalName.Interacted);
     }
 
     private Vector2 _FaceDirVec() => FaceDir switch
