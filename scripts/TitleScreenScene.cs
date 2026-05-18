@@ -6,9 +6,10 @@ public partial class TitleScreenScene : Control
 {
     public override void _Ready()
     {
-        GetNode<Button>("%BtnNewGame").Pressed  += _OnNewGame;
-        GetNode<Button>("%BtnLoadGame").Pressed += _OnLoadGame;
-        GetNode<Button>("%BtnExit").Pressed     += _OnExit;
+        GetNode<Button>("%BtnNewGame").Pressed    += _OnNewGame;
+        GetNode<Button>("%BtnQuickMatch").Pressed += _OnQuickMatch;
+        GetNode<Button>("%BtnLoadGame").Pressed   += _OnLoadGame;
+        GetNode<Button>("%BtnExit").Pressed       += _OnExit;
 
         // Kayıtlı oyun varsa Yükle aktif, yoksa soluk
         bool hasSave = PlayerData.Instance != null && !PlayerData.Instance.IsNew;
@@ -35,6 +36,17 @@ public partial class TitleScreenScene : Control
     {
         PlayerData.Instance.Reset();
         WorldManager.Instance.GoTo("CharacterCreation");
+    }
+
+    private void _OnQuickMatch()
+    {
+        // Stat'ları test değerlerine getir, direkt maça gir
+        GameManager.Instance.Energy    = 100;
+        GameManager.Instance.ShotPower = 55;
+        GameManager.Instance.Sprint    = 50;
+        GameManager.Instance.Technique = 48;
+        GameManager.Instance.Overall   = 51;
+        WorldManager.Instance.GoTo("Match");
     }
 
     private void _OnLoadGame()

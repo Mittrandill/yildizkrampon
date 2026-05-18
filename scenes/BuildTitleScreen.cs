@@ -112,6 +112,10 @@ public partial class BuildTitleScreen : SceneBuilderBase
             new Color(0.12f, 0.42f, 0.12f), new Color(0.40f, 0.80f, 0.32f));
         vbox.AddChild(btnNew);
 
+        var btnMatch = _Btn("▶  HIZLI MAÇ", "BtnQuickMatch",
+            new Color(0.45f, 0.28f, 0.05f), new Color(1.0f, 0.72f, 0.12f));
+        vbox.AddChild(btnMatch);
+
         var btnLoad = _Btn("📂  OYUN YÜKLE", "BtnLoadGame",
             new Color(0.18f, 0.28f, 0.50f), new Color(0.40f, 0.58f, 0.90f));
         vbox.AddChild(btnLoad);

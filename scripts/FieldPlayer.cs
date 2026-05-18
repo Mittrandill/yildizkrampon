@@ -34,6 +34,9 @@ public partial class FieldPlayer : CharacterBody2D
     private bool  _isCharging   = false;
     private float _kickCooldown = 0f;
 
+    // Animasyon
+    private AnimatedSprite2D? _anim;
+
     // AI state
     private enum AIState { Positioning, ChasingBall, Dribbling, Supporting, Marking, Pressing }
     private AIState _aiState    = AIState.Positioning;
@@ -73,20 +76,104 @@ public partial class FieldPlayer : CharacterBody2D
         AddToGroup("field_players");
 
         _aiTarget = _GetFormationPos(new Vector2(PITCH_W / 2f, PITCH_H / 2f));
+        _SetupAnimation();
     }
 
     public override void _Draw()
     {
         bool human = MatchManager.Instance?.IsHumanControlled(this) ?? false;
         if (!human) return;
-
-        // Yeşil aşağı ok — oyuncunun başı üzerinde
         DrawPolygon(
             new Vector2[] { new Vector2(0, -30), new Vector2(-9, -46), new Vector2(9, -46) },
             new Color[] { new Color(0.15f, 1f, 0.3f), new Color(0.15f, 1f, 0.3f), new Color(0.15f, 1f, 0.3f) }
         );
-        // İnce beyaz çerçeve çizgisi
         DrawLine(new Vector2(-9, -46), new Vector2(9, -46), new Color(1,1,1,0.8f), 1.5f);
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  ANİMASYON
+    // ─────────────────────────────────────────────────────────────
+
+    private void _SetupAnimation()
+    {
+        var oldSprite = GetNodeOrNull<Sprite2D>("Sprite2D");
+        var sprScale  = oldSprite?.Scale    ?? new Vector2(0.16f, 0.16f);
+        var sprPos    = oldSprite?.Position ?? new Vector2(0, -6);
+        oldSprite?.QueueFree();
+
+        string prefix  = PlayerTeam == Team.Red ? "player" : "blue";
+        string idlePath  = PlayerTeam == Team.Red
+            ? "res://assets/img/player_sprite.png"
+            : "res://assets/img/npc_blue.png";
+        string walk1Path = $"res://assets/img/anim/{prefix}_walk1.png";
+        string walk2Path = $"res://assets/img/anim/{prefix}_walk2.png";
+        string kickPath  = $"res://assets/img/anim/{prefix}_kick.png";
+
+        var idleTex  = GD.Load<Texture2D>(idlePath);
+        var walk1Tex = ResourceLoader.Exists(walk1Path) ? GD.Load<Texture2D>(walk1Path) : idleTex;
+        var walk2Tex = ResourceLoader.Exists(walk2Path) ? GD.Load<Texture2D>(walk2Path) : idleTex;
+        var kickTex  = ResourceLoader.Exists(kickPath)  ? GD.Load<Texture2D>(kickPath)  : idleTex;
+
+        var frames = new SpriteFrames();
+
+        _AddAnim(frames, "idle",      4f,  true,  idleTex);
+        _AddAnim(frames, "walk",      7f,  true,  idleTex, walk1Tex);
+        _AddAnim(frames, "walk_back", 6f,  true,  walk2Tex);
+        _AddAnim(frames, "run",       13f, true,  idleTex, walk1Tex);
+        _AddAnim(frames, "kick",      10f, false, idleTex, kickTex, idleTex);
+
+        _anim = new AnimatedSprite2D();
+        _anim.Name           = "AnimSprite";
+        _anim.SpriteFrames   = frames;
+        _anim.Scale          = sprScale;
+        _anim.Position       = sprPos;
+        AddChild(_anim);
+        _anim.Play("idle");
+    }
+
+    private static void _AddAnim(SpriteFrames frames, string name, float fps,
+                                  bool loop, params Texture2D[] textures)
+    {
+        frames.AddAnimation(name);
+        frames.SetAnimationSpeed(name, fps);
+        frames.SetAnimationLoop(name, loop);
+        foreach (var t in textures) frames.AddFrame(name, t);
+    }
+
+    private void _UpdateAnimation()
+    {
+        if (_anim == null) return;
+
+        float speed   = Velocity.Length();
+        bool kicking  = _kickCooldown > 0.35f;
+        bool sprinting = speed > WALK_SPEED * 1.15f;
+        bool movingUp  = FacingDir.Y < -0.55f && Mathf.Abs(FacingDir.X) < 0.65f;
+
+        string newAnim;
+        if (kicking)
+            newAnim = "kick";
+        else if (speed < 18f)
+            newAnim = "idle";
+        else if (movingUp)
+            newAnim = "walk_back";
+        else if (sprinting)
+            newAnim = "run";
+        else
+            newAnim = "walk";
+
+        if (_anim.Animation != newAnim)
+            _anim.Play(newAnim);
+
+        // Yatay flip (sağ/sol hareket)
+        if (!movingUp)
+        {
+            if (FacingDir.X < -0.15f)      _anim.FlipH = true;
+            else if (FacingDir.X > 0.15f)  _anim.FlipH = false;
+        }
+        else
+        {
+            _anim.FlipH = false;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -94,7 +181,7 @@ public partial class FieldPlayer : CharacterBody2D
         if (_kickCooldown > 0f) _kickCooldown -= (float)delta;
         _aiDecTimer = Mathf.Max(0f, _aiDecTimer - (float)delta);
 
-        QueueRedraw(); // gösterge ok her frame güncellenir
+        QueueRedraw();
 
         var ball = Football.Instance;
 
@@ -171,6 +258,7 @@ public partial class FieldPlayer : CharacterBody2D
             if (Input.IsActionJustPressed("interact"))
                 _TryTackle();
         }
+        _UpdateAnimation();
     }
 
     private void _HumanPass()
@@ -266,6 +354,7 @@ public partial class FieldPlayer : CharacterBody2D
         _MoveTowardAI(_aiTarget, delta);
 
         if (HasBall) _AIBallDecision(ball);
+        _UpdateAnimation();
     }
 
     private void _UpdateAIState(Football ball)

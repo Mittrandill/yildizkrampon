@@ -21,7 +21,9 @@ public partial class GoalkeeperAI : CharacterBody2D
     private float _minX, _maxX;
     private const float GK_SPEED  = 145f;
     private const float DIVE_SPEED = 400f;
-    private const float GK_DEPTH  = 55f; // gol çizgisinden ne kadar ileride durur
+    private const float GK_DEPTH  = 55f;
+
+    private AnimatedSprite2D? _anim;
 
     public override void _Ready()
     {
@@ -44,6 +46,35 @@ public partial class GoalkeeperAI : CharacterBody2D
         CollisionMask  = 1 | 2 | 16;
         AddToGroup(GKTeam == Team.Red ? "team_red" : "team_blue");
         AddToGroup("goalkeepers");
+        _SetupGKAnimation();
+    }
+
+    private void _SetupGKAnimation()
+    {
+        var old = GetNodeOrNull<Sprite2D>("Sprite2D");
+        var sc  = old?.Scale    ?? new Vector2(0.16f, 0.16f);
+        var pos = old?.Position ?? new Vector2(0, -6);
+        old?.QueueFree();
+
+        string prefix   = GKTeam == Team.Red ? "player" : "blue";
+        string idlePath = GKTeam == Team.Red ? "res://assets/img/player_sprite.png" : "res://assets/img/npc_blue.png";
+        string walkPath = $"res://assets/img/anim/{prefix}_walk1.png";
+
+        var idleTex = GD.Load<Texture2D>(idlePath);
+        var walkTex = ResourceLoader.Exists(walkPath) ? GD.Load<Texture2D>(walkPath) : idleTex;
+
+        var frames = new SpriteFrames();
+        frames.AddAnimation("idle");      frames.SetAnimationSpeed("idle", 4f);  frames.SetAnimationLoop("idle", true);  frames.AddFrame("idle", idleTex);
+        frames.AddAnimation("walk");      frames.SetAnimationSpeed("walk", 7f);  frames.SetAnimationLoop("walk", true);  frames.AddFrame("walk", idleTex); frames.AddFrame("walk", walkTex);
+        frames.AddAnimation("dive");      frames.SetAnimationSpeed("dive", 6f);  frames.SetAnimationLoop("dive", true);  frames.AddFrame("dive", walkTex);
+
+        _anim = new AnimatedSprite2D();
+        _anim.Name = "AnimSprite"; _anim.SpriteFrames = frames;
+        _anim.Scale = sc; _anim.Position = pos;
+        // Kaleci renk tonu (mevcut BuildMatch modülasyonunu koru)
+        _anim.Modulate = GKTeam == Team.Red ? new Color(1f, 0.7f, 0.2f) : new Color(0.7f, 0.7f, 1f);
+        AddChild(_anim);
+        _anim.Play("idle");
     }
 
     public override void _PhysicsProcess(double delta)
