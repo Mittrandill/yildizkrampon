@@ -2,78 +2,72 @@ using Godot;
 using System.Collections.Generic;
 
 /// res://scripts/MatchManager.cs
-/// Maç durumu makinesi — skor, süre, out, yarı, bitiş, otomatik oyuncu değişimi.
+/// Maç durum makinesi — skor, süre, kale, taç, devre, bitiş.
+/// İnsan oyuncusu SABITTIR — asla değişmez.
 public partial class MatchManager : Node2D
 {
     public static MatchManager? Instance { get; private set; }
 
-    // Saha sabitleri
-    public const float PITCH_W      = FieldPlayer.PITCH_W;
-    public const float PITCH_H      = FieldPlayer.PITCH_H;
-    public const float GOAL_TOP     = FieldPlayer.GOAL_TOP;
-    public const float GOAL_BOT     = FieldPlayer.GOAL_BOT;
+    public const float PITCH_W  = FieldPlayer.PITCH_W;
+    public const float PITCH_H  = FieldPlayer.PITCH_H;
+    public const float GOAL_TOP = FieldPlayer.GOAL_TOP;
+    public const float GOAL_BOT = FieldPlayer.GOAL_BOT;
     public static readonly Vector2 CENTER = new(PITCH_W / 2f, PITCH_H / 2f);
 
-    // Maç durumu
+    // ─── Maç durumu ─────────────────────────────────────────────
     private enum MatchState { KickOff, Playing, Goal, ThrowIn, HalfTime, FullTime }
-    private MatchState _state = MatchState.KickOff;
+    private MatchState _state      = MatchState.KickOff;
     private float      _stateTimer = 0f;
+    private enum Team { Red, Blue }
+    private Team  _lastGoalTeam;
 
-    // Skor & süre
-    public int   RedScore    { get; private set; } = 0;
-    public int   BlueScore   { get; private set; } = 0;
-    private float _elapsed   = 0f;
-    private float _halfDuration = 180f; // 3 dakika / yarı
+    // ─── Skor & süre ────────────────────────────────────────────
+    public int   RedScore  { get; private set; } = 0;
+    public int   BlueScore { get; private set; } = 0;
+    private float _elapsed      = 0f;
+    private float _halfDuration = 180f; // 3 dak/yarı
     private bool  _secondHalf   = false;
-    private bool  _sidesFlipped = false;
 
-    // Oyuncular
-    private readonly List<FieldPlayer>    _redPlayers  = new();
-    private readonly List<FieldPlayer>    _bluePlayers = new();
-    private FieldPlayer? _humanPlayer;
+    // ─── Oyuncular ──────────────────────────────────────────────
+    private readonly List<FieldPlayer> _redPlayers = new();
+    private FieldPlayer? _humanPlayer;          // Sabit — değişmez
 
-    // Asist takibi
-    private FieldPlayer? _lastAssistCandidate;
+    // ─── Asist ─────────────────────────────────────────────────
+    private FieldPlayer? _lastAssist;
     private float        _assistTimer = 0f;
 
-    // UI referansları
-    private Label?      _scoreLabel;
-    private Label?      _timerLabel;
-    private Label?      _stateLabel;
+    // ─── UI ─────────────────────────────────────────────────────
+    private Label?       _scoreLabel;
+    private Label?       _timerLabel;
+    private Label?       _stateLabel;
     private ProgressBar? _staminaBar;
     private ProgressBar? _powerBar;
     private ProgressBar? _energyBar;
-    private Label?      _ratingLabel;
-    private Label?      _hintLabel;
-    private Camera2D?   _camera;
+    private Label?       _ratingLabel;
+    private Label?       _hintLabel;
+    private Camera2D?    _camera;
+    private MiniMap?     _miniMap;
 
-    // Mini-harita renk göstergesi
-    private MiniMap?    _miniMap;
-
-    // Oyuncu puanı
+    // ─── Oyuncu puanı ───────────────────────────────────────────
     private float _playerRating = 6.0f;
     private float _hintTimer    = 0f;
-    private int   _hintPhase    = 0;
 
-    // İnsan oyuncusunun son pozisyonu (switch threshold)
-    private float _switchTimer = 0f;
-    private const float SWITCH_INTERVAL  = 0.5f;
-    private const float SWITCH_THRESHOLD = 100f;
+    // ─── Taç ────────────────────────────────────────────────────
+    private Vector2          _throwInPos;
+    private FieldPlayer.Team _throwInTeam;
+
+    // ─────────────────────────────────────────────────────────────
 
     public override void _Ready()
     {
         Instance = this;
 
-        // Oyuncuları topla
         foreach (Node n in GetTree().GetNodesInGroup("team_red"))
             if (n is FieldPlayer fp) _redPlayers.Add(fp);
-        foreach (Node n in GetTree().GetNodesInGroup("team_blue"))
-            if (n is FieldPlayer fp) _bluePlayers.Add(fp);
 
-        // İlk insan oyuncusu (FWD1 — slot 4)
+        // İnsan oyuncusu: FwdRed1 (slot 4, index 4). Yoksa 0.
         _humanPlayer = _redPlayers.Count > 4 ? _redPlayers[4] : _redPlayers[0];
 
-        // UI bul
         _scoreLabel  = GetNodeOrNull<Label>("%ScoreLabel");
         _timerLabel  = GetNodeOrNull<Label>("%TimerLabel");
         _stateLabel  = GetNodeOrNull<Label>("%StateLabel");
@@ -85,21 +79,15 @@ public partial class MatchManager : Node2D
         _camera      = GetNodeOrNull<Camera2D>("%MatchCamera");
         _miniMap     = GetNodeOrNull<MiniMap>("%MiniMap");
 
-        // Maç başlarken enerjiyi taze tut
-        if (GameManager.Instance.Energy < 80)
-            GameManager.Instance.Energy = 80;
-
-        // Kamerayı saha ortasına başlat
-        if (_camera != null)
-            _camera.Position = CENTER;
+        if (GameManager.Instance.Energy < 80) GameManager.Instance.Energy = 80;
+        if (_camera != null) _camera.Position = CENTER;
 
         _UpdateScoreUI();
         _SetState(MatchState.KickOff);
 
-        // Goal Area2D sinyalleri
         var goalLeft  = GetNodeOrNull<Area2D>("%GoalLeft");
         var goalRight = GetNodeOrNull<Area2D>("%GoalRight");
-        if (goalLeft  != null) goalLeft.BodyEntered  += _ => _OnGoal(Team.Blue);  // sol gole giren → mavi gol atar
+        if (goalLeft  != null) goalLeft.BodyEntered  += _ => _OnGoal(Team.Blue);
         if (goalRight != null) goalRight.BodyEntered += _ => _OnGoal(Team.Red);
     }
 
@@ -119,7 +107,7 @@ public partial class MatchManager : Node2D
                 break;
 
             case MatchState.Goal:
-                _SetupKickOff(scoringTeam: _lastGoalTeam);
+                _SetupKickOff();
                 _SetState(MatchState.Playing);
                 break;
 
@@ -129,122 +117,85 @@ public partial class MatchManager : Node2D
                 break;
 
             case MatchState.HalfTime:
-                if (!_secondHalf)
-                {
-                    _secondHalf   = true;
-                    _elapsed      = 0f;
-                    _FlipSides();
-                    _SetupKickOff(scoringTeam: null);
-                    _SetState(MatchState.Playing);
-                }
+                _secondHalf = true; _elapsed = 0f;
+                _FlipSides();
+                _SetupKickOff();
+                _SetState(MatchState.Playing);
                 break;
 
             case MatchState.FullTime:
                 if (Input.IsActionJustPressed("action") || Input.IsActionJustPressed("interact"))
-                    _EndMatch();
+                    WorldManager.Instance.GoTo("WorldMap");
                 break;
         }
     }
 
+    // ─── Oynuyor ────────────────────────────────────────────────
+
     private void _UpdatePlaying(float delta)
     {
         _elapsed += delta;
-
-        // Süreyi göster
-        float totalTime = _secondHalf ? _halfDuration + _elapsed : _elapsed;
-        float remaining = _halfDuration * 2f - totalTime;
+        float total   = _secondHalf ? _halfDuration + _elapsed : _elapsed;
         if (_timerLabel != null)
-            _timerLabel.Text = $"{(int)(totalTime / 60):D2}:{(int)(totalTime % 60):D2}";
+            _timerLabel.Text = $"{(int)(total / 60):D2}:{(int)(total % 60):D2}";
 
-        // Yarı bitti mi?
         if (!_secondHalf && _elapsed >= _halfDuration)
         {
             _SetState(MatchState.HalfTime);
             if (_stateLabel != null) _stateLabel.Text = "DEVRE ARI";
-            _stateTimer = 3f;
-            return;
+            _stateTimer = 3f; return;
         }
         if (_secondHalf && _elapsed >= _halfDuration)
         {
             _SetState(MatchState.FullTime);
             if (_stateLabel != null) _stateLabel.Text = "MAÇ BİTTİ";
-            _ShowResult();
-            return;
+            _ShowResult(); return;
         }
 
-        // Out kontrolü
         var ball = Football.Instance;
-        if (ball != null && !ball.IsControlled)
-            _CheckOutOfBounds(ball);
-
-        // Asist sayacı
+        if (ball != null && !ball.IsControlled) _CheckOutOfBounds(ball);
         if (_assistTimer > 0f) _assistTimer -= delta;
 
-        // Kamera
         _UpdateCamera(ball);
+        _UpdateHUD(ball, delta);
+    }
 
-        // Enerji barı
-        if (_energyBar != null)
-            _energyBar.Value = GameManager.Instance.Energy;
+    private void _UpdateHUD(Football? ball, float delta)
+    {
+        if (_energyBar != null) _energyBar.Value = GameManager.Instance.Energy;
 
-        // Pas başarı → rating güncelle
         if (_humanPlayer != null)
         {
-            float rating = 6.0f;
-            rating += _humanPlayer.GoalsScored * 0.8f;
-            rating += _humanPlayer.PassesAttempted * 0.05f;
-            rating += _humanPlayer.TacklesWon * 0.2f;
-            _playerRating = Mathf.Clamp(rating, 1.0f, 10.0f);
-            if (_ratingLabel != null)
-                _ratingLabel.Text = $"{_playerRating:F1} ★";
+            float r = 6.0f + _humanPlayer.GoalsScored * 0.8f
+                           + _humanPlayer.PassesAttempted * 0.04f
+                           + _humanPlayer.TacklesWon * 0.15f;
+            _playerRating = Mathf.Clamp(r, 1f, 10f);
+            if (_ratingLabel != null) _ratingLabel.Text = $"{_playerRating:F1} ★";
         }
 
-        // Taktik ipucu
         _hintTimer -= delta;
-        if (_hintTimer <= 0f)
+        if (_hintTimer <= 0f && ball != null)
         {
-            _UpdateTacticalHint(ball);
+            _UpdateHint(ball);
             _hintTimer = 3.5f;
         }
-
-        // Otomatik oyuncu değişimi
-        _switchTimer += delta;
-        if (_switchTimer >= SWITCH_INTERVAL)
-        {
-            _switchTimer = 0f;
-            _AutoSwitch();
-        }
     }
 
-    private void _UpdateTacticalHint(Football? ball)
+    private void _UpdateHint(Football ball)
     {
-        if (_hintLabel == null || ball == null || _humanPlayer == null) return;
+        if (_hintLabel == null || _humanPlayer == null) return;
 
-        bool hasBall     = _humanPlayer.HasBall;
-        float distToGoal = _humanPlayer.GlobalPosition.DistanceTo(
+        bool hasBall  = _humanPlayer.HasBall;
+        float distGol = _humanPlayer.GlobalPosition.DistanceTo(
             new Vector2(PITCH_W, (GOAL_TOP + GOAL_BOT) / 2f));
-        bool nearGoal    = distToGoal < 350f;
 
-        string hint;
-        if (hasBall && nearGoal)
-            hint = "ŞUTA GEÇ! [SPACE]";
-        else if (hasBall)
-            hint = "F: Pas Ver";
-        else if (!ball.IsControlled)
-            hint = "TOPA KOŞ!";
-        else
-            hint = "SHIFT: Sprint";
-
-        _hintPhase = (_hintPhase + 1) % 4;
-        _hintLabel.Text = hint;
+        _hintLabel.Text = hasBall && distGol < 380f ? "ŞUTA GEÇ! [SPACE]" :
+                          hasBall                    ? "F: Pas Ver" :
+                          !ball.IsControlled         ? "TOPA KOŞ!" :
+                                                       "SHIFT: Sprint";
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  GOL, OUT, KickOff
-    // ─────────────────────────────────────────────────────────────
-
-    private enum Team { Red, Blue }
-    private Team _lastGoalTeam;
+    // ─── Gol ────────────────────────────────────────────────────
 
     private void _OnGoal(Team scoringTeam)
     {
@@ -253,77 +204,68 @@ public partial class MatchManager : Node2D
         if (scoringTeam == Team.Red) RedScore++;
         else                         BlueScore++;
 
-        _lastGoalTeam = scoringTeam;
-        _UpdateScoreUI();
-
-        // Asist
+        // İnsan gol attıysa
         var ball = Football.Instance;
-        if (_assistTimer > 0f && _lastAssistCandidate != null
-            && ball?.LastToucher?.PlayerTeam == FieldPlayer.Team.Red
-            && scoringTeam == Team.Red)
+        if (scoringTeam == Team.Red && ball?.LastToucher == _humanPlayer)
         {
-            // Asist var (gelecekte rating'e ekle)
+            _humanPlayer!.GoalsScored++;
+            _playerRating = Mathf.Clamp(_playerRating + 0.8f, 1f, 10f);
         }
 
-        // Oyuncu gol attıysa rating güncelle
-        if (scoringTeam == Team.Red && ball?.LastToucher == _humanPlayer)
-            _playerRating = Mathf.Clamp(_playerRating + 0.8f, 1.0f, 10.0f);
-
+        _lastGoalTeam = scoringTeam;
+        _UpdateScoreUI();
         if (_stateLabel != null) _stateLabel.Text = scoringTeam == Team.Red ? "GOL! KIRMIZI!" : "GOL! MAVİ!";
         _stateTimer = 2.5f;
         _SetState(MatchState.Goal);
     }
 
-    private void _SetupKickOff(Team? scoringTeam)
+    // ─── Kick-off ───────────────────────────────────────────────
+
+    private void _SetupKickOff()
     {
         Football.Instance?.ResetTo(CENTER);
-        // Oyuncuları başlangıç pozisyonlarına yerleştir
         foreach (Node n in GetTree().GetNodesInGroup("field_players"))
-        {
-            if (n is FieldPlayer fp) fp.GlobalPosition = fp.GetMeta("start_pos").AsVector2();
-        }
+            if (n is FieldPlayer fp && fp.HasMeta("start_pos"))
+                fp.GlobalPosition = fp.GetMeta("start_pos").AsVector2();
         foreach (Node n in GetTree().GetNodesInGroup("goalkeepers"))
-        {
-            if (n is GoalkeeperAI gk) gk.GlobalPosition = gk.GetMeta("start_pos").AsVector2();
-        }
+            if (n is GoalkeeperAI gk && gk.HasMeta("start_pos"))
+                gk.GlobalPosition = gk.GetMeta("start_pos").AsVector2();
     }
+
+    // ─── Out ────────────────────────────────────────────────────
 
     private void _CheckOutOfBounds(Football ball)
     {
         Vector2 pos = ball.GlobalPosition;
+
         if (pos.Y < -20f || pos.Y > PITCH_H + 20f)
         {
-            // Taç
-            _lastThrowInPos = new Vector2(pos.X, pos.Y < 0 ? 0f : PITCH_H);
-            _throwInTeam    = ball.LastToucher?.PlayerTeam == FieldPlayer.Team.Red
-                              ? FieldPlayer.Team.Blue : FieldPlayer.Team.Red;
-            _SetState(MatchState.ThrowIn);
-            _stateTimer = 0.8f;
+            _throwInPos  = new Vector2(pos.X, pos.Y < 0 ? 2f : PITCH_H - 2f);
+            _throwInTeam = ball.LastToucher?.PlayerTeam == FieldPlayer.Team.Red
+                ? FieldPlayer.Team.Blue : FieldPlayer.Team.Red;
             if (_stateLabel != null) _stateLabel.Text = "TAÇ";
+            _stateTimer = 0.7f;
+            _SetState(MatchState.ThrowIn);
         }
-        else if ((pos.X < -40f || pos.X > PITCH_W + 40f) &&
-                 (pos.Y < GOAL_TOP || pos.Y > GOAL_BOT))
+        else if ((pos.X < -40f || pos.X > PITCH_W + 40f) && (pos.Y < GOAL_TOP || pos.Y > GOAL_BOT))
         {
-            // Kale vuruşu veya köşe vuruşu
-            bool leftSide = pos.X < 0;
-            _HandleByline(ball, leftSide);
+            bool left = pos.X < 0;
+            ball.ResetTo(new Vector2(left ? 70f : PITCH_W - 70f, PITCH_H / 2f));
+            if (_stateLabel != null) _stateLabel.Text = "KALE VURUŞU";
+            _stateTimer = 0.5f;
         }
     }
 
-    private Vector2 _lastThrowInPos;
-    private FieldPlayer.Team _throwInTeam;
-
     private void _DoThrowIn()
     {
-        // En yakın taç takımı oyuncusunu bul ve topa ver
         var ball = Football.Instance;
         if (ball == null) return;
-        ball.ResetTo(new Vector2(Mathf.Clamp(_lastThrowInPos.X, 60f, PITCH_W - 60f), _lastThrowInPos.Y));
+        float clampedX = Mathf.Clamp(_throwInPos.X, 60f, PITCH_W - 60f);
+        ball.ResetTo(new Vector2(clampedX, _throwInPos.Y));
 
-        string group = _throwInTeam == FieldPlayer.Team.Red ? "team_red" : "team_blue";
-        FieldPlayer? nearest = null;
-        float nd = float.MaxValue;
-        foreach (Node n in GetTree().GetNodesInGroup(group))
+        string grp = _throwInTeam == FieldPlayer.Team.Red ? "team_red" : "team_blue";
+        FieldPlayer? nearest = null; float nd = float.MaxValue;
+        foreach (Node n in GetTree().GetNodesInGroup(grp))
         {
             if (n is not FieldPlayer fp) continue;
             float d = fp.GlobalPosition.DistanceTo(ball.GlobalPosition);
@@ -332,146 +274,87 @@ public partial class MatchManager : Node2D
         if (nearest != null) ball.GiveControl(nearest);
     }
 
-    private void _HandleByline(Football ball, bool leftSide)
-    {
-        // Basit: kale vuruşu veya köşe → kaleci veya ilgili takıma ver
-        float resetX = leftSide ? 60f : PITCH_W - 60f;
-        ball.ResetTo(new Vector2(resetX, PITCH_H / 2f));
-        if (_stateLabel != null) _stateLabel.Text = leftSide ? "KALE VURUŞU" : "KALE VURUŞU";
-        _stateTimer = 0.5f;
-    }
-
-    // ─────────────────────────────────────────────────────────────
-    //  OTOMATİK OYUNCU DEĞİŞİMİ
-    // ─────────────────────────────────────────────────────────────
-
-    public bool IsHumanControlled(FieldPlayer p) => p == _humanPlayer;
-
-    private void _AutoSwitch()
-    {
-        if (_humanPlayer?.HasBall == true) return; // top varken değiştirme
-
-        var ball = Football.Instance;
-        if (ball == null) return;
-
-        FieldPlayer? best    = null;
-        float        bestD   = float.MaxValue;
-        float        curD    = _humanPlayer?.GlobalPosition.DistanceTo(ball.GlobalPosition) ?? float.MaxValue;
-
-        foreach (var fp in _redPlayers)
-        {
-            float d = fp.GlobalPosition.DistanceTo(ball.GlobalPosition);
-            if (d < bestD) { bestD = d; best = fp; }
-        }
-
-        if (best != null && best != _humanPlayer && bestD < curD - SWITCH_THRESHOLD)
-            _humanPlayer = best;
-    }
-
-    // ─────────────────────────────────────────────────────────────
-    //  UI & KAMERA
-    // ─────────────────────────────────────────────────────────────
-
-    public void SetStaminaBar(float value)
-    {
-        if (_staminaBar != null) _staminaBar.Value = value;
-    }
-
-    public void SetPowerBar(float value)
-    {
-        if (_powerBar != null) _powerBar.Value = value;
-    }
-
-    public void OnAssistOpportunity(FieldPlayer target)
-    {
-        _lastAssistCandidate = target;
-        _assistTimer = 3.5f;
-    }
+    // ─── Kamera ─────────────────────────────────────────────────
 
     private void _UpdateCamera(Football? ball)
     {
         if (_camera == null) return;
 
         Vector2 focus;
-        if (ball != null && _humanPlayer != null)
+        if (_humanPlayer != null && ball != null)
         {
-            // Topu ve oyuncuyu çerçevele — top ağırlıklı ama oyuncu ekrandan çıkmasın
-            focus = _humanPlayer.GlobalPosition * 0.45f + ball.GlobalPosition * 0.55f;
+            // Oyuncu ağırlıklı + topa doğru önceden bakış
+            Vector2 midPoint = _humanPlayer.GlobalPosition * 0.5f + ball.GlobalPosition * 0.5f;
+            Vector2 lookahead = ball.LinearVelocity * 0.15f;
+            focus = midPoint + lookahead;
         }
         else if (_humanPlayer != null)
             focus = _humanPlayer.GlobalPosition;
         else if (ball != null)
             focus = ball.GlobalPosition;
-        else
-            return;
+        else return;
 
-        _camera.Position = _camera.Position.Lerp(focus, 0.11f);
+        _camera.Position = _camera.Position.Lerp(focus, 0.10f);
     }
+
+    // ─── Yardımcılar ────────────────────────────────────────────
+
+    public bool IsHumanControlled(FieldPlayer p) => p == _humanPlayer;
+
+    public void SetStaminaBar(float v)  { if (_staminaBar != null) _staminaBar.Value = v; }
+    public void SetPowerBar(float v)    { if (_powerBar   != null) _powerBar.Value   = v; }
+    public void OnAssistOpportunity(FieldPlayer t) { _lastAssist = t; _assistTimer = 3.5f; }
 
     private void _UpdateScoreUI()
     {
-        if (_scoreLabel != null)
-            _scoreLabel.Text = $"{RedScore}  —  {BlueScore}";
+        if (_scoreLabel != null) _scoreLabel.Text = $"{RedScore}  —  {BlueScore}";
     }
 
     private void _SetState(MatchState s)
     {
         _state = s;
         if (s == MatchState.KickOff && _stateLabel != null)
-            _stateLabel.Text = "▶  BAŞLAMAK İÇİN  SPACE  VEYA  E  'YE  BAS  ◀";
+            _stateLabel.Text = "▶  BAŞLAMAK İÇİN  SPACE  VEYA  E  BASIN  ◀";
         else if (s == MatchState.Playing && _stateLabel != null)
             _stateLabel.Text = "";
     }
 
     private void _FlipSides()
     {
-        // Takımlar yer değiştirsin (devre arası)
         foreach (Node n in GetTree().GetNodesInGroup("field_players"))
-        {
             if (n is FieldPlayer fp)
                 fp.GlobalPosition = new Vector2(PITCH_W - fp.GlobalPosition.X, fp.GlobalPosition.Y);
-        }
         foreach (Node n in GetTree().GetNodesInGroup("goalkeepers"))
-        {
             if (n is GoalkeeperAI gk)
                 gk.GlobalPosition = new Vector2(PITCH_W - gk.GlobalPosition.X, gk.GlobalPosition.Y);
-        }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  MAÇ SONU
-    // ─────────────────────────────────────────────────────────────
+    // ─── Maç sonu ───────────────────────────────────────────────
 
     private void _ShowResult()
     {
         _ApplyMatchStats();
 
-        int goals    = _humanPlayer?.GoalsScored ?? 0;
-        int passes   = _humanPlayer?.PassesAttempted ?? 0;
-        int tackles  = _humanPlayer?.TacklesWon ?? 0;
+        int goals   = _humanPlayer?.GoalsScored    ?? 0;
+        int passes  = _humanPlayer?.PassesAttempted ?? 0;
+        int tackles = _humanPlayer?.TacklesWon      ?? 0;
 
-        // Win/loss final rating adjustment
-        if (RedScore > BlueScore)       _playerRating = Mathf.Clamp(_playerRating + 0.5f, 1f, 10f);
-        else if (RedScore < BlueScore)  _playerRating = Mathf.Clamp(_playerRating - 0.5f, 1f, 10f);
+        if (RedScore > BlueScore)      _playerRating = Mathf.Clamp(_playerRating + 0.5f, 1f, 10f);
+        else if (RedScore < BlueScore) _playerRating = Mathf.Clamp(_playerRating - 0.5f, 1f, 10f);
 
-        string result    = RedScore > BlueScore ? "KAZANDIN!" : RedScore < BlueScore ? "KAYBETTİN" : "BERABERLİK";
-        string highlight = goals >= 2 ? $"MAÇIN ADAMI — {goals} GOL!" :
-                           goals == 1 ? "1 GOL ATTIN!" :
-                           tackles >= 2 ? $"{tackles} FAULLE KALEYE SAHİP ÇIKTIN!" :
-                           passes >= 5  ? "YARATICI OYUN!" :
-                           "İyi mücadele!";
+        string result = RedScore > BlueScore ? "KAZANDIN!" :
+                        RedScore < BlueScore ? "KAYBETTİN" : "BERABERLİK";
 
-        string statGain = "";
-        if (goals > 0)       statGain += $"Şut Gücü +{goals / 2 + 1}  ";
-        if (RedScore > BlueScore) statGain += "Moral +15  ";
-        statGain += "Yorgunluk +25";
+        string highlight = goals >= 2  ? $"MAÇIN ADAMI — {goals} GOL!" :
+                           goals == 1  ? "1 GOL ATTIN!" :
+                           tackles >= 2 ? $"{tackles} TOPU ALDIM!" :
+                           passes >= 5  ? "YARATICI OYUN!" : "İyi mücadele!";
 
         DialogueManager.Instance.Show(
             $"MAÇ BİTTİ — {result}",
             $"Skor: {RedScore} — {BlueScore}  |  Puan: {_playerRating:F1} ★\n" +
             $"{highlight}\n" +
-            $"Gol: {goals}  Pas: {passes}  Faul: {tackles}\n" +
-            $"{statGain}\n" +
+            $"Gol: {goals}  Pas: {passes}  Top Alma: {tackles}\n" +
             $"Devam etmek için Enter'a bas.",
             () => WorldManager.Instance.GoTo("WorldMap")
         );
@@ -480,31 +363,14 @@ public partial class MatchManager : Node2D
     private void _ApplyMatchStats()
     {
         var gm = GameManager.Instance;
-
-        if (RedScore > BlueScore)
-        {
-            gm.Morale   = Mathf.Min(100, gm.Morale  + 15);
-            gm.AddEvent("Maçı kazandın! Moral +15");
-        }
-        else if (RedScore < BlueScore)
-        {
-            gm.Morale   = Mathf.Max(0, gm.Morale  - 5);
-        }
+        if (RedScore > BlueScore)      { gm.Morale = Mathf.Min(100, gm.Morale + 15); gm.AddEvent("Maçı kazandın! Moral +15"); }
+        else if (RedScore < BlueScore) { gm.Morale = Mathf.Max(0, gm.Morale - 5); }
 
         int goals = _humanPlayer?.GoalsScored ?? 0;
-        if (goals > 0)
-        {
-            gm.ShotPower = Mathf.Min(99, gm.ShotPower + goals / 2);
-            gm.AddEvent($"{goals} gol attın! Şut Gücü +" + goals / 2);
-        }
+        if (goals > 0) { gm.ShotPower = Mathf.Min(99, gm.ShotPower + goals / 2); }
 
         gm.Fatigue = Mathf.Min(100, gm.Fatigue + 25);
         gm.Energy  = Mathf.Max(0,   gm.Energy  - 20);
-        GameTime.Instance?.AdvanceTime(180f); // Maç = 3 saat oyun süresi
-    }
-
-    private void _EndMatch()
-    {
-        WorldManager.Instance.GoTo("WorldMap");
+        GameTime.Instance?.AdvanceTime(180f);
     }
 }

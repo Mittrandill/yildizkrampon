@@ -19,11 +19,11 @@ public partial class Football : RigidBody2D
     public override void _Ready()
     {
         Instance      = this;
-        LinearDamp    = 2.2f;
-        AngularDamp   = 6f;
+        LinearDamp    = 3.2f;  // Daha fazla sürtünme — top gerçekçi durur
+        AngularDamp   = 8f;
         GravityScale  = 0f;
         CollisionLayer = 4;
-        CollisionMask  = 16; // walls only when free
+        CollisionMask  = 16;
         AddToGroup("ball");
     }
 

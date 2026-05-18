@@ -1,64 +1,61 @@
 using Godot;
-using System.Collections.Generic;
 
 /// res://scripts/FieldPlayer.cs
-/// Saha oyuncusu — hem insan kontrolü hem YZ modu.
-/// MatchManager hangi Red oyuncunun human-controlled olduğunu belirler.
+/// Saha oyuncusu — insan kontrolü + rol-tabanlı YZ (DEF/MID/FWD farklı davranır).
 public partial class FieldPlayer : CharacterBody2D
 {
     public enum Team { Red, Blue }
     public enum Role { DEF, MID, FWD }
 
-    // --- Metadata (BuildMatch tarafından SetMeta ile set edilir) ---
+    // ─── Metadata ───────────────────────────────────────────────
     public Team PlayerTeam  { get; set; } = Team.Red;
     public Role PlayerRole  { get; set; } = Role.MID;
     public int  SlotIndex   { get; set; } = 0;
-
-    // Formation anchor (0-1 normalized, relative to team direction)
     private float _slotX = 0.5f;
     private float _slotY = 0.5f;
 
-    // --- Runtime state ---
-    public Vector2 FacingDir    { get; private set; } = Vector2.Right;
-    public bool    HasBall       => Football.Instance?.BallController == this;
-    public float   Stamina       { get; private set; } = 100f;
+    // ─── Saha sabitleri ─────────────────────────────────────────
+    public const float PITCH_W  = 1920f;
+    public const float PITCH_H  = 768f;
+    public const float GOAL_TOP = 279f;
+    public const float GOAL_BOT = 489f;
 
-    // Match stats (for player rating)
-    public int GoalsScored    = 0;
-    public int ShotsFired     = 0;
-    public int PassesAttempted= 0;
-    public int TacklesWon     = 0;
+    // ─── Hız ────────────────────────────────────────────────────
+    private const float WALK_SPEED   = 175f;
+    private const float SPRINT_SPEED = 280f;
+    private const float AI_BASE_SPEED = 158f;
+    private const float CLAIM_DIST    = 40f;
 
-    // Human control
+    // ─── Durum ──────────────────────────────────────────────────
+    public Vector2 FacingDir   { get; private set; } = Vector2.Right;
+    public bool    HasBall      => Football.Instance?.BallController == this;
+    public float   Stamina      { get; private set; } = 100f;
+
+    // Maç istatistikleri
+    public int GoalsScored     = 0;
+    public int ShotsFired      = 0;
+    public int PassesAttempted = 0;
+    public int TacklesWon      = 0;
+
+    // ─── İnsan kontrolü ─────────────────────────────────────────
     private float _shootCharge  = 0f;
     private bool  _isCharging   = false;
     private float _kickCooldown = 0f;
 
-    // Animasyon
+    // ─── Animasyon ──────────────────────────────────────────────
     private AnimatedSprite2D? _anim;
 
-    // AI state
+    // ─── YZ durumu ──────────────────────────────────────────────
     private enum AIState { Positioning, ChasingBall, Dribbling, Supporting, Marking, Pressing }
     private AIState _aiState    = AIState.Positioning;
     private float   _aiDecTimer = 0f;
     private Vector2 _aiTarget   = Vector2.Zero;
 
-    // Pitch constants (shared with MatchManager)
-    public const float PITCH_W    = 1920f;
-    public const float PITCH_H    = 768f;
-    public const float GOAL_TOP   = 279f;
-    public const float GOAL_BOT   = 489f;
-
-    // Speed constants
-    private const float WALK_SPEED   = 160f;
-    private const float SPRINT_SPEED = 252f;
-    private const float CONTROL_DIST = 32f;
-    private const float TACKLE_DIST  = 34f;
-
+    // ─────────────────────────────────────────────────────────────
     public override void _Ready()
     {
-        // Read metadata set by scene builder
-        if (HasMeta("team"))    PlayerTeam = ((string)GetMeta("team")) == "Red" ? Team.Red : Team.Blue;
+        if (HasMeta("team"))
+            PlayerTeam = ((string)GetMeta("team")) == "Red" ? Team.Red : Team.Blue;
         if (HasMeta("role"))
         {
             string r = (string)GetMeta("role");
@@ -70,175 +67,139 @@ public partial class FieldPlayer : CharacterBody2D
 
         CollisionLayer = PlayerTeam == Team.Red ? 1u : 2u;
         CollisionMask  = 1 | 2 | 16;
-
-        string group = PlayerTeam == Team.Red ? "team_red" : "team_blue";
-        AddToGroup(group);
+        AddToGroup(PlayerTeam == Team.Red ? "team_red" : "team_blue");
         AddToGroup("field_players");
 
-        _aiTarget = _GetFormationPos(new Vector2(PITCH_W / 2f, PITCH_H / 2f));
+        _aiTarget = GlobalPosition;
         _SetupAnimation();
     }
 
     public override void _Draw()
     {
-        bool human = MatchManager.Instance?.IsHumanControlled(this) ?? false;
-        if (!human) return;
+        if (!(MatchManager.Instance?.IsHumanControlled(this) ?? false)) return;
+        // Oyuncu üstünde yeşil ok
         DrawPolygon(
-            new Vector2[] { new Vector2(0, -30), new Vector2(-9, -46), new Vector2(9, -46) },
-            new Color[] { new Color(0.15f, 1f, 0.3f), new Color(0.15f, 1f, 0.3f), new Color(0.15f, 1f, 0.3f) }
+            new Vector2[] { new(0, -32), new(-10, -50), new(10, -50) },
+            new Color[] { new(0.2f, 1f, 0.3f), new(0.2f, 1f, 0.3f), new(0.2f, 1f, 0.3f) }
         );
-        DrawLine(new Vector2(-9, -46), new Vector2(9, -46), new Color(1,1,1,0.8f), 1.5f);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  ANİMASYON
-    // ─────────────────────────────────────────────────────────────
+    // ─── Animasyon ──────────────────────────────────────────────
 
     private void _SetupAnimation()
     {
-        var oldSprite = GetNodeOrNull<Sprite2D>("Sprite2D");
-        var sprScale  = oldSprite?.Scale    ?? new Vector2(0.16f, 0.16f);
-        var sprPos    = oldSprite?.Position ?? new Vector2(0, -6);
-        oldSprite?.QueueFree();
+        var old = GetNodeOrNull<Sprite2D>("Sprite2D");
+        var sc  = old?.Scale    ?? new Vector2(0.30f, 0.30f);
+        var pos = old?.Position ?? new Vector2(0, -6);
+        old?.QueueFree();
 
-        string prefix  = PlayerTeam == Team.Red ? "player" : "blue";
-        string idlePath  = PlayerTeam == Team.Red
-            ? "res://assets/img/player_sprite.png"
-            : "res://assets/img/npc_blue.png";
-        string walk1Path = $"res://assets/img/anim/{prefix}_walk1.png";
-        string walk2Path = $"res://assets/img/anim/{prefix}_walk2.png";
-        string kickPath  = $"res://assets/img/anim/{prefix}_kick.png";
+        string prefix   = PlayerTeam == Team.Red ? "player" : "blue";
+        string idlePath = PlayerTeam == Team.Red
+            ? "res://assets/img/player_sprite.png" : "res://assets/img/npc_blue.png";
+        string walk1P   = $"res://assets/img/anim/{prefix}_walk1.png";
+        string walk2P   = $"res://assets/img/anim/{prefix}_walk2.png";
+        string kickP    = $"res://assets/img/anim/{prefix}_kick.png";
 
-        var idleTex  = GD.Load<Texture2D>(idlePath);
-        var walk1Tex = ResourceLoader.Exists(walk1Path) ? GD.Load<Texture2D>(walk1Path) : idleTex;
-        var walk2Tex = ResourceLoader.Exists(walk2Path) ? GD.Load<Texture2D>(walk2Path) : idleTex;
-        var kickTex  = ResourceLoader.Exists(kickPath)  ? GD.Load<Texture2D>(kickPath)  : idleTex;
+        var idle  = GD.Load<Texture2D>(idlePath);
+        var walk1 = ResourceLoader.Exists(walk1P) ? GD.Load<Texture2D>(walk1P) : idle;
+        var walk2 = ResourceLoader.Exists(walk2P) ? GD.Load<Texture2D>(walk2P) : idle;
+        var kick  = ResourceLoader.Exists(kickP)  ? GD.Load<Texture2D>(kickP)  : idle;
 
         var frames = new SpriteFrames();
+        _AddAnim(frames, "idle",      4f,  true,  idle);
+        _AddAnim(frames, "walk",      8f,  true,  idle, walk1);
+        _AddAnim(frames, "walk_back", 7f,  true,  walk2);
+        _AddAnim(frames, "run",       14f, true,  idle, walk1, walk2);
+        _AddAnim(frames, "kick",      10f, false, kick, idle);
 
-        _AddAnim(frames, "idle",      4f,  true,  idleTex);
-        _AddAnim(frames, "walk",      7f,  true,  idleTex, walk1Tex);
-        _AddAnim(frames, "walk_back", 6f,  true,  walk2Tex);
-        _AddAnim(frames, "run",       13f, true,  idleTex, walk1Tex);
-        _AddAnim(frames, "kick",      10f, false, idleTex, kickTex, idleTex);
-
-        _anim = new AnimatedSprite2D();
-        _anim.Name           = "AnimSprite";
-        _anim.SpriteFrames   = frames;
-        _anim.Scale          = sprScale;
-        _anim.Position       = sprPos;
+        _anim = new AnimatedSprite2D { Name = "AnimSprite", SpriteFrames = frames, Scale = sc, Position = pos };
         AddChild(_anim);
         _anim.Play("idle");
     }
 
-    private static void _AddAnim(SpriteFrames frames, string name, float fps,
-                                  bool loop, params Texture2D[] textures)
+    private static void _AddAnim(SpriteFrames f, string n, float fps, bool loop, params Texture2D[] texs)
     {
-        frames.AddAnimation(name);
-        frames.SetAnimationSpeed(name, fps);
-        frames.SetAnimationLoop(name, loop);
-        foreach (var t in textures) frames.AddFrame(name, t);
+        f.AddAnimation(n); f.SetAnimationSpeed(n, fps); f.SetAnimationLoop(n, loop);
+        foreach (var t in texs) f.AddFrame(n, t);
     }
 
     private void _UpdateAnimation()
     {
         if (_anim == null) return;
+        float spd      = Velocity.Length();
+        bool  kicking  = _kickCooldown > 0.3f;
+        bool  backMove = FacingDir.Y < -0.5f && Mathf.Abs(FacingDir.X) < 0.7f;
+        bool  sprinting = spd > WALK_SPEED * 1.1f;
 
-        float speed   = Velocity.Length();
-        bool kicking  = _kickCooldown > 0.35f;
-        bool sprinting = speed > WALK_SPEED * 1.15f;
-        bool movingUp  = FacingDir.Y < -0.55f && Mathf.Abs(FacingDir.X) < 0.65f;
+        string next = kicking      ? "kick"      :
+                      spd < 20f    ? "idle"      :
+                      backMove     ? "walk_back" :
+                      sprinting    ? "run"       : "walk";
 
-        string newAnim;
-        if (kicking)
-            newAnim = "kick";
-        else if (speed < 18f)
-            newAnim = "idle";
-        else if (movingUp)
-            newAnim = "walk_back";
-        else if (sprinting)
-            newAnim = "run";
-        else
-            newAnim = "walk";
+        if (_anim.Animation != next) _anim.Play(next);
 
-        if (_anim.Animation != newAnim)
-            _anim.Play(newAnim);
-
-        // Yatay flip (sağ/sol hareket)
-        if (!movingUp)
+        if (!backMove)
         {
-            if (FacingDir.X < -0.15f)      _anim.FlipH = true;
-            else if (FacingDir.X > 0.15f)  _anim.FlipH = false;
+            if (FacingDir.X < -0.1f)     _anim.FlipH = true;
+            else if (FacingDir.X > 0.1f) _anim.FlipH = false;
         }
-        else
-        {
-            _anim.FlipH = false;
-        }
+        else _anim.FlipH = false;
     }
+
+    // ─── Fizik döngüsü ──────────────────────────────────────────
 
     public override void _PhysicsProcess(double delta)
     {
         if (_kickCooldown > 0f) _kickCooldown -= (float)delta;
         _aiDecTimer = Mathf.Max(0f, _aiDecTimer - (float)delta);
-
         QueueRedraw();
 
+        // Serbest topu kap
         var ball = Football.Instance;
+        if (ball != null && ball.CanBeClaimed && _kickCooldown <= 0f
+            && GlobalPosition.DistanceTo(ball.GlobalPosition) < CLAIM_DIST)
+            ball.GiveControl(this);
 
-        // Try to claim free ball
-        if (ball != null && ball.CanBeClaimed && _kickCooldown <= 0f)
-        {
-            float dist = GlobalPosition.DistanceTo(ball.GlobalPosition);
-            if (dist < CONTROL_DIST)
-                ball.GiveControl(this);
-        }
-
-        bool humanControlled = MatchManager.Instance?.IsHumanControlled(this) ?? false;
-
-        if (humanControlled)
+        if (MatchManager.Instance?.IsHumanControlled(this) ?? false)
             _HumanProcess((float)delta);
         else
             _AIProcess((float)delta);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  HUMAN CONTROL
-    // ─────────────────────────────────────────────────────────────
+    // ─── İnsan kontrolü ─────────────────────────────────────────
 
     private void _HumanProcess(float delta)
     {
-        var dir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        var dir    = Input.GetVector("move_left", "move_right", "move_up", "move_down");
         bool sprint = Input.IsActionPressed("sprint");
 
-        if (dir != Vector2.Zero) FacingDir = dir;
+        if (dir != Vector2.Zero) FacingDir = dir.Normalized();
 
-        // Stamina
         if (sprint && dir != Vector2.Zero)
-            Stamina = Mathf.Max(0f, Stamina - delta * 22f);
+            Stamina = Mathf.Max(0f, Stamina - delta * 20f);
         else
-            Stamina = Mathf.Min(100f, Stamina + delta * 9f);
+            Stamina = Mathf.Min(100f, Stamina + delta * 12f);
 
-        float spd = (sprint && Stamina > 5f) ? SPRINT_SPEED : WALK_SPEED;
-        float energyMod = Mathf.Clamp(GameManager.Instance.Energy / 100f, 0.5f, 1.0f);
-        float sprintMod = Mathf.Clamp(GameManager.Instance.Sprint / 50f, 0.7f, 1.4f);
-        Velocity = dir * spd * energyMod * sprintMod;
+        float spd  = (sprint && Stamina > 5f) ? SPRINT_SPEED : WALK_SPEED;
+        float eMod = Mathf.Clamp(GameManager.Instance.Energy / 100f, 0.55f, 1.0f);
+
+        // Yumuşak ivme
+        Velocity = Velocity.Lerp(dir * spd * eMod, 0.25f);
         MoveAndSlide();
 
         MatchManager.Instance?.SetStaminaBar(Stamina);
 
         if (HasBall)
         {
-            // PAS: F
             if (Input.IsActionJustPressed("pass"))
                 _HumanPass();
 
-            // ŞUT: Space (şarj et ve bırak)
             if (Input.IsActionPressed("action") && !_isCharging)
                 _isCharging = true;
 
             if (_isCharging)
             {
-                _shootCharge = Mathf.Min(100f, _shootCharge + delta * 75f);
+                _shootCharge = Mathf.Min(100f, _shootCharge + delta * 80f);
                 MatchManager.Instance?.SetPowerBar(_shootCharge);
             }
 
@@ -254,10 +215,10 @@ public partial class FieldPlayer : CharacterBody2D
             _shootCharge = 0f; _isCharging = false;
             MatchManager.Instance?.SetPowerBar(0f);
 
-            // FAUL: E
             if (Input.IsActionJustPressed("interact"))
                 _TryTackle();
         }
+
         _UpdateAnimation();
     }
 
@@ -266,15 +227,14 @@ public partial class FieldPlayer : CharacterBody2D
         var ball = Football.Instance;
         if (ball?.BallController != this) return;
 
-        FieldPlayer? target = _FindBestPassTarget();
+        var target = _FindBestPassTarget();
         if (target == null) return;
 
-        Vector2 toTarget  = target.GlobalPosition - GlobalPosition;
-        float   dist      = toTarget.Length();
-        float   passSpeed = Mathf.Clamp(dist * 1.8f, 320f, 720f);
-        ball.Kick(toTarget.Normalized() * passSpeed);
-        FacingDir = toTarget.Normalized();
-        _kickCooldown     = 0.55f;
+        Vector2 dir   = target.GlobalPosition - GlobalPosition;
+        float   speed = Mathf.Clamp(dir.Length() * 1.9f, 300f, 780f);
+        ball.Kick(dir.Normalized() * speed);
+        FacingDir     = dir.Normalized();
+        _kickCooldown = 0.45f;
         PassesAttempted++;
         MatchManager.Instance?.OnAssistOpportunity(target);
     }
@@ -293,19 +253,20 @@ public partial class FieldPlayer : CharacterBody2D
 
         if (isHuman)
         {
-            // Blend joystick direction + goal direction
-            shootDir = (baseDir * 0.65f + FacingDir * 0.35f).Normalized();
+            // Yüz yönü + kale yönü karıştır
+            shootDir = (baseDir * 0.6f + FacingDir * 0.4f).Normalized();
         }
         else
         {
-            // AI shoot with slight inaccuracy based on skill
-            float noise = Mathf.Lerp(0.12f, 0.02f, GameManager.Instance.ShotPower / 99f);
-            shootDir = (baseDir + new Vector2(GD.Randf() * noise - noise / 2f,
-                                              GD.Randf() * noise - noise / 2f)).Normalized();
+            float noise = Mathf.Lerp(0.10f, 0.02f, GameManager.Instance.ShotPower / 99f);
+            shootDir = (baseDir + new Vector2(
+                (GD.Randf() * 2f - 1f) * noise,
+                (GD.Randf() * 2f - 1f) * noise * 1.5f
+            )).Normalized();
         }
 
-        float shotPowerStat = Mathf.Clamp(GameManager.Instance.ShotPower / 50f, 0.6f, 1.5f);
-        float speed = Mathf.Lerp(380f, 960f, power / 100f) * shotPowerStat;
+        float statMod = Mathf.Clamp(GameManager.Instance.ShotPower / 50f, 0.7f, 1.5f);
+        float speed   = Mathf.Lerp(420f, 1050f, power / 100f) * statMod;
         ball.Kick(shootDir * speed);
         FacingDir     = shootDir;
         _kickCooldown = 0.65f;
@@ -315,314 +276,271 @@ public partial class FieldPlayer : CharacterBody2D
     private void _TryTackle()
     {
         var ball = Football.Instance;
-        if (ball?.BallController == null) return;
-        if (ball.BallController.PlayerTeam == PlayerTeam) return;
+        if (ball?.BallController == null || ball.BallController.PlayerTeam == PlayerTeam) return;
+        if (GlobalPosition.DistanceTo(ball.BallController.GlobalPosition) > 58f) return;
 
-        float dist = GlobalPosition.DistanceTo(ball.BallController.GlobalPosition);
-        if (dist > TACKLE_DIST * 1.6f) return;
-
-        float techMod  = Mathf.Clamp(GameManager.Instance.Technique / 50f, 0.4f, 1.6f);
-        float chance   = 0.60f * techMod;
-
-        if (GD.Randf() < chance)
-        {
-            ball.ForceRelease();
-            TacklesWon++;
-        }
-        _kickCooldown = 0.5f;
+        float chance = 0.55f * Mathf.Clamp(GameManager.Instance.Technique / 50f, 0.4f, 1.6f);
+        if (GD.Randf() < chance) { ball.ForceRelease(); TacklesWon++; }
+        _kickCooldown = 0.45f;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  AI CONTROL
-    // ─────────────────────────────────────────────────────────────
+    // ─── YZ kontrolü ────────────────────────────────────────────
 
     private void _AIProcess(float delta)
     {
         var ball = Football.Instance;
         if (ball == null) { MoveAndSlide(); return; }
 
-        // Update stamina (AI recovers always)
-        Stamina = Mathf.Min(100f, Stamina + delta * 6f);
+        Stamina = Mathf.Min(100f, Stamina + delta * 7f);
 
         if (_aiDecTimer <= 0f)
         {
-            _UpdateAIState(ball);
+            _aiState    = _DecideState(ball);
             _aiDecTimer = _AIDecisionInterval();
         }
 
-        _aiTarget = _ComputeAITarget(ball);
-        _MoveTowardAI(_aiTarget, delta);
+        _aiTarget = _ComputeTarget(ball);
+        _MoveToward(_aiTarget, delta);
 
-        if (HasBall) _AIBallDecision(ball);
+        if (HasBall) _AIWithBall(ball);
         _UpdateAnimation();
     }
 
-    private void _UpdateAIState(Football ball)
+    private AIState _DecideState(Football ball)
     {
-        bool myTeamHasBall  = ball.BallController?.PlayerTeam == PlayerTeam;
-        bool oppHasBall     = ball.IsControlled && !myTeamHasBall;
-        bool ballFree       = !ball.IsControlled;
+        if (HasBall) return AIState.Dribbling;
 
-        if (HasBall)       { _aiState = AIState.Dribbling; return; }
+        bool myTeam   = ball.BallController?.PlayerTeam == PlayerTeam;
+        bool ballFree = !ball.IsControlled;
+        float dist    = GlobalPosition.DistanceTo(ball.GlobalPosition);
 
-        bool iChase        = _IsNearestToBall(ball);
+        // En fazla 2 oyuncu topa koşsun — formasyonu boz
+        bool canChase = _IsAmongNearestN(ball, 2);
 
-        if (ballFree)
+        switch (PlayerRole)
         {
-            _aiState = iChase ? AIState.ChasingBall : AIState.Positioning;
-            return;
-        }
-        if (oppHasBall)
-        {
-            _aiState = iChase ? AIState.Pressing : AIState.Marking;
-            return;
-        }
-        // My team has ball
-        _aiState = iChase ? AIState.Positioning : AIState.Supporting;
-    }
-
-    private Vector2 _ComputeAITarget(Football ball)
-    {
-        switch (_aiState)
-        {
-            case AIState.Dribbling:
+            case Role.DEF:
             {
-                // Drive toward opponent goal
-                float gx = PlayerTeam == Team.Red ? PITCH_W * 0.85f : PITCH_W * 0.15f;
-                return new Vector2(gx, Mathf.Lerp(GlobalPosition.Y, PITCH_H / 2f, 0.1f));
+                bool inMyHalf = _BallInMyHalf(ball);
+                if (canChase && inMyHalf && dist < 340f) return AIState.ChasingBall;
+                if (!myTeam && inMyHalf)
+                {
+                    var opp = _NearestOpponent();
+                    if (opp != null && GlobalPosition.DistanceTo(opp.GlobalPosition) < 260f)
+                        return AIState.Marking;
+                }
+                return AIState.Positioning;
             }
-            case AIState.ChasingBall:
-            case AIState.Pressing:
-                return ball.GlobalPosition;
 
-            case AIState.Supporting:
-                return _GetSupportPosition(ball);
+            case Role.MID:
+                if (canChase && dist < 400f) return AIState.ChasingBall;
+                if (!myTeam && dist < 300f)  return AIState.Pressing;
+                return myTeam ? AIState.Supporting : AIState.Positioning;
 
-            case AIState.Marking:
-                return _GetMarkingPosition(ball);
-
-            default:
-                return _GetFormationPos(ball.GlobalPosition);
+            default: // FWD
+                if (canChase && dist < 480f) return AIState.ChasingBall;
+                if (!myTeam && dist < 350f)  return AIState.Pressing;
+                return myTeam ? AIState.Supporting : AIState.Positioning;
         }
     }
 
-    private void _MoveTowardAI(Vector2 target, float delta)
+    private Vector2 _ComputeTarget(Football ball)
     {
-        float diff = _AISpeedFactor();
-        float spd  = WALK_SPEED * diff;
-        Vector2 dir = (target - GlobalPosition);
-        float dist = dir.Length();
-        if (dist < 4f) { Velocity = Vector2.Zero; MoveAndSlide(); return; }
+        return _aiState switch
+        {
+            AIState.Dribbling                       => _DribbleTarget(),
+            AIState.ChasingBall or AIState.Pressing => ball.GlobalPosition,
+            AIState.Supporting                      => _SupportTarget(ball),
+            AIState.Marking                         => _MarkTarget(ball),
+            _                                       => _FormationTarget(ball.GlobalPosition),
+        };
+    }
 
-        dir /= dist;
-        if (dir != Vector2.Zero) FacingDir = dir;
+    private Vector2 _DribbleTarget()
+    {
+        float gx = PlayerTeam == Team.Red ? PITCH_W - 90f : 90f;
+        float gy = Mathf.Clamp(GlobalPosition.Y, GOAL_TOP + 10f, GOAL_BOT - 10f);
+        return new Vector2(gx, Mathf.Lerp(GlobalPosition.Y, gy, 0.1f));
+    }
 
-        // Separation from teammates
-        dir += _ComputeSeparation() * 0.4f;
+    private Vector2 _SupportTarget(Football ball)
+    {
+        float ax   = PlayerTeam == Team.Red ? 1f : -1f;
+        float offY = SlotIndex % 2 == 0 ? 120f : -120f;
+        float offX = ax * (PlayerRole == Role.FWD ? 150f : 70f);
+        return new Vector2(
+            Mathf.Clamp(ball.GlobalPosition.X + offX, 60f, PITCH_W - 60f),
+            Mathf.Clamp(ball.GlobalPosition.Y + offY, 60f, PITCH_H - 60f)
+        );
+    }
 
-        Velocity = dir.Normalized() * spd;
+    private Vector2 _MarkTarget(Football ball)
+    {
+        var opp = _NearestOpponent();
+        if (opp == null) return _FormationTarget(ball.GlobalPosition);
+        Vector2 ownGoal = PlayerTeam == Team.Red
+            ? new Vector2(0f, PITCH_H / 2f)
+            : new Vector2(PITCH_W, PITCH_H / 2f);
+        return opp.GlobalPosition + (ownGoal - opp.GlobalPosition).Normalized() * 38f;
+    }
+
+    private Vector2 _FormationTarget(Vector2 ballPos)
+    {
+        bool myTeam    = Football.Instance?.BallController?.PlayerTeam == PlayerTeam;
+        float attackDir = PlayerTeam == Team.Red ? 1f : -1f;
+
+        float baseX = PlayerTeam == Team.Red ? _slotX * PITCH_W : (1f - _slotX) * PITCH_W;
+        float baseY = _slotY * PITCH_H;
+
+        baseX += attackDir * (myTeam ? 0.07f : -0.05f) * PITCH_W;
+        float blY = Mathf.Clamp(Mathf.Lerp(baseY, ballPos.Y, 0.22f), 60f, PITCH_H - 60f);
+
+        return new Vector2(Mathf.Clamp(baseX, 50f, PITCH_W - 50f), blY);
+    }
+
+    private void _MoveToward(Vector2 target, float delta)
+    {
+        float spd  = AI_BASE_SPEED * _AISpeedFactor();
+        Vector2 d  = target - GlobalPosition;
+        float  dist = d.Length();
+
+        if (dist < 5f) { Velocity = Vector2.Zero; MoveAndSlide(); return; }
+
+        d /= dist;
+        if (d != Vector2.Zero) FacingDir = d;
+        d += _Separation() * 0.35f;
+
+        Velocity = d.Normalized() * spd;
         MoveAndSlide();
     }
 
-    private void _AIBallDecision(Football ball)
+    private void _AIWithBall(Football ball)
     {
         if (_kickCooldown > 0f) return;
 
-        Vector2 goalCenter = PlayerTeam == Team.Red
+        Vector2 goalC = PlayerTeam == Team.Red
             ? new Vector2(PITCH_W, (GOAL_TOP + GOAL_BOT) / 2f)
             : new Vector2(0f, (GOAL_TOP + GOAL_BOT) / 2f);
 
-        float distGoal = GlobalPosition.DistanceTo(goalCenter);
-        Vector2 toGoal = (goalCenter - GlobalPosition).Normalized();
-        float angle    = FacingDir.Dot(toGoal);
+        float distGoal = GlobalPosition.DistanceTo(goalC);
 
-        // ŞUT: menzile geldiyse
-        float shootRange = Mathf.Lerp(250f, 450f, _AISpeedFactor());
-        if (distGoal < shootRange && angle > 0.35f)
+        if (distGoal < 400f && (goalC - GlobalPosition).Normalized().Dot(FacingDir) > 0.25f)
         {
-            float power = GD.Randf() * 35f + 55f; // 55-90% güç
-            _Shoot(power, isHuman: false);
+            _Shoot(GD.Randf() * 30f + 60f, isHuman: false);
             return;
         }
 
-        // PAS: baskı altındaysa veya daha iyi konumda takım arkadaşı varsa
-        float pressure = _GetSelfPressure(ball);
-        if (pressure > 0.5f || (GD.Randf() < 0.3f && distGoal > 500f))
+        if (_SelfPressure() > 0.45f || (GD.Randf() < 0.22f && distGoal > 520f))
         {
-            FieldPlayer? t = _FindBestPassTarget();
+            var t = _FindBestPassTarget();
             if (t != null) { _AIPass(t, ball); return; }
         }
-
-        // Hedef kaleye doğru dribbling — _MoveTowardAI halleder
     }
 
     private void _AIPass(FieldPlayer target, Football ball)
     {
         if (ball.BallController != this) return;
-        Vector2 toTarget  = target.GlobalPosition - GlobalPosition;
-        float   dist      = toTarget.Length();
-        float   speed     = Mathf.Clamp(dist * 1.7f, 280f, 680f);
-        ball.Kick(toTarget.Normalized() * speed);
-        FacingDir     = toTarget.Normalized();
-        _kickCooldown = 0.55f;
-        MatchManager.Instance?.OnAssistOpportunity(target);
+        Vector2 d = target.GlobalPosition - GlobalPosition;
+        ball.Kick(d.Normalized() * Mathf.Clamp(d.Length() * 1.8f, 280f, 740f));
+        FacingDir = d.Normalized(); _kickCooldown = 0.5f;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  HELPERS
-    // ─────────────────────────────────────────────────────────────
+    // ─── Yardımcı metodlar ───────────────────────────────────────
 
-    private Vector2 _GetFormationPos(Vector2 ballPos)
+    private bool _BallInMyHalf(Football ball)
+        => PlayerTeam == Team.Red
+            ? ball.GlobalPosition.X < PITCH_W * 0.5f
+            : ball.GlobalPosition.X > PITCH_W * 0.5f;
+
+    private bool _IsAmongNearestN(Football ball, int n)
     {
-        bool myTeamHasBall = Football.Instance?.BallController?.PlayerTeam == PlayerTeam;
-        float attackDir    = PlayerTeam == Team.Red ? 1f : -1f;
-
-        // Slot in world coords
-        float baseX, baseY;
-        if (PlayerTeam == Team.Red)
+        float myD  = GlobalPosition.DistanceTo(ball.GlobalPosition);
+        string grp = PlayerTeam == Team.Red ? "team_red" : "team_blue";
+        int cnt    = 0;
+        foreach (Node node in GetTree().GetNodesInGroup(grp))
         {
-            baseX = _slotX * PITCH_W;
+            if (node is not FieldPlayer fp || fp == this) continue;
+            if (fp.GlobalPosition.DistanceTo(ball.GlobalPosition) < myD - 20f) cnt++;
         }
-        else
-        {
-            baseX = (1f - _slotX) * PITCH_W;
-        }
-        baseY = _slotY * PITCH_H;
-
-        // Push forward when attacking, drop deep when defending
-        float bias = myTeamHasBall ? 0.08f : -0.06f;
-        baseX += attackDir * bias * PITCH_W;
-
-        // Pull Y toward ball (within limits)
-        float blendedY = Mathf.Lerp(baseY, ballPos.Y, 0.28f);
-        blendedY = Mathf.Clamp(blendedY, 60f, PITCH_H - 60f);
-
-        return new Vector2(Mathf.Clamp(baseX, 40f, PITCH_W - 40f), blendedY);
-    }
-
-    private Vector2 _GetSupportPosition(Football ball)
-    {
-        // Be in triangle: left/right of ball carrier, forward
-        float attackDir = PlayerTeam == Team.Red ? 1f : -1f;
-        float lateral   = (SlotIndex % 2 == 0 ? 1f : -1f) * 90f;
-        float forward   = 80f * attackDir;
-        return ball.GlobalPosition + new Vector2(forward, lateral);
-    }
-
-    private Vector2 _GetMarkingPosition(Football ball)
-    {
-        // Find nearest opponent to mark
-        FieldPlayer? opp = _NearestOpponentToMe();
-        if (opp == null) return _GetFormationPos(ball.GlobalPosition);
-        // Stand between opponent and our goal
-        Vector2 ownGoal = PlayerTeam == Team.Red
-            ? new Vector2(0f, PITCH_H / 2f)
-            : new Vector2(PITCH_W, PITCH_H / 2f);
-        return Vector2.Zero.Lerp(opp.GlobalPosition, 0.7f) +
-               (ownGoal - opp.GlobalPosition).Normalized() * 30f;
+        return cnt < n;
     }
 
     private FieldPlayer? _FindBestPassTarget()
     {
-        string group = PlayerTeam == Team.Red ? "team_red" : "team_blue";
+        string grp = PlayerTeam == Team.Red ? "team_red" : "team_blue";
         FieldPlayer? best = null;
-        float bestScore  = -9999f;
-
-        foreach (Node node in GetTree().GetNodesInGroup(group))
+        float bestSc = -9999f;
+        foreach (Node node in GetTree().GetNodesInGroup(grp))
         {
             if (node is not FieldPlayer fp || fp == this) continue;
-
-            Vector2 toTarget = fp.GlobalPosition - GlobalPosition;
-            float forwardness = PlayerTeam == Team.Red ? toTarget.X : -toTarget.X;
-            if (forwardness < -80f) continue; // geri pas kabul et ama küçük bonusla
-
-            float distance = toTarget.Length();
-            if (distance < 60f || distance > 650f) continue;
-
-            float pressure = _GetPressureOn(fp);
-            float score    = forwardness * 0.6f
-                           - pressure * 40f
-                           - Mathf.Abs(distance - 280f) * 0.12f;
-
-            if (score > bestScore) { bestScore = score; best = fp; }
+            Vector2 toFP = fp.GlobalPosition - GlobalPosition;
+            float fwd    = PlayerTeam == Team.Red ? toFP.X : -toFP.X;
+            float dist   = toFP.Length();
+            if (fwd < -100f || dist < 60f || dist > 700f) continue;
+            float prs  = _PressureOn(fp);
+            float score = fwd * 0.5f - prs * 45f - Mathf.Abs(dist - 260f) * 0.1f;
+            // Bonus: insan oyuncuya pas atma ihtimali
+            if (MatchManager.Instance?.IsHumanControlled(fp) ?? false) score += 30f;
+            if (score > bestSc) { bestSc = score; best = fp; }
         }
         return best;
     }
 
-    private float _GetSelfPressure(Football ball)
+    private float _SelfPressure()
     {
-        string oppGroup = PlayerTeam == Team.Red ? "team_blue" : "team_red";
-        float totalPressure = 0f;
-        foreach (Node node in GetTree().GetNodesInGroup(oppGroup))
+        string opp = PlayerTeam == Team.Red ? "team_blue" : "team_red";
+        float p = 0f;
+        foreach (Node n in GetTree().GetNodesInGroup(opp))
         {
-            if (node is not FieldPlayer fp) continue;
+            if (n is not FieldPlayer fp) continue;
             float d = GlobalPosition.DistanceTo(fp.GlobalPosition);
-            if (d < 120f) totalPressure += 1f - d / 120f;
+            if (d < 120f) p += 1f - d / 120f;
         }
-        return Mathf.Clamp(totalPressure, 0f, 1f);
+        return Mathf.Clamp(p, 0f, 1f);
     }
 
-    private float _GetPressureOn(FieldPlayer target)
+    private float _PressureOn(FieldPlayer target)
     {
-        string oppGroup = PlayerTeam == Team.Red ? "team_blue" : "team_red";
+        string opp = PlayerTeam == Team.Red ? "team_blue" : "team_red";
         float p = 0f;
-        foreach (Node node in GetTree().GetNodesInGroup(oppGroup))
+        foreach (Node n in GetTree().GetNodesInGroup(opp))
         {
-            if (node is not FieldPlayer fp) continue;
+            if (n is not FieldPlayer fp) continue;
             float d = target.GlobalPosition.DistanceTo(fp.GlobalPosition);
             if (d < 100f) p += 1f - d / 100f;
         }
         return Mathf.Clamp(p, 0f, 1f);
     }
 
-    private bool _IsNearestToBall(Football ball)
+    private FieldPlayer? _NearestOpponent()
     {
-        float myDist = GlobalPosition.DistanceTo(ball.GlobalPosition);
-        string group = PlayerTeam == Team.Red ? "team_red" : "team_blue";
-        foreach (Node node in GetTree().GetNodesInGroup(group))
-        {
-            if (node is not FieldPlayer fp || fp == this) continue;
-            if (fp.GlobalPosition.DistanceTo(ball.GlobalPosition) < myDist - 15f) return false;
-        }
-        return true;
-    }
-
-    private FieldPlayer? _NearestOpponentToMe()
-    {
-        string group = PlayerTeam == Team.Red ? "team_blue" : "team_red";
-        FieldPlayer? nearest = null;
-        float nearestD = float.MaxValue;
-        foreach (Node n in GetTree().GetNodesInGroup(group))
+        string grp = PlayerTeam == Team.Red ? "team_blue" : "team_red";
+        FieldPlayer? nearest = null; float nd = float.MaxValue;
+        foreach (Node n in GetTree().GetNodesInGroup(grp))
         {
             if (n is not FieldPlayer fp) continue;
             float d = GlobalPosition.DistanceTo(fp.GlobalPosition);
-            if (d < nearestD) { nearestD = d; nearest = fp; }
+            if (d < nd) { nd = d; nearest = fp; }
         }
         return nearest;
     }
 
-    private Vector2 _ComputeSeparation()
+    private Vector2 _Separation()
     {
-        Vector2 force = Vector2.Zero;
+        Vector2 f = Vector2.Zero;
         foreach (Node n in GetTree().GetNodesInGroup("field_players"))
         {
             if (n is not FieldPlayer fp || fp == this) continue;
             float d = GlobalPosition.DistanceTo(fp.GlobalPosition);
-            if (d < 28f && d > 0.01f)
-                force += (GlobalPosition - fp.GlobalPosition).Normalized() * (1f - d / 28f) * 60f;
+            if (d < 32f && d > 0.01f)
+                f += (GlobalPosition - fp.GlobalPosition).Normalized() * (1f - d / 32f) * 75f;
         }
-        return force;
+        return f;
     }
 
     private float _AISpeedFactor()
-    {
-        // Kolay başlangıç (Overall 38) → AI %70 hız; Overall 99 → %100 hız
-        return Mathf.Lerp(0.62f, 1.0f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
-    }
+        => Mathf.Lerp(0.65f, 1.0f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
 
     private float _AIDecisionInterval()
-    {
-        // Daha yavaş kararlar başlangıçta (0.7s → 0.25s)
-        return Mathf.Lerp(0.70f, 0.25f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
-    }
+        => Mathf.Lerp(0.60f, 0.20f, Mathf.Clamp(GameManager.Instance.Overall / 100f, 0f, 1f));
 }

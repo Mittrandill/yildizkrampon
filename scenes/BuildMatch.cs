@@ -138,9 +138,10 @@ public partial class BuildMatch : SceneBuilderBase
     {
         var cam = new Camera2D(); cam.Name = "MatchCamera"; cam.UniqueNameInOwner = true;
         cam.Position = new Vector2(CX, CY);
+        cam.Zoom = new Vector2(1.5f, 1.5f);   // Yakın çekim — oyuncular büyük görünsün
         cam.LimitLeft = 0; cam.LimitRight = (int)W;
         cam.LimitTop = 0; cam.LimitBottom = (int)H;
-        cam.PositionSmoothingEnabled = true; cam.PositionSmoothingSpeed = 5f;
+        cam.PositionSmoothingEnabled = true; cam.PositionSmoothingSpeed = 6f;
         root.AddChild(cam);
     }
 
@@ -156,7 +157,7 @@ public partial class BuildMatch : SceneBuilderBase
         var sp = new Sprite2D();
         sp.Texture = GD.Load<Texture2D>(isRed
             ? "res://assets/img/player_sprite.png" : "res://assets/img/npc_blue.png");
-        sp.Scale = new Vector2(0.16f, 0.16f); sp.Position = new Vector2(0, -6); p.AddChild(sp);
+        sp.Scale = new Vector2(0.30f, 0.30f); sp.Position = new Vector2(0, -8); p.AddChild(sp);
         parent.AddChild(p);
     }
 
@@ -169,7 +170,7 @@ public partial class BuildMatch : SceneBuilderBase
         var sp = new Sprite2D();
         sp.Texture = GD.Load<Texture2D>(isRed
             ? "res://assets/img/player_sprite.png" : "res://assets/img/npc_blue.png");
-        sp.Scale = new Vector2(0.16f, 0.16f); sp.Position = new Vector2(0, -6);
+        sp.Scale = new Vector2(0.30f, 0.30f); sp.Position = new Vector2(0, -8);
         sp.Modulate = isRed ? new Color(1f, 0.7f, 0.2f) : new Color(0.7f, 0.7f, 1f);
         gk.AddChild(sp);
         parent.AddChild(gk);
