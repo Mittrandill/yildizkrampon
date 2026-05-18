@@ -17,4 +17,12 @@
 - GravityScale = 0 on all CharacterBody2D and RigidBody2D (2D top-down, no gravity).
 
 ## Known Issues / Workarounds
-- (none yet — will record during task execution)
+- GetTree() not available in SceneTree scripts — use Root.GetTree() instead.
+- ffmpeg on Windows (git-bundled) does not support glob patterns; use printf-style `frame%08d.png` instead.
+
+## Task 8 — Advanced Match HUD (done)
+- MatchManager tracks live player rating (starts 6.0, +0.8/goal, +0.05/pass, +0.2/tackle, clamp 1-10).
+- Tactical hints refresh every 3.5s: "ŞUTA GEÇ!" near goal, "F: Pas Ver" in possession, "TOPA KOŞ!" when ball is free.
+- EnergyBar ProgressBar pulls GameManager.Energy each frame in _UpdatePlaying.
+- CaptureMatch.cs: closed-loop ball-chasing by finding IsHumanControlled FieldPlayer + Football.Instance.GlobalPosition.
+- Post-match DialogueManager dialog shows rating, highlight text (MAÇIN ADAMI if goals≥2), and stat gains.

@@ -178,57 +178,103 @@ public partial class BuildMatch : SceneBuilderBase
     private void _BuildHUD(Node root)
     {
         var hud = new CanvasLayer(); hud.Name = "HUD"; hud.Layer = 10; root.AddChild(hud);
+
+        // --- TOP BAR ---
         var topBar = new ColorRect(); topBar.Color = new Color(0, 0, 0, 0.60f);
-        topBar.SetAnchorsPreset(Control.LayoutPreset.TopWide); topBar.Size = new Vector2(1280, 44);
+        topBar.SetAnchorsPreset(Control.LayoutPreset.TopWide); topBar.Size = new Vector2(1280, 50);
         hud.AddChild(topBar);
+
+        // Score (center)
         var score = new Label(); score.Name = "ScoreLabel"; score.UniqueNameInOwner = true;
-        score.Text = "0  -  0"; score.SetAnchorsPreset(Control.LayoutPreset.TopWide);
-        score.HorizontalAlignment = HorizontalAlignment.Center; score.Position = new Vector2(0, 4);
+        score.Text = "0  —  0"; score.SetAnchorsPreset(Control.LayoutPreset.TopWide);
+        score.HorizontalAlignment = HorizontalAlignment.Center; score.Position = new Vector2(0, 6);
         score.AddThemeFontSizeOverride("font_size", 28);
         score.AddThemeColorOverride("font_color", Colors.White); hud.AddChild(score);
+
+        // Timer (top right)
         var timer = new Label(); timer.Name = "TimerLabel"; timer.UniqueNameInOwner = true;
         timer.Text = "00:00"; timer.SetAnchorsPreset(Control.LayoutPreset.TopRight);
-        timer.Position = new Vector2(-110, 8); timer.AddThemeFontSizeOverride("font_size", 22);
+        timer.Position = new Vector2(-120, 10); timer.AddThemeFontSizeOverride("font_size", 22);
         timer.AddThemeColorOverride("font_color", new Color(1f, 0.9f, 0.4f)); hud.AddChild(timer);
+
+        // Energy bar (top left)
+        var eLbl = new Label(); eLbl.Text = "ENERJİ";
+        eLbl.SetAnchorsPreset(Control.LayoutPreset.TopLeft);
+        eLbl.Position = new Vector2(10, 6); eLbl.AddThemeFontSizeOverride("font_size", 11);
+        eLbl.AddThemeColorOverride("font_color", new Color(0.4f, 1f, 0.4f)); hud.AddChild(eLbl);
+        var energyBar = new ProgressBar(); energyBar.Name = "EnergyBar";
+        energyBar.UniqueNameInOwner = true; energyBar.MinValue = 0;
+        energyBar.MaxValue = 100; energyBar.Value = 100;
+        energyBar.SetAnchorsPreset(Control.LayoutPreset.TopLeft);
+        energyBar.Position = new Vector2(10, 22); energyBar.Size = new Vector2(160, 18);
+        hud.AddChild(energyBar);
+
+        // Player rating label (top right, below timer)
+        var ratingLabel = new Label(); ratingLabel.Name = "RatingLabel";
+        ratingLabel.UniqueNameInOwner = true;
+        ratingLabel.Text = "6.0 ★"; ratingLabel.SetAnchorsPreset(Control.LayoutPreset.TopRight);
+        ratingLabel.Position = new Vector2(-120, 32); ratingLabel.AddThemeFontSizeOverride("font_size", 16);
+        ratingLabel.AddThemeColorOverride("font_color", new Color(1f, 0.85f, 0.2f)); hud.AddChild(ratingLabel);
+
+        // State label (center)
         var stateL = new Label(); stateL.Name = "StateLabel"; stateL.UniqueNameInOwner = true;
         stateL.Text = ""; stateL.SetAnchorsPreset(Control.LayoutPreset.Center);
         stateL.HorizontalAlignment = HorizontalAlignment.Center;
-        stateL.Position = new Vector2(-200, -40); stateL.CustomMinimumSize = new Vector2(400, 0);
-        stateL.AddThemeFontSizeOverride("font_size", 22);
+        stateL.Position = new Vector2(-200, -50); stateL.CustomMinimumSize = new Vector2(400, 0);
+        stateL.AddThemeFontSizeOverride("font_size", 24);
         stateL.AddThemeColorOverride("font_color", new Color(1f, 0.9f, 0.2f)); hud.AddChild(stateL);
+
+        // --- BOTTOM BAR ---
         var botBar = new ColorRect(); botBar.Color = new Color(0, 0, 0, 0.55f);
         botBar.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
-        botBar.Position = new Vector2(0, -52); botBar.Size = new Vector2(1280, 52);
+        botBar.Position = new Vector2(0, -58); botBar.Size = new Vector2(1280, 58);
         hud.AddChild(botBar);
+
+        // Stamina bar (bottom left)
+        var slbl = new Label(); slbl.Text = "KONDİSYON";
+        slbl.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
+        slbl.Position = new Vector2(10, -56); slbl.AddThemeFontSizeOverride("font_size", 11);
+        slbl.AddThemeColorOverride("font_color", new Color(0.9f, 0.9f, 0.9f)); hud.AddChild(slbl);
         var staminaBar = new ProgressBar(); staminaBar.Name = "StaminaBar";
         staminaBar.UniqueNameInOwner = true; staminaBar.MinValue = 0;
         staminaBar.MaxValue = 100; staminaBar.Value = 100;
         staminaBar.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
-        staminaBar.Position = new Vector2(10, -34); staminaBar.Size = new Vector2(200, 20);
+        staminaBar.Position = new Vector2(10, -38); staminaBar.Size = new Vector2(180, 18);
         hud.AddChild(staminaBar);
-        var slbl = new Label(); slbl.Text = "Kondisyon";
-        slbl.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
-        slbl.Position = new Vector2(10, -50); slbl.AddThemeFontSizeOverride("font_size", 12);
-        slbl.AddThemeColorOverride("font_color", new Color(0.9f, 0.9f, 0.9f)); hud.AddChild(slbl);
+
+        // Shot power bar (bottom center)
+        var plbl = new Label(); plbl.Text = "ŞUT GÜCÜ";
+        plbl.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
+        plbl.HorizontalAlignment = HorizontalAlignment.Center;
+        plbl.Position = new Vector2(0, -56); plbl.AddThemeFontSizeOverride("font_size", 11);
+        plbl.AddThemeColorOverride("font_color", new Color(1f, 0.8f, 0.2f)); hud.AddChild(plbl);
         var powerBar = new ProgressBar(); powerBar.Name = "PowerBar";
         powerBar.UniqueNameInOwner = true; powerBar.MinValue = 0;
         powerBar.MaxValue = 100; powerBar.Value = 0;
         powerBar.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
-        powerBar.Position = new Vector2(490, -34); powerBar.Size = new Vector2(300, 20);
+        powerBar.Position = new Vector2(460, -38); powerBar.Size = new Vector2(360, 18);
         hud.AddChild(powerBar);
-        var plbl = new Label(); plbl.Text = "Sut Gucu";
-        plbl.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
-        plbl.HorizontalAlignment = HorizontalAlignment.Center;
-        plbl.Position = new Vector2(0, -50); plbl.AddThemeFontSizeOverride("font_size", 12);
-        plbl.AddThemeColorOverride("font_color", new Color(1f, 0.8f, 0.2f)); hud.AddChild(plbl);
+
+        // Tactical hint label (bottom center, above bar)
+        var hintLabel = new Label(); hintLabel.Name = "HintLabel";
+        hintLabel.UniqueNameInOwner = true; hintLabel.Text = "";
+        hintLabel.SetAnchorsPreset(Control.LayoutPreset.BottomWide);
+        hintLabel.HorizontalAlignment = HorizontalAlignment.Center;
+        hintLabel.Position = new Vector2(0, -76); hintLabel.CustomMinimumSize = new Vector2(500, 0);
+        hintLabel.AddThemeFontSizeOverride("font_size", 13);
+        hintLabel.AddThemeColorOverride("font_color", new Color(0.4f, 1f, 0.9f)); hud.AddChild(hintLabel);
+
+        // Controls hint (bottom right of bar)
         var ctrl = new Label();
-        ctrl.Text = "WASD:Hareket  SHIFT:Sprint  F:Pas  SPACE(tut):Sut  E:Faul";
-        ctrl.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
-        ctrl.Position = new Vector2(220, -50); ctrl.AddThemeFontSizeOverride("font_size", 11);
-        ctrl.AddThemeColorOverride("font_color", new Color(0.8f, 0.8f, 0.8f)); hud.AddChild(ctrl);
+        ctrl.Text = "WASD:Hareket  SHIFT:Sprint  F:Pas  SPACE:Şut  E:Faul";
+        ctrl.SetAnchorsPreset(Control.LayoutPreset.BottomRight);
+        ctrl.Position = new Vector2(-460, -56); ctrl.AddThemeFontSizeOverride("font_size", 10);
+        ctrl.AddThemeColorOverride("font_color", new Color(0.6f, 0.6f, 0.6f)); hud.AddChild(ctrl);
+
+        // Mini-map (bottom right)
         var miniMap = new MiniMap(); miniMap.Name = "MiniMap"; miniMap.UniqueNameInOwner = true;
         miniMap.SetAnchorsPreset(Control.LayoutPreset.BottomRight);
-        miniMap.Position = new Vector2(-252, -104); miniMap.Size = new Vector2(240, 96);
+        miniMap.Position = new Vector2(-256, -110); miniMap.Size = new Vector2(240, 96);
         hud.AddChild(miniMap);
     }
 

@@ -42,10 +42,18 @@ public partial class MatchManager : Node2D
     private Label?      _stateLabel;
     private ProgressBar? _staminaBar;
     private ProgressBar? _powerBar;
+    private ProgressBar? _energyBar;
+    private Label?      _ratingLabel;
+    private Label?      _hintLabel;
     private Camera2D?   _camera;
 
     // Mini-harita renk göstergesi
     private MiniMap?    _miniMap;
+
+    // Oyuncu puanı
+    private float _playerRating = 6.0f;
+    private float _hintTimer    = 0f;
+    private int   _hintPhase    = 0;
 
     // İnsan oyuncusunun son pozisyonu (switch threshold)
     private float _switchTimer = 0f;
@@ -71,6 +79,9 @@ public partial class MatchManager : Node2D
         _stateLabel  = GetNodeOrNull<Label>("%StateLabel");
         _staminaBar  = GetNodeOrNull<ProgressBar>("%StaminaBar");
         _powerBar    = GetNodeOrNull<ProgressBar>("%PowerBar");
+        _energyBar   = GetNodeOrNull<ProgressBar>("%EnergyBar");
+        _ratingLabel = GetNodeOrNull<Label>("%RatingLabel");
+        _hintLabel   = GetNodeOrNull<Label>("%HintLabel");
         _camera      = GetNodeOrNull<Camera2D>("%MatchCamera");
         _miniMap     = GetNodeOrNull<MiniMap>("%MiniMap");
 
@@ -164,6 +175,30 @@ public partial class MatchManager : Node2D
         // Kamera
         _UpdateCamera(ball);
 
+        // Enerji barı
+        if (_energyBar != null)
+            _energyBar.Value = GameManager.Instance.Energy;
+
+        // Pas başarı → rating güncelle
+        if (_humanPlayer != null)
+        {
+            float rating = 6.0f;
+            rating += _humanPlayer.GoalsScored * 0.8f;
+            rating += _humanPlayer.PassesAttempted * 0.05f;
+            rating += _humanPlayer.TacklesWon * 0.2f;
+            _playerRating = Mathf.Clamp(rating, 1.0f, 10.0f);
+            if (_ratingLabel != null)
+                _ratingLabel.Text = $"{_playerRating:F1} ★";
+        }
+
+        // Taktik ipucu
+        _hintTimer -= delta;
+        if (_hintTimer <= 0f)
+        {
+            _UpdateTacticalHint(ball);
+            _hintTimer = 3.5f;
+        }
+
         // Otomatik oyuncu değişimi
         _switchTimer += delta;
         if (_switchTimer >= SWITCH_INTERVAL)
@@ -171,6 +206,29 @@ public partial class MatchManager : Node2D
             _switchTimer = 0f;
             _AutoSwitch();
         }
+    }
+
+    private void _UpdateTacticalHint(Football? ball)
+    {
+        if (_hintLabel == null || ball == null || _humanPlayer == null) return;
+
+        bool hasBall     = _humanPlayer.HasBall;
+        float distToGoal = _humanPlayer.GlobalPosition.DistanceTo(
+            new Vector2(PITCH_W, (GOAL_TOP + GOAL_BOT) / 2f));
+        bool nearGoal    = distToGoal < 350f;
+
+        string hint;
+        if (hasBall && nearGoal)
+            hint = "ŞUTA GEÇ! [SPACE]";
+        else if (hasBall)
+            hint = "F: Pas Ver";
+        else if (!ball.IsControlled)
+            hint = "TOPA KOŞ!";
+        else
+            hint = "SHIFT: Sprint";
+
+        _hintPhase = (_hintPhase + 1) % 4;
+        _hintLabel.Text = hint;
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -198,6 +256,10 @@ public partial class MatchManager : Node2D
         {
             // Asist var (gelecekte rating'e ekle)
         }
+
+        // Oyuncu gol attıysa rating güncelle
+        if (scoringTeam == Team.Red && ball?.LastToucher == _humanPlayer)
+            _playerRating = Mathf.Clamp(_playerRating + 0.8f, 1.0f, 10.0f);
 
         if (_stateLabel != null) _stateLabel.Text = scoringTeam == Team.Red ? "GOL! KIRMIZI!" : "GOL! MAVİ!";
         _stateTimer = 2.5f;
@@ -362,11 +424,33 @@ public partial class MatchManager : Node2D
     private void _ShowResult()
     {
         _ApplyMatchStats();
-        string result = RedScore > BlueScore ? "KAZANDIN!" : RedScore < BlueScore ? "KAYBETTİN" : "BERABERLİK";
+
+        int goals    = _humanPlayer?.GoalsScored ?? 0;
+        int passes   = _humanPlayer?.PassesAttempted ?? 0;
+        int tackles  = _humanPlayer?.TacklesWon ?? 0;
+
+        // Win/loss final rating adjustment
+        if (RedScore > BlueScore)       _playerRating = Mathf.Clamp(_playerRating + 0.5f, 1f, 10f);
+        else if (RedScore < BlueScore)  _playerRating = Mathf.Clamp(_playerRating - 0.5f, 1f, 10f);
+
+        string result    = RedScore > BlueScore ? "KAZANDIN!" : RedScore < BlueScore ? "KAYBETTİN" : "BERABERLİK";
+        string highlight = goals >= 2 ? $"MAÇIN ADAMI — {goals} GOL!" :
+                           goals == 1 ? "1 GOL ATTIN!" :
+                           tackles >= 2 ? $"{tackles} FAULLE KALEYE SAHİP ÇIKTIN!" :
+                           passes >= 5  ? "YARATICI OYUN!" :
+                           "İyi mücadele!";
+
+        string statGain = "";
+        if (goals > 0)       statGain += $"Şut Gücü +{goals / 2 + 1}  ";
+        if (RedScore > BlueScore) statGain += "Moral +15  ";
+        statGain += "Yorgunluk +25";
+
         DialogueManager.Instance.Show(
-            $"Maç Bitti — {result}",
-            $"Skor: {RedScore} — {BlueScore}\n" +
-            $"Golcü: {_humanPlayer?.GoalsScored ?? 0} gol\n" +
+            $"MAÇ BİTTİ — {result}",
+            $"Skor: {RedScore} — {BlueScore}  |  Puan: {_playerRating:F1} ★\n" +
+            $"{highlight}\n" +
+            $"Gol: {goals}  Pas: {passes}  Faul: {tackles}\n" +
+            $"{statGain}\n" +
             $"Devam etmek için Enter'a bas.",
             () => WorldManager.Instance.GoTo("WorldMap")
         );

@@ -231,7 +231,7 @@ scenes/
 | 5 | HomeInterior.tscn | [x] tamamlandı |
 | 6 | NPCScheduler | [x] tamamlandı |
 | 7 | Aktivite sistemi | [x] tamamlandı (ev + tüm mekanlar) |
-| 8 | Gelişmiş futbol maçı | [ ] bekliyor |
+| 8 | Gelişmiş futbol maçı | [x] tamamlandı |
 | 9 | Diğer iç mekanlar | [x] tamamlandı (Bakkal, SporTesisi, Fitness, CayBahcesi) |
 | 10 | Kariyer + events | [ ] bekliyor |
 | 11 | Kayıt/yükleme | [ ] bekliyor |
