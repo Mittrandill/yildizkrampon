@@ -94,6 +94,12 @@ request_pass={
 2d_physics/layer_2="npc"
 2d_physics/layer_4="walls"
 
+[debug]
+
+shapes/collision/shape_color=Color(0, 0, 0, 0)
+shapes/collision/contact_color=Color(0, 0, 0, 0)
+shapes/collision/geometry_color=Color(0, 0, 0, 0)
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
