@@ -789,6 +789,8 @@ public partial class MatchActor : Node2D
 			ZIndex = 4
 		};
 		_anim.SpriteFrames = BuildFrames();
+		var bgShader = GD.Load<Shader>("res://shaders/remove_white_bg.gdshader");
+		if (bgShader != null) _anim.Material = new ShaderMaterial { Shader = bgShader };
 		AddChild(_anim);
 		_anim.Play("idle_down");
 

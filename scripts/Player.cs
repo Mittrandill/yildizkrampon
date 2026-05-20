@@ -38,6 +38,8 @@ public partial class Player : CharacterBody2D
         }
 
         _anim.SpriteFrames = frames;
+        var bgShader = GD.Load<Shader>("res://shaders/remove_white_bg.gdshader");
+        if (bgShader != null) _anim.Material = new ShaderMaterial { Shader = bgShader };
         AddChild(_anim);
         _RefreshFrames();
         _anim.Play("idle_down");
