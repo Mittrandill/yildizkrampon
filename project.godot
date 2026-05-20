@@ -99,6 +99,10 @@ request_pass={
 shapes/collision/shape_color=Color(0, 0, 0, 0)
 shapes/collision/contact_color=Color(0, 0, 0, 0)
 shapes/collision/geometry_color=Color(0, 0, 0, 0)
+shapes/collision/area_color=Color(0, 0, 0, 0)
+shapes/navigation/edge_connection_color=Color(0, 0, 0, 0)
+shapes/navigation/geometry_color=Color(0, 0, 0, 0)
+shapes/paths/geometry_color=Color(0, 0, 0, 0)
 
 [rendering]
 

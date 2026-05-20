@@ -248,16 +248,24 @@ public partial class BuildWorld : SceneBuilderBase
 
     private void _BuildPitch(Node root)
     {
-        _PitchPavement(root);
-        _PitchFenceVisual(root);
-        _PitchGrass(root);
-        _PitchLines(root);
-        _PitchGoals(root);
-        _PitchLights(root);
-        _PitchBenches(root);
-        _PitchGate(root);
-        _PitchSign(root);
+        _PitchSprite(root);
         _PitchFenceCollision(root);
+    }
+
+    // Single pixel-art sprite replaces all procedural pitch visuals.
+    // Sprite is 620x465. Gate in reference is ~68% down (y≈316px in sprite).
+    // Align that to game gate at y=524: sprite top = 524-316 = 208, center = 208+232 = 440.
+    private void _PitchSprite(Node root)
+    {
+        var tex = GD.Load<Texture2D>("res://assets/places/pitch_world_sprite.png");
+        if (tex == null) { GD.PrintErr("pitch_world_sprite.png not found"); return; }
+        root.AddChild(new Sprite2D
+        {
+            Texture       = tex,
+            Position      = new Vector2(cx, 440f),
+            ZIndex        = 3,
+            TextureFilter = CanvasItem.TextureFilterEnum.Nearest,
+        });
     }
 
     // Stone pavement surround
