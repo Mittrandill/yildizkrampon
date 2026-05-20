@@ -41,280 +41,280 @@ size = Vector2(10, 338)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i4b1j"]
 size = Vector2(10, 338)
 
-[node name="World" type="Node2D" unique_id=978506586]
+[node name="World" type="Node2D" unique_id=1446479684]
 script = ExtResource("1_32lhk")
 
-[node name="@ColorRect@2" type="ColorRect" parent="." unique_id=1058549363]
+[node name="@ColorRect@2" type="ColorRect" parent="." unique_id=631619810]
 z_index = -10
 offset_right = 1920.0
 offset_bottom = 1280.0
 color = Color(0.27, 0.6, 0.25, 1)
 
-[node name="@ColorRect@3" type="ColorRect" parent="." unique_id=50175073]
+[node name="@ColorRect@3" type="ColorRect" parent="." unique_id=190344109]
 z_index = -8
 offset_left = 944.0
 offset_right = 976.0
 offset_bottom = 1280.0
 color = Color(0.6, 0.48, 0.32, 1)
 
-[node name="@ColorRect@4" type="ColorRect" parent="." unique_id=786678890]
+[node name="@ColorRect@4" type="ColorRect" parent="." unique_id=569260962]
 z_index = -8
 offset_top = 624.0
 offset_right = 1920.0
 offset_bottom = 656.0
 color = Color(0.6, 0.48, 0.32, 1)
 
-[node name="@ColorRect@5" type="ColorRect" parent="." unique_id=744941885]
+[node name="@ColorRect@5" type="ColorRect" parent="." unique_id=110048649]
 z_index = -7
 offset_top = 620.0
 offset_right = 1920.0
 offset_bottom = 632.0
 color = Color(0.5, 0.4, 0.25, 1)
 
-[node name="@ColorRect@6" type="ColorRect" parent="." unique_id=1359401791]
+[node name="@ColorRect@6" type="ColorRect" parent="." unique_id=923775395]
 z_index = -7
 offset_top = 648.0
 offset_right = 1920.0
 offset_bottom = 660.0
 color = Color(0.5, 0.4, 0.25, 1)
 
-[node name="@ColorRect@7" type="ColorRect" parent="." unique_id=828650260]
+[node name="@ColorRect@7" type="ColorRect" parent="." unique_id=1067930497]
 z_index = -7
 offset_left = 940.0
 offset_right = 952.0
 offset_bottom = 1280.0
 color = Color(0.5, 0.4, 0.25, 1)
 
-[node name="@ColorRect@8" type="ColorRect" parent="." unique_id=1972870406]
+[node name="@ColorRect@8" type="ColorRect" parent="." unique_id=1890741910]
 z_index = -7
 offset_left = 968.0
 offset_right = 980.0
 offset_bottom = 1280.0
 color = Color(0.5, 0.4, 0.25, 1)
 
-[node name="@ColorRect@9" type="ColorRect" parent="." unique_id=1114041527]
+[node name="@ColorRect@9" type="ColorRect" parent="." unique_id=949682176]
 z_index = -9
 offset_right = 32.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@10" type="ColorRect" parent="." unique_id=1263931443]
+[node name="@ColorRect@10" type="ColorRect" parent="." unique_id=385393345]
 z_index = -9
 offset_left = 64.0
 offset_right = 96.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@11" type="ColorRect" parent="." unique_id=459889326]
+[node name="@ColorRect@11" type="ColorRect" parent="." unique_id=2044025680]
 z_index = -9
 offset_left = 128.0
 offset_right = 160.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@12" type="ColorRect" parent="." unique_id=291528747]
+[node name="@ColorRect@12" type="ColorRect" parent="." unique_id=307914480]
 z_index = -9
 offset_left = 192.0
 offset_right = 224.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@13" type="ColorRect" parent="." unique_id=1654157503]
+[node name="@ColorRect@13" type="ColorRect" parent="." unique_id=1918224340]
 z_index = -9
 offset_left = 256.0
 offset_right = 288.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@14" type="ColorRect" parent="." unique_id=2061505207]
+[node name="@ColorRect@14" type="ColorRect" parent="." unique_id=1955231663]
 z_index = -9
 offset_left = 320.0
 offset_right = 352.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@15" type="ColorRect" parent="." unique_id=1516703716]
+[node name="@ColorRect@15" type="ColorRect" parent="." unique_id=2101771747]
 z_index = -9
 offset_left = 384.0
 offset_right = 416.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@16" type="ColorRect" parent="." unique_id=1039177760]
+[node name="@ColorRect@16" type="ColorRect" parent="." unique_id=372468600]
 z_index = -9
 offset_left = 448.0
 offset_right = 480.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@17" type="ColorRect" parent="." unique_id=1147032460]
+[node name="@ColorRect@17" type="ColorRect" parent="." unique_id=1301461697]
 z_index = -9
 offset_left = 512.0
 offset_right = 544.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@18" type="ColorRect" parent="." unique_id=1333535568]
+[node name="@ColorRect@18" type="ColorRect" parent="." unique_id=1035445696]
 z_index = -9
 offset_left = 576.0
 offset_right = 608.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@19" type="ColorRect" parent="." unique_id=1220137460]
+[node name="@ColorRect@19" type="ColorRect" parent="." unique_id=942195478]
 z_index = -9
 offset_left = 640.0
 offset_right = 672.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@20" type="ColorRect" parent="." unique_id=1183615502]
+[node name="@ColorRect@20" type="ColorRect" parent="." unique_id=57600156]
 z_index = -9
 offset_left = 704.0
 offset_right = 736.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@21" type="ColorRect" parent="." unique_id=63243842]
+[node name="@ColorRect@21" type="ColorRect" parent="." unique_id=1358913993]
 z_index = -9
 offset_left = 768.0
 offset_right = 800.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@22" type="ColorRect" parent="." unique_id=2135657427]
+[node name="@ColorRect@22" type="ColorRect" parent="." unique_id=768464416]
 z_index = -9
 offset_left = 832.0
 offset_right = 864.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@23" type="ColorRect" parent="." unique_id=714501500]
+[node name="@ColorRect@23" type="ColorRect" parent="." unique_id=757447613]
 z_index = -9
 offset_left = 896.0
 offset_right = 928.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@24" type="ColorRect" parent="." unique_id=945662132]
+[node name="@ColorRect@24" type="ColorRect" parent="." unique_id=805062160]
 z_index = -9
 offset_left = 960.0
 offset_right = 992.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@25" type="ColorRect" parent="." unique_id=158287178]
+[node name="@ColorRect@25" type="ColorRect" parent="." unique_id=466175061]
 z_index = -9
 offset_left = 1024.0
 offset_right = 1056.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@26" type="ColorRect" parent="." unique_id=547311083]
+[node name="@ColorRect@26" type="ColorRect" parent="." unique_id=605770633]
 z_index = -9
 offset_left = 1088.0
 offset_right = 1120.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@27" type="ColorRect" parent="." unique_id=1884720920]
+[node name="@ColorRect@27" type="ColorRect" parent="." unique_id=662187947]
 z_index = -9
 offset_left = 1152.0
 offset_right = 1184.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@28" type="ColorRect" parent="." unique_id=14732360]
+[node name="@ColorRect@28" type="ColorRect" parent="." unique_id=445943090]
 z_index = -9
 offset_left = 1216.0
 offset_right = 1248.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@29" type="ColorRect" parent="." unique_id=471552729]
+[node name="@ColorRect@29" type="ColorRect" parent="." unique_id=1952001138]
 z_index = -9
 offset_left = 1280.0
 offset_right = 1312.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@30" type="ColorRect" parent="." unique_id=1161647623]
+[node name="@ColorRect@30" type="ColorRect" parent="." unique_id=845228458]
 z_index = -9
 offset_left = 1344.0
 offset_right = 1376.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@31" type="ColorRect" parent="." unique_id=1328935890]
+[node name="@ColorRect@31" type="ColorRect" parent="." unique_id=1571546690]
 z_index = -9
 offset_left = 1408.0
 offset_right = 1440.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@32" type="ColorRect" parent="." unique_id=1003813905]
+[node name="@ColorRect@32" type="ColorRect" parent="." unique_id=1201665610]
 z_index = -9
 offset_left = 1472.0
 offset_right = 1504.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@33" type="ColorRect" parent="." unique_id=1107091244]
+[node name="@ColorRect@33" type="ColorRect" parent="." unique_id=1741788123]
 z_index = -9
 offset_left = 1536.0
 offset_right = 1568.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@34" type="ColorRect" parent="." unique_id=1437249827]
+[node name="@ColorRect@34" type="ColorRect" parent="." unique_id=1498731654]
 z_index = -9
 offset_left = 1600.0
 offset_right = 1632.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@35" type="ColorRect" parent="." unique_id=1038182223]
+[node name="@ColorRect@35" type="ColorRect" parent="." unique_id=429903729]
 z_index = -9
 offset_left = 1664.0
 offset_right = 1696.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@36" type="ColorRect" parent="." unique_id=1257334054]
+[node name="@ColorRect@36" type="ColorRect" parent="." unique_id=202938070]
 z_index = -9
 offset_left = 1728.0
 offset_right = 1760.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@37" type="ColorRect" parent="." unique_id=1750317995]
+[node name="@ColorRect@37" type="ColorRect" parent="." unique_id=1757065841]
 z_index = -9
 offset_left = 1792.0
 offset_right = 1824.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="@ColorRect@38" type="ColorRect" parent="." unique_id=363259283]
+[node name="@ColorRect@38" type="ColorRect" parent="." unique_id=244208837]
 z_index = -9
 offset_left = 1856.0
 offset_right = 1888.0
 offset_bottom = 1280.0
 color = Color(0.24, 0.56, 0.22, 0.45)
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1551027515]
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1123939879]
 unique_name_in_owner = true
 z_index = 5
 position = Vector2(960, 640)
 collision_mask = 16
 script = ExtResource("2_7g83o")
 
-[node name="@CollisionShape2D@39" type="CollisionShape2D" parent="Player" unique_id=1202904939]
+[node name="@CollisionShape2D@39" type="CollisionShape2D" parent="Player" unique_id=2095915389]
 position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_d1c63")
 
-[node name="Camera" type="Camera2D" parent="Player" unique_id=1805003224]
+[node name="Camera" type="Camera2D" parent="Player" unique_id=1285196103]
 unique_name_in_owner = true
-zoom = Vector2(2, 2)
+zoom = Vector2(0.75, 0.75)
 limit_left = 0
 limit_top = 0
 limit_right = 1920
@@ -322,65 +322,65 @@ limit_bottom = 1280
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="WallTop" type="StaticBody2D" parent="." unique_id=1973859344]
+[node name="WallTop" type="StaticBody2D" parent="." unique_id=2037831757]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="WallTop" unique_id=2022658955]
+[node name="@CollisionShape2D@40" type="CollisionShape2D" parent="WallTop" unique_id=1817580787]
 position = Vector2(960, -10)
 shape = SubResource("RectangleShape2D_1lgw5")
 
-[node name="WallBottom" type="StaticBody2D" parent="." unique_id=1346036457]
+[node name="WallBottom" type="StaticBody2D" parent="." unique_id=1239519997]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@41" type="CollisionShape2D" parent="WallBottom" unique_id=369082207]
+[node name="@CollisionShape2D@41" type="CollisionShape2D" parent="WallBottom" unique_id=1667821091]
 position = Vector2(960, 1290)
 shape = SubResource("RectangleShape2D_hlk0d")
 
-[node name="WallLeft" type="StaticBody2D" parent="." unique_id=17581798]
+[node name="WallLeft" type="StaticBody2D" parent="." unique_id=1230321053]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@42" type="CollisionShape2D" parent="WallLeft" unique_id=117245947]
+[node name="@CollisionShape2D@42" type="CollisionShape2D" parent="WallLeft" unique_id=1807863966]
 position = Vector2(-10, 640)
 shape = SubResource("RectangleShape2D_0uv0p")
 
-[node name="WallRight" type="StaticBody2D" parent="." unique_id=1955110926]
+[node name="WallRight" type="StaticBody2D" parent="." unique_id=1780795006]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@43" type="CollisionShape2D" parent="WallRight" unique_id=835269064]
+[node name="@CollisionShape2D@43" type="CollisionShape2D" parent="WallRight" unique_id=128004133]
 position = Vector2(1930, 640)
 shape = SubResource("RectangleShape2D_b3faq")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=971788095]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1522748413]
 layer = 10
 
-[node name="@PanelContainer@44" type="PanelContainer" parent="HUD" unique_id=1611961925]
+[node name="@PanelContainer@44" type="PanelContainer" parent="HUD" unique_id=1420953798]
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 10.0
 offset_bottom = 10.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ygioq")
 
-[node name="@VBoxContainer@45" type="VBoxContainer" parent="HUD/@PanelContainer@44" unique_id=28540052]
+[node name="@VBoxContainer@45" type="VBoxContainer" parent="HUD/@PanelContainer@44" unique_id=1103458954]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="@Label@46" type="Label" parent="HUD/@PanelContainer@44/@VBoxContainer@45" unique_id=130221714]
+[node name="@Label@46" type="Label" parent="HUD/@PanelContainer@44/@VBoxContainer@45" unique_id=1123591355]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.5, 1, 0.5, 1)
 text = "ENERJI 100"
 
-[node name="@Label@47" type="Label" parent="HUD/@PanelContainer@44/@VBoxContainer@45" unique_id=554573863]
+[node name="@Label@47" type="Label" parent="HUD/@PanelContainer@44/@VBoxContainer@45" unique_id=389472849]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 text = "PARA: 0"
 
-[node name="@Label@48" type="Label" parent="HUD" unique_id=249669115]
+[node name="@Label@48" type="Label" parent="HUD" unique_id=1845406610]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -392,7 +392,7 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "GUN 1"
 
-[node name="@Label@49" type="Label" parent="HUD" unique_id=211598594]
+[node name="@Label@49" type="Label" parent="HUD" unique_id=1284560265]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -404,7 +404,7 @@ theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 text = "WASD: Hareket   E: Etkilesim   SHIFT: Kos"
 
-[node name="PitchHint" type="Label" parent="HUD" unique_id=808691471]
+[node name="PitchHint" type="Label" parent="HUD" unique_id=1711781181]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 2
@@ -418,821 +418,821 @@ theme_override_font_sizes/font_size = 15
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "E  Maca Gir"
 
-[node name="@ColorRect@50" type="ColorRect" parent="." unique_id=581649824]
+[node name="@ColorRect@50" type="ColorRect" parent="." unique_id=1632909737]
 offset_left = 108.0
 offset_top = 80.0
 offset_right = 116.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@51" type="Polygon2D" parent="." unique_id=1996901833]
+[node name="@Polygon2D@51" type="Polygon2D" parent="." unique_id=1987823256]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 74, 130.47758, 81.65367, 126.142136, 88.142136, 119.65367, 92.47759, 112, 94, 104.34633, 92.47759, 97.857864, 88.142136, 93.52241, 81.65366, 92, 74, 93.52241, 66.34633, 97.857864, 59.857864, 104.34634, 55.522408, 112, 54, 119.65367, 55.52241, 126.14214, 59.85787, 130.47758, 66.34633)
 
-[node name="@Polygon2D@52" type="Polygon2D" parent="." unique_id=2015995290]
+[node name="@Polygon2D@52" type="Polygon2D" parent="." unique_id=1128791592]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 74, 124.93431, 79.35757, 121.8995, 83.8995, 117.35757, 86.93431, 112, 88, 106.64243, 86.93431, 102.1005, 83.8995, 99.06569, 79.35757, 98, 74, 99.06569, 68.64243, 102.10051, 64.1005, 106.64243, 61.065685, 112, 60, 117.357574, 61.06569, 121.8995, 64.10051, 124.93431, 68.64243)
 
-[node name="@Polygon2D@53" type="Polygon2D" parent="." unique_id=1374101856]
+[node name="@Polygon2D@53" type="Polygon2D" parent="." unique_id=355006267]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 74, 119.39104, 77.06147, 117.65685, 79.65685, 115.06147, 81.39104, 112, 82, 108.93853, 81.39104, 106.34315, 79.65685, 104.60896, 77.06146, 104, 74, 104.60896, 70.93853, 106.34315, 68.34315, 108.93854, 66.60896, 112, 66, 115.06147, 66.60896, 117.65685, 68.34315, 119.39104, 70.93853)
 
-[node name="@ColorRect@54" type="ColorRect" parent="." unique_id=1047965276]
+[node name="@ColorRect@54" type="ColorRect" parent="." unique_id=155799807]
 offset_left = 172.0
 offset_top = 112.0
 offset_right = 180.0
 offset_bottom = 126.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@55" type="Polygon2D" parent="." unique_id=1215762668]
+[node name="@Polygon2D@55" type="Polygon2D" parent="." unique_id=1746036405]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(196, 106, 194.47758, 113.65367, 190.14214, 120.142136, 183.65367, 124.47759, 176, 126, 168.34633, 124.47759, 161.85786, 120.142136, 157.5224, 113.65366, 156, 106, 157.52242, 98.34633, 161.85786, 91.857864, 168.34634, 87.52241, 176, 86, 183.65367, 87.522415, 190.14214, 91.85787, 194.47758, 98.34633)
 
-[node name="@Polygon2D@56" type="Polygon2D" parent="." unique_id=692483620]
+[node name="@Polygon2D@56" type="Polygon2D" parent="." unique_id=206508041]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(190, 106, 188.93431, 111.35757, 185.89949, 115.8995, 181.35757, 118.93431, 176, 120, 170.64243, 118.93431, 166.10051, 115.8995, 163.06569, 111.35757, 162, 106, 163.06569, 100.64243, 166.10051, 96.1005, 170.64244, 93.06568, 176, 92, 181.35757, 93.06569, 185.8995, 96.10051, 188.93431, 100.64243)
 
-[node name="@Polygon2D@57" type="Polygon2D" parent="." unique_id=763368134]
+[node name="@Polygon2D@57" type="Polygon2D" parent="." unique_id=2074345026]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(184, 106, 183.39104, 109.06147, 181.65686, 111.65685, 179.06146, 113.39104, 176, 114, 172.93854, 113.39104, 170.34314, 111.65685, 168.60896, 109.06146, 168, 106, 168.60896, 102.93853, 170.34314, 100.34315, 172.93854, 98.60896, 176, 98, 179.06146, 98.60896, 181.65686, 100.34315, 183.39104, 102.93853)
 
-[node name="@ColorRect@58" type="ColorRect" parent="." unique_id=954672344]
+[node name="@ColorRect@58" type="ColorRect" parent="." unique_id=2013056400]
 offset_left = 236.0
 offset_top = 80.0
 offset_right = 244.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@59" type="Polygon2D" parent="." unique_id=59700458]
+[node name="@Polygon2D@59" type="Polygon2D" parent="." unique_id=317438053]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(260, 74, 258.4776, 81.65367, 254.14214, 88.142136, 247.65367, 92.47759, 240, 94, 232.34633, 92.47759, 225.85786, 88.142136, 221.5224, 81.65366, 220, 74, 221.52242, 66.34633, 225.85786, 59.857864, 232.34634, 55.522408, 240, 54, 247.65367, 55.52241, 254.14214, 59.85787, 258.4776, 66.34633)
 
-[node name="@Polygon2D@60" type="Polygon2D" parent="." unique_id=2092292866]
+[node name="@Polygon2D@60" type="Polygon2D" parent="." unique_id=26857274]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(254, 74, 252.93431, 79.35757, 249.89949, 83.8995, 245.35757, 86.93431, 240, 88, 234.64243, 86.93431, 230.10051, 83.8995, 227.06569, 79.35757, 226, 74, 227.06569, 68.64243, 230.10051, 64.1005, 234.64244, 61.065685, 240, 60, 245.35757, 61.06569, 249.8995, 64.10051, 252.93431, 68.64243)
 
-[node name="@Polygon2D@61" type="Polygon2D" parent="." unique_id=1453041166]
+[node name="@Polygon2D@61" type="Polygon2D" parent="." unique_id=1426774162]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(248, 74, 247.39104, 77.06147, 245.65686, 79.65685, 243.06146, 81.39104, 240, 82, 236.93854, 81.39104, 234.34314, 79.65685, 232.60896, 77.06146, 232, 74, 232.60896, 70.93853, 234.34314, 68.34315, 236.93854, 66.60896, 240, 66, 243.06146, 66.60896, 245.65686, 68.34315, 247.39104, 70.93853)
 
-[node name="@ColorRect@62" type="ColorRect" parent="." unique_id=1597080781]
+[node name="@ColorRect@62" type="ColorRect" parent="." unique_id=1055060452]
 offset_left = 332.0
 offset_top = 144.0
 offset_right = 340.0
 offset_bottom = 158.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@63" type="Polygon2D" parent="." unique_id=946031277]
+[node name="@Polygon2D@63" type="Polygon2D" parent="." unique_id=1089524518]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(356, 138, 354.4776, 145.65367, 350.14215, 152.14214, 343.65366, 156.47758, 336, 158, 328.34634, 156.47758, 321.85785, 152.14214, 317.5224, 145.65367, 316, 138, 317.5224, 130.34633, 321.85788, 123.857864, 328.34634, 119.52241, 336, 118, 343.6537, 119.522415, 350.14215, 123.85787, 354.4776, 130.34633)
 
-[node name="@Polygon2D@64" type="Polygon2D" parent="." unique_id=811813605]
+[node name="@Polygon2D@64" type="Polygon2D" parent="." unique_id=1843179584]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(350, 138, 348.93433, 143.35757, 345.8995, 147.89949, 341.35757, 150.93431, 336, 152, 330.64243, 150.93431, 326.1005, 147.89949, 323.06567, 143.35756, 322, 138, 323.06567, 132.64243, 326.1005, 128.10051, 330.64243, 125.06568, 336, 124, 341.35757, 125.06569, 345.8995, 128.10051, 348.93433, 132.64243)
 
-[node name="@Polygon2D@65" type="Polygon2D" parent="." unique_id=1309032586]
+[node name="@Polygon2D@65" type="Polygon2D" parent="." unique_id=1497152588]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(344, 138, 343.39102, 141.06146, 341.65686, 143.65686, 339.06146, 145.39104, 336, 146, 332.93854, 145.39104, 330.34314, 143.65686, 328.60895, 141.06146, 328, 138, 328.60898, 134.93854, 330.34314, 132.34314, 332.93854, 130.60896, 336, 130, 339.06146, 130.60896, 341.65686, 132.34315, 343.39102, 134.93854)
 
-[node name="@ColorRect@66" type="ColorRect" parent="." unique_id=186898438]
+[node name="@ColorRect@66" type="ColorRect" parent="." unique_id=612835103]
 offset_left = 396.0
 offset_top = 80.0
 offset_right = 404.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@67" type="Polygon2D" parent="." unique_id=2144103789]
+[node name="@Polygon2D@67" type="Polygon2D" parent="." unique_id=855154024]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(420, 74, 418.4776, 81.65367, 414.14215, 88.142136, 407.65366, 92.47759, 400, 94, 392.34634, 92.47759, 385.85785, 88.142136, 381.5224, 81.65366, 380, 74, 381.5224, 66.34633, 385.85788, 59.857864, 392.34634, 55.522408, 400, 54, 407.6537, 55.52241, 414.14215, 59.85787, 418.4776, 66.34633)
 
-[node name="@Polygon2D@68" type="Polygon2D" parent="." unique_id=545358664]
+[node name="@Polygon2D@68" type="Polygon2D" parent="." unique_id=635163937]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(414, 74, 412.93433, 79.35757, 409.8995, 83.8995, 405.35757, 86.93431, 400, 88, 394.64243, 86.93431, 390.1005, 83.8995, 387.06567, 79.35757, 386, 74, 387.06567, 68.64243, 390.1005, 64.1005, 394.64243, 61.065685, 400, 60, 405.35757, 61.06569, 409.8995, 64.10051, 412.93433, 68.64243)
 
-[node name="@Polygon2D@69" type="Polygon2D" parent="." unique_id=617629607]
+[node name="@Polygon2D@69" type="Polygon2D" parent="." unique_id=450239118]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(408, 74, 407.39102, 77.06147, 405.65686, 79.65685, 403.06146, 81.39104, 400, 82, 396.93854, 81.39104, 394.34314, 79.65685, 392.60895, 77.06146, 392, 74, 392.60898, 70.93853, 394.34314, 68.34315, 396.93854, 66.60896, 400, 66, 403.06146, 66.60896, 405.65686, 68.34315, 407.39102, 70.93853)
 
-[node name="@ColorRect@70" type="ColorRect" parent="." unique_id=319520115]
+[node name="@ColorRect@70" type="ColorRect" parent="." unique_id=1384032467]
 offset_left = 492.0
 offset_top = 112.0
 offset_right = 500.0
 offset_bottom = 126.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@71" type="Polygon2D" parent="." unique_id=1629282675]
+[node name="@Polygon2D@71" type="Polygon2D" parent="." unique_id=1594392063]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(516, 106, 514.4776, 113.65367, 510.14215, 120.142136, 503.65366, 124.47759, 496, 126, 488.34634, 124.47759, 481.85785, 120.142136, 477.5224, 113.65366, 476, 106, 477.5224, 98.34633, 481.85788, 91.857864, 488.34634, 87.52241, 496, 86, 503.6537, 87.522415, 510.14215, 91.85787, 514.4776, 98.34633)
 
-[node name="@Polygon2D@72" type="Polygon2D" parent="." unique_id=1124283254]
+[node name="@Polygon2D@72" type="Polygon2D" parent="." unique_id=1991964450]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(510, 106, 508.93433, 111.35757, 505.8995, 115.8995, 501.35757, 118.93431, 496, 120, 490.64243, 118.93431, 486.1005, 115.8995, 483.06567, 111.35757, 482, 106, 483.06567, 100.64243, 486.1005, 96.1005, 490.64243, 93.06568, 496, 92, 501.35757, 93.06569, 505.8995, 96.10051, 508.93433, 100.64243)
 
-[node name="@Polygon2D@73" type="Polygon2D" parent="." unique_id=810185418]
+[node name="@Polygon2D@73" type="Polygon2D" parent="." unique_id=2141011571]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(504, 106, 503.39102, 109.06147, 501.65686, 111.65685, 499.06146, 113.39104, 496, 114, 492.93854, 113.39104, 490.34314, 111.65685, 488.60895, 109.06146, 488, 106, 488.60898, 102.93853, 490.34314, 100.34315, 492.93854, 98.60896, 496, 98, 499.06146, 98.60896, 501.65686, 100.34315, 503.39102, 102.93853)
 
-[node name="@ColorRect@74" type="ColorRect" parent="." unique_id=1084936436]
+[node name="@ColorRect@74" type="ColorRect" parent="." unique_id=806512446]
 offset_left = 588.0
 offset_top = 80.0
 offset_right = 596.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@75" type="Polygon2D" parent="." unique_id=1485593001]
+[node name="@Polygon2D@75" type="Polygon2D" parent="." unique_id=746273505]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(612, 74, 610.4776, 81.65367, 606.14215, 88.142136, 599.6537, 92.47759, 592, 94, 584.3463, 92.47759, 577.85785, 88.142136, 573.5224, 81.65366, 572, 74, 573.5224, 66.34633, 577.85785, 59.857864, 584.3463, 55.522408, 592, 54, 599.6537, 55.52241, 606.14215, 59.85787, 610.4776, 66.34633)
 
-[node name="@Polygon2D@76" type="Polygon2D" parent="." unique_id=425975217]
+[node name="@Polygon2D@76" type="Polygon2D" parent="." unique_id=903284871]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(606, 74, 604.9343, 79.35757, 601.8995, 83.8995, 597.35754, 86.93431, 592, 88, 586.64246, 86.93431, 582.1005, 83.8995, 579.0657, 79.35757, 578, 74, 579.0657, 68.64243, 582.1005, 64.1005, 586.64246, 61.065685, 592, 60, 597.35754, 61.06569, 601.8995, 64.10051, 604.9343, 68.64243)
 
-[node name="@Polygon2D@77" type="Polygon2D" parent="." unique_id=285462849]
+[node name="@Polygon2D@77" type="Polygon2D" parent="." unique_id=463266506]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(600, 74, 599.39105, 77.06147, 597.65686, 79.65685, 595.06146, 81.39104, 592, 82, 588.93854, 81.39104, 586.34314, 79.65685, 584.60895, 77.06146, 584, 74, 584.60895, 70.93853, 586.34314, 68.34315, 588.93854, 66.60896, 592, 66, 595.06146, 66.60896, 597.65686, 68.34315, 599.39105, 70.93853)
 
-[node name="@ColorRect@78" type="ColorRect" parent="." unique_id=457555617]
+[node name="@ColorRect@78" type="ColorRect" parent="." unique_id=2140988891]
 offset_left = 716.0
 offset_top = 144.0
 offset_right = 724.0
 offset_bottom = 158.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@79" type="Polygon2D" parent="." unique_id=2058361453]
+[node name="@Polygon2D@79" type="Polygon2D" parent="." unique_id=223635618]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(740, 138, 738.4776, 145.65367, 734.14215, 152.14214, 727.6537, 156.47758, 720, 158, 712.3463, 156.47758, 705.85785, 152.14214, 701.5224, 145.65367, 700, 138, 701.5224, 130.34633, 705.85785, 123.857864, 712.3463, 119.52241, 720, 118, 727.6537, 119.522415, 734.14215, 123.85787, 738.4776, 130.34633)
 
-[node name="@Polygon2D@80" type="Polygon2D" parent="." unique_id=911299083]
+[node name="@Polygon2D@80" type="Polygon2D" parent="." unique_id=2037329553]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(734, 138, 732.9343, 143.35757, 729.8995, 147.89949, 725.35754, 150.93431, 720, 152, 714.64246, 150.93431, 710.1005, 147.89949, 707.0657, 143.35756, 706, 138, 707.0657, 132.64243, 710.1005, 128.10051, 714.64246, 125.06568, 720, 124, 725.35754, 125.06569, 729.8995, 128.10051, 732.9343, 132.64243)
 
-[node name="@Polygon2D@81" type="Polygon2D" parent="." unique_id=2037044132]
+[node name="@Polygon2D@81" type="Polygon2D" parent="." unique_id=902555016]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(728, 138, 727.39105, 141.06146, 725.65686, 143.65686, 723.06146, 145.39104, 720, 146, 716.93854, 145.39104, 714.34314, 143.65686, 712.60895, 141.06146, 712, 138, 712.60895, 134.93854, 714.34314, 132.34314, 716.93854, 130.60896, 720, 130, 723.06146, 130.60896, 725.65686, 132.34315, 727.39105, 134.93854)
 
-[node name="@ColorRect@82" type="ColorRect" parent="." unique_id=1023475365]
+[node name="@ColorRect@82" type="ColorRect" parent="." unique_id=597954950]
 offset_left = 108.0
 offset_top = 1136.0
 offset_right = 116.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@83" type="Polygon2D" parent="." unique_id=440051197]
+[node name="@Polygon2D@83" type="Polygon2D" parent="." unique_id=1353004612]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 1130, 130.47758, 1137.6537, 126.142136, 1144.1421, 119.65367, 1148.4775, 112, 1150, 104.34633, 1148.4775, 97.857864, 1144.1421, 93.52241, 1137.6537, 92, 1130, 93.52241, 1122.3463, 97.857864, 1115.8579, 104.34634, 1111.5225, 112, 1110, 119.65367, 1111.5225, 126.14214, 1115.8579, 130.47758, 1122.3463)
 
-[node name="@Polygon2D@84" type="Polygon2D" parent="." unique_id=1883652854]
+[node name="@Polygon2D@84" type="Polygon2D" parent="." unique_id=1242506936]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 1130, 124.93431, 1135.3575, 121.8995, 1139.8995, 117.35757, 1142.9343, 112, 1144, 106.64243, 1142.9343, 102.1005, 1139.8995, 99.06569, 1135.3575, 98, 1130, 99.06569, 1124.6425, 102.10051, 1120.1005, 106.64243, 1117.0657, 112, 1116, 117.357574, 1117.0657, 121.8995, 1120.1005, 124.93431, 1124.6425)
 
-[node name="@Polygon2D@85" type="Polygon2D" parent="." unique_id=305149500]
+[node name="@Polygon2D@85" type="Polygon2D" parent="." unique_id=1593789635]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 1130, 119.39104, 1133.0615, 117.65685, 1135.6569, 115.06147, 1137.391, 112, 1138, 108.93853, 1137.391, 106.34315, 1135.6569, 104.60896, 1133.0615, 104, 1130, 104.60896, 1126.9385, 106.34315, 1124.3431, 108.93854, 1122.609, 112, 1122, 115.06147, 1122.609, 117.65685, 1124.3431, 119.39104, 1126.9385)
 
-[node name="@ColorRect@86" type="ColorRect" parent="." unique_id=1808666546]
+[node name="@ColorRect@86" type="ColorRect" parent="." unique_id=390104929]
 offset_left = 204.0
 offset_top = 1168.0
 offset_right = 212.0
 offset_bottom = 1182.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@87" type="Polygon2D" parent="." unique_id=1681581573]
+[node name="@Polygon2D@87" type="Polygon2D" parent="." unique_id=1086864937]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(228, 1162, 226.47758, 1169.6537, 222.14214, 1176.1421, 215.65367, 1180.4775, 208, 1182, 200.34633, 1180.4775, 193.85786, 1176.1421, 189.5224, 1169.6537, 188, 1162, 189.52242, 1154.3463, 193.85786, 1147.8579, 200.34634, 1143.5225, 208, 1142, 215.65367, 1143.5225, 222.14214, 1147.8579, 226.47758, 1154.3463)
 
-[node name="@Polygon2D@88" type="Polygon2D" parent="." unique_id=693082047]
+[node name="@Polygon2D@88" type="Polygon2D" parent="." unique_id=1673202391]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(222, 1162, 220.93431, 1167.3575, 217.89949, 1171.8995, 213.35757, 1174.9343, 208, 1176, 202.64243, 1174.9343, 198.10051, 1171.8995, 195.06569, 1167.3575, 194, 1162, 195.06569, 1156.6425, 198.10051, 1152.1005, 202.64244, 1149.0657, 208, 1148, 213.35757, 1149.0657, 217.8995, 1152.1005, 220.93431, 1156.6425)
 
-[node name="@Polygon2D@89" type="Polygon2D" parent="." unique_id=856376339]
+[node name="@Polygon2D@89" type="Polygon2D" parent="." unique_id=1609548362]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(216, 1162, 215.39104, 1165.0615, 213.65686, 1167.6569, 211.06146, 1169.391, 208, 1170, 204.93854, 1169.391, 202.34314, 1167.6569, 200.60896, 1165.0615, 200, 1162, 200.60896, 1158.9385, 202.34314, 1156.3431, 204.93854, 1154.609, 208, 1154, 211.06146, 1154.609, 213.65686, 1156.3431, 215.39104, 1158.9385)
 
-[node name="@ColorRect@90" type="ColorRect" parent="." unique_id=670151718]
+[node name="@ColorRect@90" type="ColorRect" parent="." unique_id=1137677289]
 offset_left = 300.0
 offset_top = 1136.0
 offset_right = 308.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@91" type="Polygon2D" parent="." unique_id=167357636]
+[node name="@Polygon2D@91" type="Polygon2D" parent="." unique_id=536248873]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(324, 1130, 322.4776, 1137.6537, 318.14215, 1144.1421, 311.65366, 1148.4775, 304, 1150, 296.34634, 1148.4775, 289.85785, 1144.1421, 285.5224, 1137.6537, 284, 1130, 285.5224, 1122.3463, 289.85788, 1115.8579, 296.34634, 1111.5225, 304, 1110, 311.6537, 1111.5225, 318.14215, 1115.8579, 322.4776, 1122.3463)
 
-[node name="@Polygon2D@92" type="Polygon2D" parent="." unique_id=707834044]
+[node name="@Polygon2D@92" type="Polygon2D" parent="." unique_id=988316171]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(318, 1130, 316.93433, 1135.3575, 313.8995, 1139.8995, 309.35757, 1142.9343, 304, 1144, 298.64243, 1142.9343, 294.1005, 1139.8995, 291.06567, 1135.3575, 290, 1130, 291.06567, 1124.6425, 294.1005, 1120.1005, 298.64243, 1117.0657, 304, 1116, 309.35757, 1117.0657, 313.8995, 1120.1005, 316.93433, 1124.6425)
 
-[node name="@Polygon2D@93" type="Polygon2D" parent="." unique_id=313302290]
+[node name="@Polygon2D@93" type="Polygon2D" parent="." unique_id=1013103211]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(312, 1130, 311.39102, 1133.0615, 309.65686, 1135.6569, 307.06146, 1137.391, 304, 1138, 300.93854, 1137.391, 298.34314, 1135.6569, 296.60895, 1133.0615, 296, 1130, 296.60898, 1126.9385, 298.34314, 1124.3431, 300.93854, 1122.609, 304, 1122, 307.06146, 1122.609, 309.65686, 1124.3431, 311.39102, 1126.9385)
 
-[node name="@ColorRect@94" type="ColorRect" parent="." unique_id=1921696788]
+[node name="@ColorRect@94" type="ColorRect" parent="." unique_id=1705045604]
 offset_left = 428.0
 offset_top = 1200.0
 offset_right = 436.0
 offset_bottom = 1214.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@95" type="Polygon2D" parent="." unique_id=1715427631]
+[node name="@Polygon2D@95" type="Polygon2D" parent="." unique_id=1975437756]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(452, 1194, 450.4776, 1201.6537, 446.14215, 1208.1421, 439.65366, 1212.4775, 432, 1214, 424.34634, 1212.4775, 417.85785, 1208.1421, 413.5224, 1201.6537, 412, 1194, 413.5224, 1186.3463, 417.85788, 1179.8579, 424.34634, 1175.5225, 432, 1174, 439.6537, 1175.5225, 446.14215, 1179.8579, 450.4776, 1186.3463)
 
-[node name="@Polygon2D@96" type="Polygon2D" parent="." unique_id=1988410193]
+[node name="@Polygon2D@96" type="Polygon2D" parent="." unique_id=675996543]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(446, 1194, 444.93433, 1199.3575, 441.8995, 1203.8995, 437.35757, 1206.9343, 432, 1208, 426.64243, 1206.9343, 422.1005, 1203.8995, 419.06567, 1199.3575, 418, 1194, 419.06567, 1188.6425, 422.1005, 1184.1005, 426.64243, 1181.0657, 432, 1180, 437.35757, 1181.0657, 441.8995, 1184.1005, 444.93433, 1188.6425)
 
-[node name="@Polygon2D@97" type="Polygon2D" parent="." unique_id=1050327544]
+[node name="@Polygon2D@97" type="Polygon2D" parent="." unique_id=1214967491]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(440, 1194, 439.39102, 1197.0615, 437.65686, 1199.6569, 435.06146, 1201.391, 432, 1202, 428.93854, 1201.391, 426.34314, 1199.6569, 424.60895, 1197.0615, 424, 1194, 424.60898, 1190.9385, 426.34314, 1188.3431, 428.93854, 1186.609, 432, 1186, 435.06146, 1186.609, 437.65686, 1188.3431, 439.39102, 1190.9385)
 
-[node name="@ColorRect@98" type="ColorRect" parent="." unique_id=1771611149]
+[node name="@ColorRect@98" type="ColorRect" parent="." unique_id=519961749]
 offset_left = 556.0
 offset_top = 1136.0
 offset_right = 564.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@99" type="Polygon2D" parent="." unique_id=521851592]
+[node name="@Polygon2D@99" type="Polygon2D" parent="." unique_id=1346709314]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(580, 1130, 578.4776, 1137.6537, 574.14215, 1144.1421, 567.6537, 1148.4775, 560, 1150, 552.3463, 1148.4775, 545.85785, 1144.1421, 541.5224, 1137.6537, 540, 1130, 541.5224, 1122.3463, 545.85785, 1115.8579, 552.3463, 1111.5225, 560, 1110, 567.6537, 1111.5225, 574.14215, 1115.8579, 578.4776, 1122.3463)
 
-[node name="@Polygon2D@100" type="Polygon2D" parent="." unique_id=943997878]
+[node name="@Polygon2D@100" type="Polygon2D" parent="." unique_id=1384594583]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(574, 1130, 572.9343, 1135.3575, 569.8995, 1139.8995, 565.35754, 1142.9343, 560, 1144, 554.64246, 1142.9343, 550.1005, 1139.8995, 547.0657, 1135.3575, 546, 1130, 547.0657, 1124.6425, 550.1005, 1120.1005, 554.64246, 1117.0657, 560, 1116, 565.35754, 1117.0657, 569.8995, 1120.1005, 572.9343, 1124.6425)
 
-[node name="@Polygon2D@101" type="Polygon2D" parent="." unique_id=1351724879]
+[node name="@Polygon2D@101" type="Polygon2D" parent="." unique_id=269607897]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(568, 1130, 567.39105, 1133.0615, 565.65686, 1135.6569, 563.06146, 1137.391, 560, 1138, 556.93854, 1137.391, 554.34314, 1135.6569, 552.60895, 1133.0615, 552, 1130, 552.60895, 1126.9385, 554.34314, 1124.3431, 556.93854, 1122.609, 560, 1122, 563.06146, 1122.609, 565.65686, 1124.3431, 567.39105, 1126.9385)
 
-[node name="@ColorRect@102" type="ColorRect" parent="." unique_id=734795225]
+[node name="@ColorRect@102" type="ColorRect" parent="." unique_id=1710288790]
 offset_left = 684.0
 offset_top = 1168.0
 offset_right = 692.0
 offset_bottom = 1182.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@103" type="Polygon2D" parent="." unique_id=1677286185]
+[node name="@Polygon2D@103" type="Polygon2D" parent="." unique_id=750059155]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(708, 1162, 706.4776, 1169.6537, 702.14215, 1176.1421, 695.6537, 1180.4775, 688, 1182, 680.3463, 1180.4775, 673.85785, 1176.1421, 669.5224, 1169.6537, 668, 1162, 669.5224, 1154.3463, 673.85785, 1147.8579, 680.3463, 1143.5225, 688, 1142, 695.6537, 1143.5225, 702.14215, 1147.8579, 706.4776, 1154.3463)
 
-[node name="@Polygon2D@104" type="Polygon2D" parent="." unique_id=110937821]
+[node name="@Polygon2D@104" type="Polygon2D" parent="." unique_id=11532777]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(702, 1162, 700.9343, 1167.3575, 697.8995, 1171.8995, 693.35754, 1174.9343, 688, 1176, 682.64246, 1174.9343, 678.1005, 1171.8995, 675.0657, 1167.3575, 674, 1162, 675.0657, 1156.6425, 678.1005, 1152.1005, 682.64246, 1149.0657, 688, 1148, 693.35754, 1149.0657, 697.8995, 1152.1005, 700.9343, 1156.6425)
 
-[node name="@Polygon2D@105" type="Polygon2D" parent="." unique_id=1005515265]
+[node name="@Polygon2D@105" type="Polygon2D" parent="." unique_id=310773481]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(696, 1162, 695.39105, 1165.0615, 693.65686, 1167.6569, 691.06146, 1169.391, 688, 1170, 684.93854, 1169.391, 682.34314, 1167.6569, 680.60895, 1165.0615, 680, 1162, 680.60895, 1158.9385, 682.34314, 1156.3431, 684.93854, 1154.609, 688, 1154, 691.06146, 1154.609, 693.65686, 1156.3431, 695.39105, 1158.9385)
 
-[node name="@ColorRect@106" type="ColorRect" parent="." unique_id=729041434]
+[node name="@ColorRect@106" type="ColorRect" parent="." unique_id=741415335]
 offset_left = 812.0
 offset_top = 1136.0
 offset_right = 820.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@107" type="Polygon2D" parent="." unique_id=407582114]
+[node name="@Polygon2D@107" type="Polygon2D" parent="." unique_id=360268932]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(836, 1130, 834.4776, 1137.6537, 830.14215, 1144.1421, 823.6537, 1148.4775, 816, 1150, 808.3463, 1148.4775, 801.85785, 1144.1421, 797.5224, 1137.6537, 796, 1130, 797.5224, 1122.3463, 801.85785, 1115.8579, 808.3463, 1111.5225, 816, 1110, 823.6537, 1111.5225, 830.14215, 1115.8579, 834.4776, 1122.3463)
 
-[node name="@Polygon2D@108" type="Polygon2D" parent="." unique_id=2023958652]
+[node name="@Polygon2D@108" type="Polygon2D" parent="." unique_id=1592434085]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(830, 1130, 828.9343, 1135.3575, 825.8995, 1139.8995, 821.35754, 1142.9343, 816, 1144, 810.64246, 1142.9343, 806.1005, 1139.8995, 803.0657, 1135.3575, 802, 1130, 803.0657, 1124.6425, 806.1005, 1120.1005, 810.64246, 1117.0657, 816, 1116, 821.35754, 1117.0657, 825.8995, 1120.1005, 828.9343, 1124.6425)
 
-[node name="@Polygon2D@109" type="Polygon2D" parent="." unique_id=178455375]
+[node name="@Polygon2D@109" type="Polygon2D" parent="." unique_id=948388283]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(824, 1130, 823.39105, 1133.0615, 821.65686, 1135.6569, 819.06146, 1137.391, 816, 1138, 812.93854, 1137.391, 810.34314, 1135.6569, 808.60895, 1133.0615, 808, 1130, 808.60895, 1126.9385, 810.34314, 1124.3431, 812.93854, 1122.609, 816, 1122, 819.06146, 1122.609, 821.65686, 1124.3431, 823.39105, 1126.9385)
 
-[node name="@ColorRect@110" type="ColorRect" parent="." unique_id=1180878625]
+[node name="@ColorRect@110" type="ColorRect" parent="." unique_id=163182789]
 offset_left = 1452.0
 offset_top = 80.0
 offset_right = 1460.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@111" type="Polygon2D" parent="." unique_id=2032775429]
+[node name="@Polygon2D@111" type="Polygon2D" parent="." unique_id=1792887061]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1476, 74, 1474.4775, 81.65367, 1470.1421, 88.142136, 1463.6537, 92.47759, 1456, 94, 1448.3463, 92.47759, 1441.8579, 88.142136, 1437.5225, 81.65366, 1436, 74, 1437.5225, 66.34633, 1441.8579, 59.857864, 1448.3463, 55.522408, 1456, 54, 1463.6537, 55.52241, 1470.1421, 59.85787, 1474.4775, 66.34633)
 
-[node name="@Polygon2D@112" type="Polygon2D" parent="." unique_id=872216361]
+[node name="@Polygon2D@112" type="Polygon2D" parent="." unique_id=1433784688]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1470, 74, 1468.9343, 79.35757, 1465.8995, 83.8995, 1461.3575, 86.93431, 1456, 88, 1450.6425, 86.93431, 1446.1005, 83.8995, 1443.0657, 79.35757, 1442, 74, 1443.0657, 68.64243, 1446.1005, 64.1005, 1450.6425, 61.065685, 1456, 60, 1461.3575, 61.06569, 1465.8995, 64.10051, 1468.9343, 68.64243)
 
-[node name="@Polygon2D@113" type="Polygon2D" parent="." unique_id=1815728896]
+[node name="@Polygon2D@113" type="Polygon2D" parent="." unique_id=1193294441]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1464, 74, 1463.391, 77.06147, 1461.6569, 79.65685, 1459.0615, 81.39104, 1456, 82, 1452.9385, 81.39104, 1450.3431, 79.65685, 1448.609, 77.06146, 1448, 74, 1448.609, 70.93853, 1450.3431, 68.34315, 1452.9385, 66.60896, 1456, 66, 1459.0615, 66.60896, 1461.6569, 68.34315, 1463.391, 70.93853)
 
-[node name="@ColorRect@114" type="ColorRect" parent="." unique_id=658808980]
+[node name="@ColorRect@114" type="ColorRect" parent="." unique_id=1446816406]
 offset_left = 1548.0
 offset_top = 112.0
 offset_right = 1556.0
 offset_bottom = 126.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@115" type="Polygon2D" parent="." unique_id=1788712777]
+[node name="@Polygon2D@115" type="Polygon2D" parent="." unique_id=835769894]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1572, 106, 1570.4775, 113.65367, 1566.1421, 120.142136, 1559.6537, 124.47759, 1552, 126, 1544.3463, 124.47759, 1537.8579, 120.142136, 1533.5225, 113.65366, 1532, 106, 1533.5225, 98.34633, 1537.8579, 91.857864, 1544.3463, 87.52241, 1552, 86, 1559.6537, 87.522415, 1566.1421, 91.85787, 1570.4775, 98.34633)
 
-[node name="@Polygon2D@116" type="Polygon2D" parent="." unique_id=150344851]
+[node name="@Polygon2D@116" type="Polygon2D" parent="." unique_id=58081184]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1566, 106, 1564.9343, 111.35757, 1561.8995, 115.8995, 1557.3575, 118.93431, 1552, 120, 1546.6425, 118.93431, 1542.1005, 115.8995, 1539.0657, 111.35757, 1538, 106, 1539.0657, 100.64243, 1542.1005, 96.1005, 1546.6425, 93.06568, 1552, 92, 1557.3575, 93.06569, 1561.8995, 96.10051, 1564.9343, 100.64243)
 
-[node name="@Polygon2D@117" type="Polygon2D" parent="." unique_id=2024474718]
+[node name="@Polygon2D@117" type="Polygon2D" parent="." unique_id=1415321404]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1560, 106, 1559.391, 109.06147, 1557.6569, 111.65685, 1555.0615, 113.39104, 1552, 114, 1548.9385, 113.39104, 1546.3431, 111.65685, 1544.609, 109.06146, 1544, 106, 1544.609, 102.93853, 1546.3431, 100.34315, 1548.9385, 98.60896, 1552, 98, 1555.0615, 98.60896, 1557.6569, 100.34315, 1559.391, 102.93853)
 
-[node name="@ColorRect@118" type="ColorRect" parent="." unique_id=1561904545]
+[node name="@ColorRect@118" type="ColorRect" parent="." unique_id=1500953369]
 offset_left = 1644.0
 offset_top = 80.0
 offset_right = 1652.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@119" type="Polygon2D" parent="." unique_id=356687769]
+[node name="@Polygon2D@119" type="Polygon2D" parent="." unique_id=1706370019]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1668, 74, 1666.4775, 81.65367, 1662.1421, 88.142136, 1655.6537, 92.47759, 1648, 94, 1640.3463, 92.47759, 1633.8579, 88.142136, 1629.5225, 81.65366, 1628, 74, 1629.5225, 66.34633, 1633.8579, 59.857864, 1640.3463, 55.522408, 1648, 54, 1655.6537, 55.52241, 1662.1421, 59.85787, 1666.4775, 66.34633)
 
-[node name="@Polygon2D@120" type="Polygon2D" parent="." unique_id=1389270383]
+[node name="@Polygon2D@120" type="Polygon2D" parent="." unique_id=1848448712]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1662, 74, 1660.9343, 79.35757, 1657.8995, 83.8995, 1653.3575, 86.93431, 1648, 88, 1642.6425, 86.93431, 1638.1005, 83.8995, 1635.0657, 79.35757, 1634, 74, 1635.0657, 68.64243, 1638.1005, 64.1005, 1642.6425, 61.065685, 1648, 60, 1653.3575, 61.06569, 1657.8995, 64.10051, 1660.9343, 68.64243)
 
-[node name="@Polygon2D@121" type="Polygon2D" parent="." unique_id=1138945259]
+[node name="@Polygon2D@121" type="Polygon2D" parent="." unique_id=670746196]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1656, 74, 1655.391, 77.06147, 1653.6569, 79.65685, 1651.0615, 81.39104, 1648, 82, 1644.9385, 81.39104, 1642.3431, 79.65685, 1640.609, 77.06146, 1640, 74, 1640.609, 70.93853, 1642.3431, 68.34315, 1644.9385, 66.60896, 1648, 66, 1651.0615, 66.60896, 1653.6569, 68.34315, 1655.391, 70.93853)
 
-[node name="@ColorRect@122" type="ColorRect" parent="." unique_id=151028563]
+[node name="@ColorRect@122" type="ColorRect" parent="." unique_id=1074306601]
 offset_left = 1740.0
 offset_top = 112.0
 offset_right = 1748.0
 offset_bottom = 126.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@123" type="Polygon2D" parent="." unique_id=2087989720]
+[node name="@Polygon2D@123" type="Polygon2D" parent="." unique_id=120951985]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1764, 106, 1762.4775, 113.65367, 1758.1421, 120.142136, 1751.6537, 124.47759, 1744, 126, 1736.3463, 124.47759, 1729.8579, 120.142136, 1725.5225, 113.65366, 1724, 106, 1725.5225, 98.34633, 1729.8579, 91.857864, 1736.3463, 87.52241, 1744, 86, 1751.6537, 87.522415, 1758.1421, 91.85787, 1762.4775, 98.34633)
 
-[node name="@Polygon2D@124" type="Polygon2D" parent="." unique_id=1959603881]
+[node name="@Polygon2D@124" type="Polygon2D" parent="." unique_id=1041586459]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1758, 106, 1756.9343, 111.35757, 1753.8995, 115.8995, 1749.3575, 118.93431, 1744, 120, 1738.6425, 118.93431, 1734.1005, 115.8995, 1731.0657, 111.35757, 1730, 106, 1731.0657, 100.64243, 1734.1005, 96.1005, 1738.6425, 93.06568, 1744, 92, 1749.3575, 93.06569, 1753.8995, 96.10051, 1756.9343, 100.64243)
 
-[node name="@Polygon2D@125" type="Polygon2D" parent="." unique_id=1856942581]
+[node name="@Polygon2D@125" type="Polygon2D" parent="." unique_id=1008906067]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1752, 106, 1751.391, 109.06147, 1749.6569, 111.65685, 1747.0615, 113.39104, 1744, 114, 1740.9385, 113.39104, 1738.3431, 111.65685, 1736.609, 109.06146, 1736, 106, 1736.609, 102.93853, 1738.3431, 100.34315, 1740.9385, 98.60896, 1744, 98, 1747.0615, 98.60896, 1749.6569, 100.34315, 1751.391, 102.93853)
 
-[node name="@ColorRect@126" type="ColorRect" parent="." unique_id=1185787540]
+[node name="@ColorRect@126" type="ColorRect" parent="." unique_id=1566483500]
 offset_left = 1836.0
 offset_top = 80.0
 offset_right = 1844.0
 offset_bottom = 94.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@127" type="Polygon2D" parent="." unique_id=2011599358]
+[node name="@Polygon2D@127" type="Polygon2D" parent="." unique_id=1810956714]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1860, 74, 1858.4775, 81.65367, 1854.1421, 88.142136, 1847.6537, 92.47759, 1840, 94, 1832.3463, 92.47759, 1825.8579, 88.142136, 1821.5225, 81.65366, 1820, 74, 1821.5225, 66.34633, 1825.8579, 59.857864, 1832.3463, 55.522408, 1840, 54, 1847.6537, 55.52241, 1854.1421, 59.85787, 1858.4775, 66.34633)
 
-[node name="@Polygon2D@128" type="Polygon2D" parent="." unique_id=1401533935]
+[node name="@Polygon2D@128" type="Polygon2D" parent="." unique_id=248932381]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1854, 74, 1852.9343, 79.35757, 1849.8995, 83.8995, 1845.3575, 86.93431, 1840, 88, 1834.6425, 86.93431, 1830.1005, 83.8995, 1827.0657, 79.35757, 1826, 74, 1827.0657, 68.64243, 1830.1005, 64.1005, 1834.6425, 61.065685, 1840, 60, 1845.3575, 61.06569, 1849.8995, 64.10051, 1852.9343, 68.64243)
 
-[node name="@Polygon2D@129" type="Polygon2D" parent="." unique_id=967747950]
+[node name="@Polygon2D@129" type="Polygon2D" parent="." unique_id=32234409]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1848, 74, 1847.391, 77.06147, 1845.6569, 79.65685, 1843.0615, 81.39104, 1840, 82, 1836.9385, 81.39104, 1834.3431, 79.65685, 1832.609, 77.06146, 1832, 74, 1832.609, 70.93853, 1834.3431, 68.34315, 1836.9385, 66.60896, 1840, 66, 1843.0615, 66.60896, 1845.6569, 68.34315, 1847.391, 70.93853)
 
-[node name="@ColorRect@130" type="ColorRect" parent="." unique_id=1247408989]
+[node name="@ColorRect@130" type="ColorRect" parent="." unique_id=2059836764]
 offset_left = 1420.0
 offset_top = 1136.0
 offset_right = 1428.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@131" type="Polygon2D" parent="." unique_id=1408168090]
+[node name="@Polygon2D@131" type="Polygon2D" parent="." unique_id=276621674]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1444, 1130, 1442.4775, 1137.6537, 1438.1421, 1144.1421, 1431.6537, 1148.4775, 1424, 1150, 1416.3463, 1148.4775, 1409.8579, 1144.1421, 1405.5225, 1137.6537, 1404, 1130, 1405.5225, 1122.3463, 1409.8579, 1115.8579, 1416.3463, 1111.5225, 1424, 1110, 1431.6537, 1111.5225, 1438.1421, 1115.8579, 1442.4775, 1122.3463)
 
-[node name="@Polygon2D@132" type="Polygon2D" parent="." unique_id=1749194996]
+[node name="@Polygon2D@132" type="Polygon2D" parent="." unique_id=1875795489]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1438, 1130, 1436.9343, 1135.3575, 1433.8995, 1139.8995, 1429.3575, 1142.9343, 1424, 1144, 1418.6425, 1142.9343, 1414.1005, 1139.8995, 1411.0657, 1135.3575, 1410, 1130, 1411.0657, 1124.6425, 1414.1005, 1120.1005, 1418.6425, 1117.0657, 1424, 1116, 1429.3575, 1117.0657, 1433.8995, 1120.1005, 1436.9343, 1124.6425)
 
-[node name="@Polygon2D@133" type="Polygon2D" parent="." unique_id=170975023]
+[node name="@Polygon2D@133" type="Polygon2D" parent="." unique_id=1233034512]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1432, 1130, 1431.391, 1133.0615, 1429.6569, 1135.6569, 1427.0615, 1137.391, 1424, 1138, 1420.9385, 1137.391, 1418.3431, 1135.6569, 1416.609, 1133.0615, 1416, 1130, 1416.609, 1126.9385, 1418.3431, 1124.3431, 1420.9385, 1122.609, 1424, 1122, 1427.0615, 1122.609, 1429.6569, 1124.3431, 1431.391, 1126.9385)
 
-[node name="@ColorRect@134" type="ColorRect" parent="." unique_id=934011986]
+[node name="@ColorRect@134" type="ColorRect" parent="." unique_id=1246845137]
 offset_left = 1516.0
 offset_top = 1168.0
 offset_right = 1524.0
 offset_bottom = 1182.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@135" type="Polygon2D" parent="." unique_id=885181060]
+[node name="@Polygon2D@135" type="Polygon2D" parent="." unique_id=217430494]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1540, 1162, 1538.4775, 1169.6537, 1534.1421, 1176.1421, 1527.6537, 1180.4775, 1520, 1182, 1512.3463, 1180.4775, 1505.8579, 1176.1421, 1501.5225, 1169.6537, 1500, 1162, 1501.5225, 1154.3463, 1505.8579, 1147.8579, 1512.3463, 1143.5225, 1520, 1142, 1527.6537, 1143.5225, 1534.1421, 1147.8579, 1538.4775, 1154.3463)
 
-[node name="@Polygon2D@136" type="Polygon2D" parent="." unique_id=210265241]
+[node name="@Polygon2D@136" type="Polygon2D" parent="." unique_id=653288893]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1534, 1162, 1532.9343, 1167.3575, 1529.8995, 1171.8995, 1525.3575, 1174.9343, 1520, 1176, 1514.6425, 1174.9343, 1510.1005, 1171.8995, 1507.0657, 1167.3575, 1506, 1162, 1507.0657, 1156.6425, 1510.1005, 1152.1005, 1514.6425, 1149.0657, 1520, 1148, 1525.3575, 1149.0657, 1529.8995, 1152.1005, 1532.9343, 1156.6425)
 
-[node name="@Polygon2D@137" type="Polygon2D" parent="." unique_id=1829427107]
+[node name="@Polygon2D@137" type="Polygon2D" parent="." unique_id=1153271149]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1528, 1162, 1527.391, 1165.0615, 1525.6569, 1167.6569, 1523.0615, 1169.391, 1520, 1170, 1516.9385, 1169.391, 1514.3431, 1167.6569, 1512.609, 1165.0615, 1512, 1162, 1512.609, 1158.9385, 1514.3431, 1156.3431, 1516.9385, 1154.609, 1520, 1154, 1523.0615, 1154.609, 1525.6569, 1156.3431, 1527.391, 1158.9385)
 
-[node name="@ColorRect@138" type="ColorRect" parent="." unique_id=993880363]
+[node name="@ColorRect@138" type="ColorRect" parent="." unique_id=918055413]
 offset_left = 1612.0
 offset_top = 1136.0
 offset_right = 1620.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@139" type="Polygon2D" parent="." unique_id=2142348986]
+[node name="@Polygon2D@139" type="Polygon2D" parent="." unique_id=1206255985]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1636, 1130, 1634.4775, 1137.6537, 1630.1421, 1144.1421, 1623.6537, 1148.4775, 1616, 1150, 1608.3463, 1148.4775, 1601.8579, 1144.1421, 1597.5225, 1137.6537, 1596, 1130, 1597.5225, 1122.3463, 1601.8579, 1115.8579, 1608.3463, 1111.5225, 1616, 1110, 1623.6537, 1111.5225, 1630.1421, 1115.8579, 1634.4775, 1122.3463)
 
-[node name="@Polygon2D@140" type="Polygon2D" parent="." unique_id=28259666]
+[node name="@Polygon2D@140" type="Polygon2D" parent="." unique_id=817920474]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1630, 1130, 1628.9343, 1135.3575, 1625.8995, 1139.8995, 1621.3575, 1142.9343, 1616, 1144, 1610.6425, 1142.9343, 1606.1005, 1139.8995, 1603.0657, 1135.3575, 1602, 1130, 1603.0657, 1124.6425, 1606.1005, 1120.1005, 1610.6425, 1117.0657, 1616, 1116, 1621.3575, 1117.0657, 1625.8995, 1120.1005, 1628.9343, 1124.6425)
 
-[node name="@Polygon2D@141" type="Polygon2D" parent="." unique_id=650540588]
+[node name="@Polygon2D@141" type="Polygon2D" parent="." unique_id=106288684]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1624, 1130, 1623.391, 1133.0615, 1621.6569, 1135.6569, 1619.0615, 1137.391, 1616, 1138, 1612.9385, 1137.391, 1610.3431, 1135.6569, 1608.609, 1133.0615, 1608, 1130, 1608.609, 1126.9385, 1610.3431, 1124.3431, 1612.9385, 1122.609, 1616, 1122, 1619.0615, 1122.609, 1621.6569, 1124.3431, 1623.391, 1126.9385)
 
-[node name="@ColorRect@142" type="ColorRect" parent="." unique_id=1271057851]
+[node name="@ColorRect@142" type="ColorRect" parent="." unique_id=966411561]
 offset_left = 1708.0
 offset_top = 1168.0
 offset_right = 1716.0
 offset_bottom = 1182.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@143" type="Polygon2D" parent="." unique_id=1103657070]
+[node name="@Polygon2D@143" type="Polygon2D" parent="." unique_id=982555942]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1732, 1162, 1730.4775, 1169.6537, 1726.1421, 1176.1421, 1719.6537, 1180.4775, 1712, 1182, 1704.3463, 1180.4775, 1697.8579, 1176.1421, 1693.5225, 1169.6537, 1692, 1162, 1693.5225, 1154.3463, 1697.8579, 1147.8579, 1704.3463, 1143.5225, 1712, 1142, 1719.6537, 1143.5225, 1726.1421, 1147.8579, 1730.4775, 1154.3463)
 
-[node name="@Polygon2D@144" type="Polygon2D" parent="." unique_id=1352612955]
+[node name="@Polygon2D@144" type="Polygon2D" parent="." unique_id=1022164576]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1726, 1162, 1724.9343, 1167.3575, 1721.8995, 1171.8995, 1717.3575, 1174.9343, 1712, 1176, 1706.6425, 1174.9343, 1702.1005, 1171.8995, 1699.0657, 1167.3575, 1698, 1162, 1699.0657, 1156.6425, 1702.1005, 1152.1005, 1706.6425, 1149.0657, 1712, 1148, 1717.3575, 1149.0657, 1721.8995, 1152.1005, 1724.9343, 1156.6425)
 
-[node name="@Polygon2D@145" type="Polygon2D" parent="." unique_id=1194988771]
+[node name="@Polygon2D@145" type="Polygon2D" parent="." unique_id=1362819146]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1720, 1162, 1719.391, 1165.0615, 1717.6569, 1167.6569, 1715.0615, 1169.391, 1712, 1170, 1708.9385, 1169.391, 1706.3431, 1167.6569, 1704.609, 1165.0615, 1704, 1162, 1704.609, 1158.9385, 1706.3431, 1156.3431, 1708.9385, 1154.609, 1712, 1154, 1715.0615, 1154.609, 1717.6569, 1156.3431, 1719.391, 1158.9385)
 
-[node name="@ColorRect@146" type="ColorRect" parent="." unique_id=1023131843]
+[node name="@ColorRect@146" type="ColorRect" parent="." unique_id=2066579297]
 offset_left = 1804.0
 offset_top = 1136.0
 offset_right = 1812.0
 offset_bottom = 1150.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@147" type="Polygon2D" parent="." unique_id=146731757]
+[node name="@Polygon2D@147" type="Polygon2D" parent="." unique_id=467485455]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 1130, 1826.4775, 1137.6537, 1822.1421, 1144.1421, 1815.6537, 1148.4775, 1808, 1150, 1800.3463, 1148.4775, 1793.8579, 1144.1421, 1789.5225, 1137.6537, 1788, 1130, 1789.5225, 1122.3463, 1793.8579, 1115.8579, 1800.3463, 1111.5225, 1808, 1110, 1815.6537, 1111.5225, 1822.1421, 1115.8579, 1826.4775, 1122.3463)
 
-[node name="@Polygon2D@148" type="Polygon2D" parent="." unique_id=358031252]
+[node name="@Polygon2D@148" type="Polygon2D" parent="." unique_id=285831151]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 1130, 1820.9343, 1135.3575, 1817.8995, 1139.8995, 1813.3575, 1142.9343, 1808, 1144, 1802.6425, 1142.9343, 1798.1005, 1139.8995, 1795.0657, 1135.3575, 1794, 1130, 1795.0657, 1124.6425, 1798.1005, 1120.1005, 1802.6425, 1117.0657, 1808, 1116, 1813.3575, 1117.0657, 1817.8995, 1120.1005, 1820.9343, 1124.6425)
 
-[node name="@Polygon2D@149" type="Polygon2D" parent="." unique_id=1080312409]
+[node name="@Polygon2D@149" type="Polygon2D" parent="." unique_id=579880378]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 1130, 1815.391, 1133.0615, 1813.6569, 1135.6569, 1811.0615, 1137.391, 1808, 1138, 1804.9385, 1137.391, 1802.3431, 1135.6569, 1800.609, 1133.0615, 1800, 1130, 1800.609, 1126.9385, 1802.3431, 1124.3431, 1804.9385, 1122.609, 1808, 1122, 1811.0615, 1122.609, 1813.6569, 1124.3431, 1815.391, 1126.9385)
 
-[node name="@ColorRect@150" type="ColorRect" parent="." unique_id=483287019]
+[node name="@ColorRect@150" type="ColorRect" parent="." unique_id=601092870]
 offset_left = 108.0
 offset_top = 272.0
 offset_right = 116.0
 offset_bottom = 286.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@151" type="Polygon2D" parent="." unique_id=1317372586]
+[node name="@Polygon2D@151" type="Polygon2D" parent="." unique_id=2116601561]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 266, 130.47758, 273.65366, 126.142136, 280.14215, 119.65367, 284.4776, 112, 286, 104.34633, 284.4776, 97.857864, 280.14215, 93.52241, 273.65366, 92, 266, 93.52241, 258.34634, 97.857864, 251.85786, 104.34634, 247.5224, 112, 246, 119.65367, 247.52242, 126.14214, 251.85786, 130.47758, 258.34634)
 
-[node name="@Polygon2D@152" type="Polygon2D" parent="." unique_id=124225852]
+[node name="@Polygon2D@152" type="Polygon2D" parent="." unique_id=2118932301]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 266, 124.93431, 271.35757, 121.8995, 275.8995, 117.35757, 278.93433, 112, 280, 106.64243, 278.93433, 102.1005, 275.8995, 99.06569, 271.35757, 98, 266, 99.06569, 260.64243, 102.10051, 256.1005, 106.64243, 253.06569, 112, 252, 117.357574, 253.06569, 121.8995, 256.1005, 124.93431, 260.64243)
 
-[node name="@Polygon2D@153" type="Polygon2D" parent="." unique_id=1620541993]
+[node name="@Polygon2D@153" type="Polygon2D" parent="." unique_id=327776627]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 266, 119.39104, 269.06146, 117.65685, 271.65686, 115.06147, 273.39102, 112, 274, 108.93853, 273.39102, 106.34315, 271.65686, 104.60896, 269.06146, 104, 266, 104.60896, 262.93854, 106.34315, 260.34314, 108.93854, 258.60895, 112, 258, 115.06147, 258.60898, 117.65685, 260.34314, 119.39104, 262.93854)
 
-[node name="@ColorRect@154" type="ColorRect" parent="." unique_id=404080110]
+[node name="@ColorRect@154" type="ColorRect" parent="." unique_id=1660113447]
 offset_left = 108.0
 offset_top = 400.0
 offset_right = 116.0
 offset_bottom = 414.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@155" type="Polygon2D" parent="." unique_id=527514949]
+[node name="@Polygon2D@155" type="Polygon2D" parent="." unique_id=1086430436]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 394, 130.47758, 401.65366, 126.142136, 408.14215, 119.65367, 412.4776, 112, 414, 104.34633, 412.4776, 97.857864, 408.14215, 93.52241, 401.65366, 92, 394, 93.52241, 386.34634, 97.857864, 379.85785, 104.34634, 375.5224, 112, 374, 119.65367, 375.5224, 126.14214, 379.85788, 130.47758, 386.34634)
 
-[node name="@Polygon2D@156" type="Polygon2D" parent="." unique_id=507855338]
+[node name="@Polygon2D@156" type="Polygon2D" parent="." unique_id=1441136363]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 394, 124.93431, 399.35757, 121.8995, 403.8995, 117.35757, 406.93433, 112, 408, 106.64243, 406.93433, 102.1005, 403.8995, 99.06569, 399.35757, 98, 394, 99.06569, 388.64243, 102.10051, 384.1005, 106.64243, 381.06567, 112, 380, 117.357574, 381.06567, 121.8995, 384.1005, 124.93431, 388.64243)
 
-[node name="@Polygon2D@157" type="Polygon2D" parent="." unique_id=1118512227]
+[node name="@Polygon2D@157" type="Polygon2D" parent="." unique_id=938509297]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 394, 119.39104, 397.06146, 117.65685, 399.65686, 115.06147, 401.39102, 112, 402, 108.93853, 401.39102, 106.34315, 399.65686, 104.60896, 397.06146, 104, 394, 104.60896, 390.93854, 106.34315, 388.34314, 108.93854, 386.60895, 112, 386, 115.06147, 386.60898, 117.65685, 388.34314, 119.39104, 390.93854)
 
-[node name="@ColorRect@158" type="ColorRect" parent="." unique_id=1453297002]
+[node name="@ColorRect@158" type="ColorRect" parent="." unique_id=1047085125]
 offset_left = 108.0
 offset_top = 528.0
 offset_right = 116.0
 offset_bottom = 542.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@159" type="Polygon2D" parent="." unique_id=1760816871]
+[node name="@Polygon2D@159" type="Polygon2D" parent="." unique_id=2113504794]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 522, 130.47758, 529.6537, 126.142136, 536.14215, 119.65367, 540.4776, 112, 542, 104.34633, 540.4776, 97.857864, 536.14215, 93.52241, 529.6537, 92, 522, 93.52241, 514.3463, 97.857864, 507.85785, 104.34634, 503.5224, 112, 502, 119.65367, 503.5224, 126.14214, 507.85788, 130.47758, 514.3463)
 
-[node name="@Polygon2D@160" type="Polygon2D" parent="." unique_id=1623003455]
+[node name="@Polygon2D@160" type="Polygon2D" parent="." unique_id=677272719]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 522, 124.93431, 527.35754, 121.8995, 531.8995, 117.35757, 534.9343, 112, 536, 106.64243, 534.9343, 102.1005, 531.8995, 99.06569, 527.35754, 98, 522, 99.06569, 516.64246, 102.10051, 512.1005, 106.64243, 509.06567, 112, 508, 117.357574, 509.06567, 121.8995, 512.1005, 124.93431, 516.64246)
 
-[node name="@Polygon2D@161" type="Polygon2D" parent="." unique_id=1364544211]
+[node name="@Polygon2D@161" type="Polygon2D" parent="." unique_id=731009653]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 522, 119.39104, 525.06146, 117.65685, 527.65686, 115.06147, 529.39105, 112, 530, 108.93853, 529.39105, 106.34315, 527.65686, 104.60896, 525.06146, 104, 522, 104.60896, 518.93854, 106.34315, 516.34314, 108.93854, 514.60895, 112, 514, 115.06147, 514.60895, 117.65685, 516.34314, 119.39104, 518.93854)
 
-[node name="@ColorRect@162" type="ColorRect" parent="." unique_id=1799353408]
+[node name="@ColorRect@162" type="ColorRect" parent="." unique_id=1831009070]
 offset_left = 108.0
 offset_top = 720.0
 offset_right = 116.0
 offset_bottom = 734.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@163" type="Polygon2D" parent="." unique_id=463246430]
+[node name="@Polygon2D@163" type="Polygon2D" parent="." unique_id=496239445]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 714, 130.47758, 721.6537, 126.142136, 728.14215, 119.65367, 732.4776, 112, 734, 104.34633, 732.4776, 97.857864, 728.14215, 93.52241, 721.6537, 92, 714, 93.52241, 706.3463, 97.857864, 699.85785, 104.34634, 695.5224, 112, 694, 119.65367, 695.5224, 126.14214, 699.85785, 130.47758, 706.3463)
 
-[node name="@Polygon2D@164" type="Polygon2D" parent="." unique_id=1182403154]
+[node name="@Polygon2D@164" type="Polygon2D" parent="." unique_id=1410449440]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 714, 124.93431, 719.35754, 121.8995, 723.8995, 117.35757, 726.9343, 112, 728, 106.64243, 726.9343, 102.1005, 723.8995, 99.06569, 719.35754, 98, 714, 99.06569, 708.64246, 102.10051, 704.1005, 106.64243, 701.0657, 112, 700, 117.357574, 701.0657, 121.8995, 704.1005, 124.93431, 708.64246)
 
-[node name="@Polygon2D@165" type="Polygon2D" parent="." unique_id=2143985777]
+[node name="@Polygon2D@165" type="Polygon2D" parent="." unique_id=1152605460]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 714, 119.39104, 717.06146, 117.65685, 719.65686, 115.06147, 721.39105, 112, 722, 108.93853, 721.39105, 106.34315, 719.65686, 104.60896, 717.06146, 104, 714, 104.60896, 710.93854, 106.34315, 708.34314, 108.93854, 706.60895, 112, 706, 115.06147, 706.60895, 117.65685, 708.34314, 119.39104, 710.93854)
 
-[node name="@ColorRect@166" type="ColorRect" parent="." unique_id=1410118219]
+[node name="@ColorRect@166" type="ColorRect" parent="." unique_id=2130695861]
 offset_left = 108.0
 offset_top = 880.0
 offset_right = 116.0
 offset_bottom = 894.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@167" type="Polygon2D" parent="." unique_id=1917230184]
+[node name="@Polygon2D@167" type="Polygon2D" parent="." unique_id=978135864]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 874, 130.47758, 881.6537, 126.142136, 888.14215, 119.65367, 892.4776, 112, 894, 104.34633, 892.4776, 97.857864, 888.14215, 93.52241, 881.6537, 92, 874, 93.52241, 866.3463, 97.857864, 859.85785, 104.34634, 855.5224, 112, 854, 119.65367, 855.5224, 126.14214, 859.85785, 130.47758, 866.3463)
 
-[node name="@Polygon2D@168" type="Polygon2D" parent="." unique_id=972567759]
+[node name="@Polygon2D@168" type="Polygon2D" parent="." unique_id=1435300169]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 874, 124.93431, 879.35754, 121.8995, 883.8995, 117.35757, 886.9343, 112, 888, 106.64243, 886.9343, 102.1005, 883.8995, 99.06569, 879.35754, 98, 874, 99.06569, 868.64246, 102.10051, 864.1005, 106.64243, 861.0657, 112, 860, 117.357574, 861.0657, 121.8995, 864.1005, 124.93431, 868.64246)
 
-[node name="@Polygon2D@169" type="Polygon2D" parent="." unique_id=1916385123]
+[node name="@Polygon2D@169" type="Polygon2D" parent="." unique_id=2120508158]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 874, 119.39104, 877.06146, 117.65685, 879.65686, 115.06147, 881.39105, 112, 882, 108.93853, 881.39105, 106.34315, 879.65686, 104.60896, 877.06146, 104, 874, 104.60896, 870.93854, 106.34315, 868.34314, 108.93854, 866.60895, 112, 866, 115.06147, 866.60895, 117.65685, 868.34314, 119.39104, 870.93854)
 
-[node name="@ColorRect@170" type="ColorRect" parent="." unique_id=590555105]
+[node name="@ColorRect@170" type="ColorRect" parent="." unique_id=1568598278]
 offset_left = 108.0
 offset_top = 1040.0
 offset_right = 116.0
 offset_bottom = 1054.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@171" type="Polygon2D" parent="." unique_id=801433018]
+[node name="@Polygon2D@171" type="Polygon2D" parent="." unique_id=878397096]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(132, 1034, 130.47758, 1041.6537, 126.142136, 1048.1421, 119.65367, 1052.4775, 112, 1054, 104.34633, 1052.4775, 97.857864, 1048.1421, 93.52241, 1041.6537, 92, 1034, 93.52241, 1026.3463, 97.857864, 1019.85785, 104.34634, 1015.5224, 112, 1014, 119.65367, 1015.5224, 126.14214, 1019.85785, 130.47758, 1026.3463)
 
-[node name="@Polygon2D@172" type="Polygon2D" parent="." unique_id=960553737]
+[node name="@Polygon2D@172" type="Polygon2D" parent="." unique_id=500815139]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(126, 1034, 124.93431, 1039.3575, 121.8995, 1043.8995, 117.35757, 1046.9343, 112, 1048, 106.64243, 1046.9343, 102.1005, 1043.8995, 99.06569, 1039.3575, 98, 1034, 99.06569, 1028.6425, 102.10051, 1024.1005, 106.64243, 1021.0657, 112, 1020, 117.357574, 1021.0657, 121.8995, 1024.1005, 124.93431, 1028.6425)
 
-[node name="@Polygon2D@173" type="Polygon2D" parent="." unique_id=1362556011]
+[node name="@Polygon2D@173" type="Polygon2D" parent="." unique_id=578142026]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(120, 1034, 119.39104, 1037.0615, 117.65685, 1039.6569, 115.06147, 1041.391, 112, 1042, 108.93853, 1041.391, 106.34315, 1039.6569, 104.60896, 1037.0615, 104, 1034, 104.60896, 1030.9385, 106.34315, 1028.3431, 108.93854, 1026.609, 112, 1026, 115.06147, 1026.609, 117.65685, 1028.3431, 119.39104, 1030.9385)
 
-[node name="@ColorRect@174" type="ColorRect" parent="." unique_id=1121088099]
+[node name="@ColorRect@174" type="ColorRect" parent="." unique_id=488378866]
 offset_left = 1804.0
 offset_top = 272.0
 offset_right = 1812.0
 offset_bottom = 286.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@175" type="Polygon2D" parent="." unique_id=977270447]
+[node name="@Polygon2D@175" type="Polygon2D" parent="." unique_id=548933799]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 266, 1826.4775, 273.65366, 1822.1421, 280.14215, 1815.6537, 284.4776, 1808, 286, 1800.3463, 284.4776, 1793.8579, 280.14215, 1789.5225, 273.65366, 1788, 266, 1789.5225, 258.34634, 1793.8579, 251.85786, 1800.3463, 247.5224, 1808, 246, 1815.6537, 247.52242, 1822.1421, 251.85786, 1826.4775, 258.34634)
 
-[node name="@Polygon2D@176" type="Polygon2D" parent="." unique_id=1952440273]
+[node name="@Polygon2D@176" type="Polygon2D" parent="." unique_id=1007925456]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 266, 1820.9343, 271.35757, 1817.8995, 275.8995, 1813.3575, 278.93433, 1808, 280, 1802.6425, 278.93433, 1798.1005, 275.8995, 1795.0657, 271.35757, 1794, 266, 1795.0657, 260.64243, 1798.1005, 256.1005, 1802.6425, 253.06569, 1808, 252, 1813.3575, 253.06569, 1817.8995, 256.1005, 1820.9343, 260.64243)
 
-[node name="@Polygon2D@177" type="Polygon2D" parent="." unique_id=2034271440]
+[node name="@Polygon2D@177" type="Polygon2D" parent="." unique_id=1972506452]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 266, 1815.391, 269.06146, 1813.6569, 271.65686, 1811.0615, 273.39102, 1808, 274, 1804.9385, 273.39102, 1802.3431, 271.65686, 1800.609, 269.06146, 1800, 266, 1800.609, 262.93854, 1802.3431, 260.34314, 1804.9385, 258.60895, 1808, 258, 1811.0615, 258.60898, 1813.6569, 260.34314, 1815.391, 262.93854)
 
-[node name="@ColorRect@178" type="ColorRect" parent="." unique_id=742521491]
+[node name="@ColorRect@178" type="ColorRect" parent="." unique_id=462855757]
 offset_left = 1804.0
 offset_top = 400.0
 offset_right = 1812.0
 offset_bottom = 414.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@179" type="Polygon2D" parent="." unique_id=1146817176]
+[node name="@Polygon2D@179" type="Polygon2D" parent="." unique_id=485245844]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 394, 1826.4775, 401.65366, 1822.1421, 408.14215, 1815.6537, 412.4776, 1808, 414, 1800.3463, 412.4776, 1793.8579, 408.14215, 1789.5225, 401.65366, 1788, 394, 1789.5225, 386.34634, 1793.8579, 379.85785, 1800.3463, 375.5224, 1808, 374, 1815.6537, 375.5224, 1822.1421, 379.85788, 1826.4775, 386.34634)
 
-[node name="@Polygon2D@180" type="Polygon2D" parent="." unique_id=1496707268]
+[node name="@Polygon2D@180" type="Polygon2D" parent="." unique_id=1697336130]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 394, 1820.9343, 399.35757, 1817.8995, 403.8995, 1813.3575, 406.93433, 1808, 408, 1802.6425, 406.93433, 1798.1005, 403.8995, 1795.0657, 399.35757, 1794, 394, 1795.0657, 388.64243, 1798.1005, 384.1005, 1802.6425, 381.06567, 1808, 380, 1813.3575, 381.06567, 1817.8995, 384.1005, 1820.9343, 388.64243)
 
-[node name="@Polygon2D@181" type="Polygon2D" parent="." unique_id=1994024694]
+[node name="@Polygon2D@181" type="Polygon2D" parent="." unique_id=936921558]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 394, 1815.391, 397.06146, 1813.6569, 399.65686, 1811.0615, 401.39102, 1808, 402, 1804.9385, 401.39102, 1802.3431, 399.65686, 1800.609, 397.06146, 1800, 394, 1800.609, 390.93854, 1802.3431, 388.34314, 1804.9385, 386.60895, 1808, 386, 1811.0615, 386.60898, 1813.6569, 388.34314, 1815.391, 390.93854)
 
-[node name="@ColorRect@182" type="ColorRect" parent="." unique_id=699337414]
+[node name="@ColorRect@182" type="ColorRect" parent="." unique_id=808797049]
 offset_left = 1804.0
 offset_top = 528.0
 offset_right = 1812.0
 offset_bottom = 542.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@183" type="Polygon2D" parent="." unique_id=1156679037]
+[node name="@Polygon2D@183" type="Polygon2D" parent="." unique_id=1998663612]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 522, 1826.4775, 529.6537, 1822.1421, 536.14215, 1815.6537, 540.4776, 1808, 542, 1800.3463, 540.4776, 1793.8579, 536.14215, 1789.5225, 529.6537, 1788, 522, 1789.5225, 514.3463, 1793.8579, 507.85785, 1800.3463, 503.5224, 1808, 502, 1815.6537, 503.5224, 1822.1421, 507.85788, 1826.4775, 514.3463)
 
-[node name="@Polygon2D@184" type="Polygon2D" parent="." unique_id=2069656815]
+[node name="@Polygon2D@184" type="Polygon2D" parent="." unique_id=1413364321]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 522, 1820.9343, 527.35754, 1817.8995, 531.8995, 1813.3575, 534.9343, 1808, 536, 1802.6425, 534.9343, 1798.1005, 531.8995, 1795.0657, 527.35754, 1794, 522, 1795.0657, 516.64246, 1798.1005, 512.1005, 1802.6425, 509.06567, 1808, 508, 1813.3575, 509.06567, 1817.8995, 512.1005, 1820.9343, 516.64246)
 
-[node name="@Polygon2D@185" type="Polygon2D" parent="." unique_id=1497551423]
+[node name="@Polygon2D@185" type="Polygon2D" parent="." unique_id=1749176968]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 522, 1815.391, 525.06146, 1813.6569, 527.65686, 1811.0615, 529.39105, 1808, 530, 1804.9385, 529.39105, 1802.3431, 527.65686, 1800.609, 525.06146, 1800, 522, 1800.609, 518.93854, 1802.3431, 516.34314, 1804.9385, 514.60895, 1808, 514, 1811.0615, 514.60895, 1813.6569, 516.34314, 1815.391, 518.93854)
 
-[node name="@ColorRect@186" type="ColorRect" parent="." unique_id=529358705]
+[node name="@ColorRect@186" type="ColorRect" parent="." unique_id=1826361043]
 offset_left = 1804.0
 offset_top = 720.0
 offset_right = 1812.0
 offset_bottom = 734.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@187" type="Polygon2D" parent="." unique_id=703297640]
+[node name="@Polygon2D@187" type="Polygon2D" parent="." unique_id=1581983101]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 714, 1826.4775, 721.6537, 1822.1421, 728.14215, 1815.6537, 732.4776, 1808, 734, 1800.3463, 732.4776, 1793.8579, 728.14215, 1789.5225, 721.6537, 1788, 714, 1789.5225, 706.3463, 1793.8579, 699.85785, 1800.3463, 695.5224, 1808, 694, 1815.6537, 695.5224, 1822.1421, 699.85785, 1826.4775, 706.3463)
 
-[node name="@Polygon2D@188" type="Polygon2D" parent="." unique_id=877875365]
+[node name="@Polygon2D@188" type="Polygon2D" parent="." unique_id=1686491700]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 714, 1820.9343, 719.35754, 1817.8995, 723.8995, 1813.3575, 726.9343, 1808, 728, 1802.6425, 726.9343, 1798.1005, 723.8995, 1795.0657, 719.35754, 1794, 714, 1795.0657, 708.64246, 1798.1005, 704.1005, 1802.6425, 701.0657, 1808, 700, 1813.3575, 701.0657, 1817.8995, 704.1005, 1820.9343, 708.64246)
 
-[node name="@Polygon2D@189" type="Polygon2D" parent="." unique_id=216925527]
+[node name="@Polygon2D@189" type="Polygon2D" parent="." unique_id=720766191]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 714, 1815.391, 717.06146, 1813.6569, 719.65686, 1811.0615, 721.39105, 1808, 722, 1804.9385, 721.39105, 1802.3431, 719.65686, 1800.609, 717.06146, 1800, 714, 1800.609, 710.93854, 1802.3431, 708.34314, 1804.9385, 706.60895, 1808, 706, 1811.0615, 706.60895, 1813.6569, 708.34314, 1815.391, 710.93854)
 
-[node name="@ColorRect@190" type="ColorRect" parent="." unique_id=1757532054]
+[node name="@ColorRect@190" type="ColorRect" parent="." unique_id=709447992]
 offset_left = 1804.0
 offset_top = 880.0
 offset_right = 1812.0
 offset_bottom = 894.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@191" type="Polygon2D" parent="." unique_id=727913051]
+[node name="@Polygon2D@191" type="Polygon2D" parent="." unique_id=1159154686]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 874, 1826.4775, 881.6537, 1822.1421, 888.14215, 1815.6537, 892.4776, 1808, 894, 1800.3463, 892.4776, 1793.8579, 888.14215, 1789.5225, 881.6537, 1788, 874, 1789.5225, 866.3463, 1793.8579, 859.85785, 1800.3463, 855.5224, 1808, 854, 1815.6537, 855.5224, 1822.1421, 859.85785, 1826.4775, 866.3463)
 
-[node name="@Polygon2D@192" type="Polygon2D" parent="." unique_id=1313440421]
+[node name="@Polygon2D@192" type="Polygon2D" parent="." unique_id=408305383]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 874, 1820.9343, 879.35754, 1817.8995, 883.8995, 1813.3575, 886.9343, 1808, 888, 1802.6425, 886.9343, 1798.1005, 883.8995, 1795.0657, 879.35754, 1794, 874, 1795.0657, 868.64246, 1798.1005, 864.1005, 1802.6425, 861.0657, 1808, 860, 1813.3575, 861.0657, 1817.8995, 864.1005, 1820.9343, 868.64246)
 
-[node name="@Polygon2D@193" type="Polygon2D" parent="." unique_id=531813647]
+[node name="@Polygon2D@193" type="Polygon2D" parent="." unique_id=1770138062]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 874, 1815.391, 877.06146, 1813.6569, 879.65686, 1811.0615, 881.39105, 1808, 882, 1804.9385, 881.39105, 1802.3431, 879.65686, 1800.609, 877.06146, 1800, 874, 1800.609, 870.93854, 1802.3431, 868.34314, 1804.9385, 866.60895, 1808, 866, 1811.0615, 866.60895, 1813.6569, 868.34314, 1815.391, 870.93854)
 
-[node name="@ColorRect@194" type="ColorRect" parent="." unique_id=259206448]
+[node name="@ColorRect@194" type="ColorRect" parent="." unique_id=69971336]
 offset_left = 1804.0
 offset_top = 1040.0
 offset_right = 1812.0
 offset_bottom = 1054.0
 color = Color(0.45, 0.3, 0.12, 1)
 
-[node name="@Polygon2D@195" type="Polygon2D" parent="." unique_id=1586220732]
+[node name="@Polygon2D@195" type="Polygon2D" parent="." unique_id=2006191675]
 z_index = 1
 color = Color(0.15, 0.45, 0.12, 1)
 polygon = PackedVector2Array(1828, 1034, 1826.4775, 1041.6537, 1822.1421, 1048.1421, 1815.6537, 1052.4775, 1808, 1054, 1800.3463, 1052.4775, 1793.8579, 1048.1421, 1789.5225, 1041.6537, 1788, 1034, 1789.5225, 1026.3463, 1793.8579, 1019.85785, 1800.3463, 1015.5224, 1808, 1014, 1815.6537, 1015.5224, 1822.1421, 1019.85785, 1826.4775, 1026.3463)
 
-[node name="@Polygon2D@196" type="Polygon2D" parent="." unique_id=1300855924]
+[node name="@Polygon2D@196" type="Polygon2D" parent="." unique_id=1653827614]
 z_index = 1
 color = Color(0.2, 0.55, 0.15, 1)
 polygon = PackedVector2Array(1822, 1034, 1820.9343, 1039.3575, 1817.8995, 1043.8995, 1813.3575, 1046.9343, 1808, 1048, 1802.6425, 1046.9343, 1798.1005, 1043.8995, 1795.0657, 1039.3575, 1794, 1034, 1795.0657, 1028.6425, 1798.1005, 1024.1005, 1802.6425, 1021.0657, 1808, 1020, 1813.3575, 1021.0657, 1817.8995, 1024.1005, 1820.9343, 1028.6425)
 
-[node name="@Polygon2D@197" type="Polygon2D" parent="." unique_id=1539894322]
+[node name="@Polygon2D@197" type="Polygon2D" parent="." unique_id=1987694676]
 z_index = 1
 color = Color(0.28, 0.65, 0.2, 1)
 polygon = PackedVector2Array(1816, 1034, 1815.391, 1037.0615, 1813.6569, 1039.6569, 1811.0615, 1041.391, 1808, 1042, 1804.9385, 1041.391, 1802.3431, 1039.6569, 1800.609, 1037.0615, 1800, 1034, 1800.609, 1030.9385, 1802.3431, 1028.3431, 1804.9385, 1026.609, 1808, 1026, 1811.0615, 1026.609, 1813.6569, 1028.3431, 1815.391, 1030.9385)
 
-[node name="@ColorRect@198" type="ColorRect" parent="." unique_id=2075739935]
+[node name="@ColorRect@198" type="ColorRect" parent="." unique_id=351223541]
 z_index = 1
 offset_left = 1092.0
 offset_top = 162.0
@@ -1240,7 +1240,7 @@ offset_right = 1658.0
 offset_bottom = 548.0
 color = Color(0.58, 0.56, 0.52, 1)
 
-[node name="@ColorRect@199" type="ColorRect" parent="." unique_id=1162806492]
+[node name="@ColorRect@199" type="ColorRect" parent="." unique_id=206022749]
 z_index = 2
 offset_left = 1108.0
 offset_top = 178.0
@@ -1248,7 +1248,7 @@ offset_right = 1642.0
 offset_bottom = 532.0
 color = Color(0.62, 0.6, 0.56, 1)
 
-[node name="@ColorRect@200" type="ColorRect" parent="." unique_id=1730739092]
+[node name="@ColorRect@200" type="ColorRect" parent="." unique_id=1679264052]
 z_index = 3
 offset_left = 1116.0
 offset_top = 186.0
@@ -1256,7 +1256,7 @@ offset_right = 1634.0
 offset_bottom = 193.0
 color = Color(0.22, 0.26, 0.3, 1)
 
-[node name="@ColorRect@201" type="ColorRect" parent="." unique_id=1455472871]
+[node name="@ColorRect@201" type="ColorRect" parent="." unique_id=1540102888]
 z_index = 3
 offset_left = 1116.0
 offset_top = 517.0
@@ -1264,7 +1264,7 @@ offset_right = 1344.0
 offset_bottom = 524.0
 color = Color(0.22, 0.26, 0.3, 1)
 
-[node name="@ColorRect@202" type="ColorRect" parent="." unique_id=717412674]
+[node name="@ColorRect@202" type="ColorRect" parent="." unique_id=33654046]
 z_index = 3
 offset_left = 1406.0
 offset_top = 517.0
@@ -1272,7 +1272,7 @@ offset_right = 1634.0
 offset_bottom = 524.0
 color = Color(0.22, 0.26, 0.3, 1)
 
-[node name="@ColorRect@203" type="ColorRect" parent="." unique_id=2129204089]
+[node name="@ColorRect@203" type="ColorRect" parent="." unique_id=789790014]
 z_index = 3
 offset_left = 1116.0
 offset_top = 186.0
@@ -1280,7 +1280,7 @@ offset_right = 1123.0
 offset_bottom = 524.0
 color = Color(0.22, 0.26, 0.3, 1)
 
-[node name="@ColorRect@204" type="ColorRect" parent="." unique_id=1769771909]
+[node name="@ColorRect@204" type="ColorRect" parent="." unique_id=2018807798]
 z_index = 3
 offset_left = 1627.0
 offset_top = 186.0
@@ -1288,7 +1288,7 @@ offset_right = 1634.0
 offset_bottom = 524.0
 color = Color(0.22, 0.26, 0.3, 1)
 
-[node name="@ColorRect@205" type="ColorRect" parent="." unique_id=994432591]
+[node name="@ColorRect@205" type="ColorRect" parent="." unique_id=1670603091]
 z_index = 3
 offset_left = 1123.0
 offset_top = 206.0
@@ -1296,7 +1296,7 @@ offset_right = 1627.0
 offset_bottom = 207.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@206" type="ColorRect" parent="." unique_id=1002632108]
+[node name="@ColorRect@206" type="ColorRect" parent="." unique_id=521338230]
 z_index = 3
 offset_left = 1123.0
 offset_top = 228.0
@@ -1304,7 +1304,7 @@ offset_right = 1627.0
 offset_bottom = 229.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@207" type="ColorRect" parent="." unique_id=1925631677]
+[node name="@ColorRect@207" type="ColorRect" parent="." unique_id=1664970334]
 z_index = 3
 offset_left = 1123.0
 offset_top = 250.0
@@ -1312,7 +1312,7 @@ offset_right = 1627.0
 offset_bottom = 251.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@208" type="ColorRect" parent="." unique_id=1371064468]
+[node name="@ColorRect@208" type="ColorRect" parent="." unique_id=1599625404]
 z_index = 3
 offset_left = 1123.0
 offset_top = 272.0
@@ -1320,7 +1320,7 @@ offset_right = 1627.0
 offset_bottom = 273.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@209" type="ColorRect" parent="." unique_id=1096375791]
+[node name="@ColorRect@209" type="ColorRect" parent="." unique_id=640894841]
 z_index = 3
 offset_left = 1123.0
 offset_top = 294.0
@@ -1328,7 +1328,7 @@ offset_right = 1627.0
 offset_bottom = 295.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@210" type="ColorRect" parent="." unique_id=203805479]
+[node name="@ColorRect@210" type="ColorRect" parent="." unique_id=1895894525]
 z_index = 3
 offset_left = 1123.0
 offset_top = 316.0
@@ -1336,7 +1336,7 @@ offset_right = 1627.0
 offset_bottom = 317.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@211" type="ColorRect" parent="." unique_id=368368202]
+[node name="@ColorRect@211" type="ColorRect" parent="." unique_id=282346738]
 z_index = 3
 offset_left = 1123.0
 offset_top = 338.0
@@ -1344,7 +1344,7 @@ offset_right = 1627.0
 offset_bottom = 339.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@212" type="ColorRect" parent="." unique_id=1691385619]
+[node name="@ColorRect@212" type="ColorRect" parent="." unique_id=1444891341]
 z_index = 3
 offset_left = 1123.0
 offset_top = 360.0
@@ -1352,7 +1352,7 @@ offset_right = 1627.0
 offset_bottom = 361.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@213" type="ColorRect" parent="." unique_id=1251268840]
+[node name="@ColorRect@213" type="ColorRect" parent="." unique_id=634404581]
 z_index = 3
 offset_left = 1123.0
 offset_top = 382.0
@@ -1360,7 +1360,7 @@ offset_right = 1627.0
 offset_bottom = 383.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@214" type="ColorRect" parent="." unique_id=1407030923]
+[node name="@ColorRect@214" type="ColorRect" parent="." unique_id=1160859237]
 z_index = 3
 offset_left = 1123.0
 offset_top = 404.0
@@ -1368,7 +1368,7 @@ offset_right = 1627.0
 offset_bottom = 405.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@215" type="ColorRect" parent="." unique_id=1752065368]
+[node name="@ColorRect@215" type="ColorRect" parent="." unique_id=633241699]
 z_index = 3
 offset_left = 1123.0
 offset_top = 426.0
@@ -1376,7 +1376,7 @@ offset_right = 1627.0
 offset_bottom = 427.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@216" type="ColorRect" parent="." unique_id=1814355844]
+[node name="@ColorRect@216" type="ColorRect" parent="." unique_id=440670924]
 z_index = 3
 offset_left = 1123.0
 offset_top = 448.0
@@ -1384,7 +1384,7 @@ offset_right = 1627.0
 offset_bottom = 449.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@217" type="ColorRect" parent="." unique_id=1207018674]
+[node name="@ColorRect@217" type="ColorRect" parent="." unique_id=284944440]
 z_index = 3
 offset_left = 1123.0
 offset_top = 470.0
@@ -1392,7 +1392,7 @@ offset_right = 1627.0
 offset_bottom = 471.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@218" type="ColorRect" parent="." unique_id=969520404]
+[node name="@ColorRect@218" type="ColorRect" parent="." unique_id=971449096]
 z_index = 3
 offset_left = 1123.0
 offset_top = 492.0
@@ -1400,7 +1400,7 @@ offset_right = 1627.0
 offset_bottom = 493.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@219" type="ColorRect" parent="." unique_id=226326838]
+[node name="@ColorRect@219" type="ColorRect" parent="." unique_id=693946363]
 z_index = 3
 offset_left = 1136.0
 offset_top = 193.0
@@ -1408,7 +1408,7 @@ offset_right = 1137.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@220" type="ColorRect" parent="." unique_id=1365828934]
+[node name="@ColorRect@220" type="ColorRect" parent="." unique_id=1606037066]
 z_index = 3
 offset_left = 1158.0
 offset_top = 193.0
@@ -1416,7 +1416,7 @@ offset_right = 1159.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@221" type="ColorRect" parent="." unique_id=1887629630]
+[node name="@ColorRect@221" type="ColorRect" parent="." unique_id=1350285644]
 z_index = 3
 offset_left = 1180.0
 offset_top = 193.0
@@ -1424,7 +1424,7 @@ offset_right = 1181.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@222" type="ColorRect" parent="." unique_id=1633352283]
+[node name="@ColorRect@222" type="ColorRect" parent="." unique_id=1713555180]
 z_index = 3
 offset_left = 1202.0
 offset_top = 193.0
@@ -1432,7 +1432,7 @@ offset_right = 1203.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@223" type="ColorRect" parent="." unique_id=323696700]
+[node name="@ColorRect@223" type="ColorRect" parent="." unique_id=581174702]
 z_index = 3
 offset_left = 1224.0
 offset_top = 193.0
@@ -1440,7 +1440,7 @@ offset_right = 1225.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@224" type="ColorRect" parent="." unique_id=1339281203]
+[node name="@ColorRect@224" type="ColorRect" parent="." unique_id=210943812]
 z_index = 3
 offset_left = 1246.0
 offset_top = 193.0
@@ -1448,7 +1448,7 @@ offset_right = 1247.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@225" type="ColorRect" parent="." unique_id=1111484923]
+[node name="@ColorRect@225" type="ColorRect" parent="." unique_id=337591619]
 z_index = 3
 offset_left = 1268.0
 offset_top = 193.0
@@ -1456,7 +1456,7 @@ offset_right = 1269.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@226" type="ColorRect" parent="." unique_id=717712327]
+[node name="@ColorRect@226" type="ColorRect" parent="." unique_id=174628517]
 z_index = 3
 offset_left = 1290.0
 offset_top = 193.0
@@ -1464,7 +1464,7 @@ offset_right = 1291.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@227" type="ColorRect" parent="." unique_id=2144310836]
+[node name="@ColorRect@227" type="ColorRect" parent="." unique_id=207729979]
 z_index = 3
 offset_left = 1312.0
 offset_top = 193.0
@@ -1472,7 +1472,7 @@ offset_right = 1313.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@228" type="ColorRect" parent="." unique_id=362462863]
+[node name="@ColorRect@228" type="ColorRect" parent="." unique_id=1779377407]
 z_index = 3
 offset_left = 1334.0
 offset_top = 193.0
@@ -1480,7 +1480,7 @@ offset_right = 1335.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@229" type="ColorRect" parent="." unique_id=1438724227]
+[node name="@ColorRect@229" type="ColorRect" parent="." unique_id=692611968]
 z_index = 3
 offset_left = 1356.0
 offset_top = 193.0
@@ -1488,7 +1488,7 @@ offset_right = 1357.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@230" type="ColorRect" parent="." unique_id=1755543216]
+[node name="@ColorRect@230" type="ColorRect" parent="." unique_id=1873510338]
 z_index = 3
 offset_left = 1378.0
 offset_top = 193.0
@@ -1496,7 +1496,7 @@ offset_right = 1379.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@231" type="ColorRect" parent="." unique_id=1928328840]
+[node name="@ColorRect@231" type="ColorRect" parent="." unique_id=1647988174]
 z_index = 3
 offset_left = 1400.0
 offset_top = 193.0
@@ -1504,7 +1504,7 @@ offset_right = 1401.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@232" type="ColorRect" parent="." unique_id=879085723]
+[node name="@ColorRect@232" type="ColorRect" parent="." unique_id=1171367531]
 z_index = 3
 offset_left = 1422.0
 offset_top = 193.0
@@ -1512,7 +1512,7 @@ offset_right = 1423.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@233" type="ColorRect" parent="." unique_id=1596809419]
+[node name="@ColorRect@233" type="ColorRect" parent="." unique_id=1060156955]
 z_index = 3
 offset_left = 1444.0
 offset_top = 193.0
@@ -1520,7 +1520,7 @@ offset_right = 1445.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@234" type="ColorRect" parent="." unique_id=583852485]
+[node name="@ColorRect@234" type="ColorRect" parent="." unique_id=83037516]
 z_index = 3
 offset_left = 1466.0
 offset_top = 193.0
@@ -1528,7 +1528,7 @@ offset_right = 1467.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@235" type="ColorRect" parent="." unique_id=1020735704]
+[node name="@ColorRect@235" type="ColorRect" parent="." unique_id=762580133]
 z_index = 3
 offset_left = 1488.0
 offset_top = 193.0
@@ -1536,7 +1536,7 @@ offset_right = 1489.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@236" type="ColorRect" parent="." unique_id=1858278265]
+[node name="@ColorRect@236" type="ColorRect" parent="." unique_id=504825376]
 z_index = 3
 offset_left = 1510.0
 offset_top = 193.0
@@ -1544,7 +1544,7 @@ offset_right = 1511.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@237" type="ColorRect" parent="." unique_id=1408990476]
+[node name="@ColorRect@237" type="ColorRect" parent="." unique_id=1226164085]
 z_index = 3
 offset_left = 1532.0
 offset_top = 193.0
@@ -1552,7 +1552,7 @@ offset_right = 1533.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@238" type="ColorRect" parent="." unique_id=1930133567]
+[node name="@ColorRect@238" type="ColorRect" parent="." unique_id=1018705235]
 z_index = 3
 offset_left = 1554.0
 offset_top = 193.0
@@ -1560,7 +1560,7 @@ offset_right = 1555.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@239" type="ColorRect" parent="." unique_id=71970067]
+[node name="@ColorRect@239" type="ColorRect" parent="." unique_id=659392105]
 z_index = 3
 offset_left = 1576.0
 offset_top = 193.0
@@ -1568,7 +1568,7 @@ offset_right = 1577.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@240" type="ColorRect" parent="." unique_id=888515215]
+[node name="@ColorRect@240" type="ColorRect" parent="." unique_id=1718345537]
 z_index = 3
 offset_left = 1598.0
 offset_top = 193.0
@@ -1576,7 +1576,7 @@ offset_right = 1599.0
 offset_bottom = 517.0
 color = Color(0.28, 0.32, 0.36, 0.6)
 
-[node name="@ColorRect@241" type="ColorRect" parent="." unique_id=683407179]
+[node name="@ColorRect@241" type="ColorRect" parent="." unique_id=50353494]
 z_index = 4
 offset_left = 1130.0
 offset_top = 200.0
@@ -1584,7 +1584,7 @@ offset_right = 1620.0
 offset_bottom = 510.0
 color = Color(0.22, 0.52, 0.2, 1)
 
-[node name="@ColorRect@242" type="ColorRect" parent="." unique_id=532489466]
+[node name="@ColorRect@242" type="ColorRect" parent="." unique_id=1171808070]
 z_index = 5
 offset_left = 1130.0
 offset_top = 200.0
@@ -1592,7 +1592,7 @@ offset_right = 1191.25
 offset_bottom = 510.0
 color = Color(0.18, 0.47, 0.17, 1)
 
-[node name="@ColorRect@243" type="ColorRect" parent="." unique_id=1383120139]
+[node name="@ColorRect@243" type="ColorRect" parent="." unique_id=1798146250]
 z_index = 5
 offset_left = 1252.5
 offset_top = 200.0
@@ -1600,7 +1600,7 @@ offset_right = 1313.75
 offset_bottom = 510.0
 color = Color(0.18, 0.47, 0.17, 1)
 
-[node name="@ColorRect@244" type="ColorRect" parent="." unique_id=1560437511]
+[node name="@ColorRect@244" type="ColorRect" parent="." unique_id=679157874]
 z_index = 5
 offset_left = 1375.0
 offset_top = 200.0
@@ -1608,7 +1608,7 @@ offset_right = 1436.25
 offset_bottom = 510.0
 color = Color(0.18, 0.47, 0.17, 1)
 
-[node name="@ColorRect@245" type="ColorRect" parent="." unique_id=448106229]
+[node name="@ColorRect@245" type="ColorRect" parent="." unique_id=222942298]
 z_index = 5
 offset_left = 1497.5
 offset_top = 200.0
@@ -1616,319 +1616,319 @@ offset_right = 1558.75
 offset_bottom = 510.0
 color = Color(0.18, 0.47, 0.17, 1)
 
-[node name="@ColorRect@246" type="ColorRect" parent="." unique_id=1411557916]
+[node name="@ColorRect@246" type="ColorRect" parent="." unique_id=1190112486]
 z_index = 6
 offset_left = 1138.0
 offset_top = 208.0
 offset_right = 1612.0
 offset_bottom = 210.0
 
-[node name="@ColorRect@247" type="ColorRect" parent="." unique_id=1575047592]
+[node name="@ColorRect@247" type="ColorRect" parent="." unique_id=1936827707]
 z_index = 6
 offset_left = 1138.0
 offset_top = 500.0
 offset_right = 1612.0
 offset_bottom = 502.0
 
-[node name="@ColorRect@248" type="ColorRect" parent="." unique_id=534621548]
+[node name="@ColorRect@248" type="ColorRect" parent="." unique_id=1525929783]
 z_index = 6
 offset_left = 1138.0
 offset_top = 208.0
 offset_right = 1140.0
 offset_bottom = 502.0
 
-[node name="@ColorRect@249" type="ColorRect" parent="." unique_id=1277533019]
+[node name="@ColorRect@249" type="ColorRect" parent="." unique_id=1373940002]
 z_index = 6
 offset_left = 1610.0
 offset_top = 208.0
 offset_right = 1612.0
 offset_bottom = 502.0
 
-[node name="@ColorRect@250" type="ColorRect" parent="." unique_id=1051680214]
+[node name="@ColorRect@250" type="ColorRect" parent="." unique_id=663955899]
 z_index = 6
 offset_left = 1374.0
 offset_top = 208.0
 offset_right = 1376.0
 offset_bottom = 502.0
 
-[node name="@Line2D@251" type="Line2D" parent="." unique_id=243352816]
+[node name="@Line2D@251" type="Line2D" parent="." unique_id=1804572828]
 z_index = 6
 points = PackedVector2Array(1419, 355, 1418.1545, 363.58398)
 width = 2.0
 
-[node name="@Line2D@252" type="Line2D" parent="." unique_id=887692256]
+[node name="@Line2D@252" type="Line2D" parent="." unique_id=537629450]
 z_index = 6
 points = PackedVector2Array(1418.1545, 363.58398, 1415.6508, 371.83807)
 width = 2.0
 
-[node name="@Line2D@253" type="Line2D" parent="." unique_id=17532456]
+[node name="@Line2D@253" type="Line2D" parent="." unique_id=778838919]
 z_index = 6
 points = PackedVector2Array(1415.6508, 371.83807, 1411.5847, 379.4451)
 width = 2.0
 
-[node name="@Line2D@254" type="Line2D" parent="." unique_id=799796944]
+[node name="@Line2D@254" type="Line2D" parent="." unique_id=879332875]
 z_index = 6
 points = PackedVector2Array(1411.5847, 379.4451, 1406.1127, 386.1127)
 width = 2.0
 
-[node name="@Line2D@255" type="Line2D" parent="." unique_id=811866324]
+[node name="@Line2D@255" type="Line2D" parent="." unique_id=1542694915]
 z_index = 6
 points = PackedVector2Array(1406.1127, 386.1127, 1399.4451, 391.58466)
 width = 2.0
 
-[node name="@Line2D@256" type="Line2D" parent="." unique_id=331274176]
+[node name="@Line2D@256" type="Line2D" parent="." unique_id=1786966131]
 z_index = 6
 points = PackedVector2Array(1399.4451, 391.58466, 1391.838, 395.6507)
 width = 2.0
 
-[node name="@Line2D@257" type="Line2D" parent="." unique_id=2100318359]
+[node name="@Line2D@257" type="Line2D" parent="." unique_id=157836022]
 z_index = 6
 points = PackedVector2Array(1391.838, 395.6507, 1383.584, 398.15454)
 width = 2.0
 
-[node name="@Line2D@258" type="Line2D" parent="." unique_id=2089475285]
+[node name="@Line2D@258" type="Line2D" parent="." unique_id=245800193]
 z_index = 6
 points = PackedVector2Array(1383.584, 398.15454, 1375, 399)
 width = 2.0
 
-[node name="@Line2D@259" type="Line2D" parent="." unique_id=986456096]
+[node name="@Line2D@259" type="Line2D" parent="." unique_id=1876787012]
 z_index = 6
 points = PackedVector2Array(1375, 399, 1366.416, 398.15454)
 width = 2.0
 
-[node name="@Line2D@260" type="Line2D" parent="." unique_id=904912984]
+[node name="@Line2D@260" type="Line2D" parent="." unique_id=1925273019]
 z_index = 6
 points = PackedVector2Array(1366.416, 398.15454, 1358.1619, 395.6507)
 width = 2.0
 
-[node name="@Line2D@261" type="Line2D" parent="." unique_id=1104167483]
+[node name="@Line2D@261" type="Line2D" parent="." unique_id=314058806]
 z_index = 6
 points = PackedVector2Array(1358.1619, 395.6507, 1350.5549, 391.58466)
 width = 2.0
 
-[node name="@Line2D@262" type="Line2D" parent="." unique_id=2004409309]
+[node name="@Line2D@262" type="Line2D" parent="." unique_id=403922794]
 z_index = 6
 points = PackedVector2Array(1350.5549, 391.58466, 1343.8873, 386.1127)
 width = 2.0
 
-[node name="@Line2D@263" type="Line2D" parent="." unique_id=1488950142]
+[node name="@Line2D@263" type="Line2D" parent="." unique_id=1162599334]
 z_index = 6
 points = PackedVector2Array(1343.8873, 386.1127, 1338.4153, 379.4451)
 width = 2.0
 
-[node name="@Line2D@264" type="Line2D" parent="." unique_id=1475986932]
+[node name="@Line2D@264" type="Line2D" parent="." unique_id=965786459]
 z_index = 6
 points = PackedVector2Array(1338.4153, 379.4451, 1334.3492, 371.83807)
 width = 2.0
 
-[node name="@Line2D@265" type="Line2D" parent="." unique_id=1672065728]
+[node name="@Line2D@265" type="Line2D" parent="." unique_id=2005375868]
 z_index = 6
 points = PackedVector2Array(1334.3492, 371.83807, 1331.8455, 363.58398)
 width = 2.0
 
-[node name="@Line2D@266" type="Line2D" parent="." unique_id=1392826120]
+[node name="@Line2D@266" type="Line2D" parent="." unique_id=601079238]
 z_index = 6
 points = PackedVector2Array(1331.8455, 363.58398, 1331, 355)
 width = 2.0
 
-[node name="@Line2D@267" type="Line2D" parent="." unique_id=948068087]
+[node name="@Line2D@267" type="Line2D" parent="." unique_id=1808990582]
 z_index = 6
 points = PackedVector2Array(1331, 355, 1331.8455, 346.41602)
 width = 2.0
 
-[node name="@Line2D@268" type="Line2D" parent="." unique_id=510989053]
+[node name="@Line2D@268" type="Line2D" parent="." unique_id=1857610105]
 z_index = 6
 points = PackedVector2Array(1331.8455, 346.41602, 1334.3492, 338.16193)
 width = 2.0
 
-[node name="@Line2D@269" type="Line2D" parent="." unique_id=1412471269]
+[node name="@Line2D@269" type="Line2D" parent="." unique_id=582110662]
 z_index = 6
 points = PackedVector2Array(1334.3492, 338.16193, 1338.4153, 330.5549)
 width = 2.0
 
-[node name="@Line2D@270" type="Line2D" parent="." unique_id=898772263]
+[node name="@Line2D@270" type="Line2D" parent="." unique_id=2140267857]
 z_index = 6
 points = PackedVector2Array(1338.4153, 330.5549, 1343.8873, 323.8873)
 width = 2.0
 
-[node name="@Line2D@271" type="Line2D" parent="." unique_id=262579908]
+[node name="@Line2D@271" type="Line2D" parent="." unique_id=1455049582]
 z_index = 6
 points = PackedVector2Array(1343.8873, 323.8873, 1350.5549, 318.41534)
 width = 2.0
 
-[node name="@Line2D@272" type="Line2D" parent="." unique_id=1764323012]
+[node name="@Line2D@272" type="Line2D" parent="." unique_id=622188715]
 z_index = 6
 points = PackedVector2Array(1350.5549, 318.41534, 1358.162, 314.3493)
 width = 2.0
 
-[node name="@Line2D@273" type="Line2D" parent="." unique_id=211527258]
+[node name="@Line2D@273" type="Line2D" parent="." unique_id=42046484]
 z_index = 6
 points = PackedVector2Array(1358.162, 314.3493, 1366.416, 311.84546)
 width = 2.0
 
-[node name="@Line2D@274" type="Line2D" parent="." unique_id=948228981]
+[node name="@Line2D@274" type="Line2D" parent="." unique_id=1267499921]
 z_index = 6
 points = PackedVector2Array(1366.416, 311.84546, 1375, 311)
 width = 2.0
 
-[node name="@Line2D@275" type="Line2D" parent="." unique_id=1079138437]
+[node name="@Line2D@275" type="Line2D" parent="." unique_id=1310501759]
 z_index = 6
 points = PackedVector2Array(1375, 311, 1383.584, 311.84546)
 width = 2.0
 
-[node name="@Line2D@276" type="Line2D" parent="." unique_id=2004703992]
+[node name="@Line2D@276" type="Line2D" parent="." unique_id=263106900]
 z_index = 6
 points = PackedVector2Array(1383.584, 311.84546, 1391.8381, 314.3493)
 width = 2.0
 
-[node name="@Line2D@277" type="Line2D" parent="." unique_id=1018785043]
+[node name="@Line2D@277" type="Line2D" parent="." unique_id=210059371]
 z_index = 6
 points = PackedVector2Array(1391.8381, 314.3493, 1399.4451, 318.41534)
 width = 2.0
 
-[node name="@Line2D@278" type="Line2D" parent="." unique_id=1976355460]
+[node name="@Line2D@278" type="Line2D" parent="." unique_id=1799563856]
 z_index = 6
 points = PackedVector2Array(1399.4451, 318.41534, 1406.1127, 323.8873)
 width = 2.0
 
-[node name="@Line2D@279" type="Line2D" parent="." unique_id=1356495151]
+[node name="@Line2D@279" type="Line2D" parent="." unique_id=195079109]
 z_index = 6
 points = PackedVector2Array(1406.1127, 323.8873, 1411.5847, 330.5549)
 width = 2.0
 
-[node name="@Line2D@280" type="Line2D" parent="." unique_id=842879335]
+[node name="@Line2D@280" type="Line2D" parent="." unique_id=197991508]
 z_index = 6
 points = PackedVector2Array(1411.5847, 330.5549, 1415.6508, 338.16193)
 width = 2.0
 
-[node name="@Line2D@281" type="Line2D" parent="." unique_id=1186439035]
+[node name="@Line2D@281" type="Line2D" parent="." unique_id=613161869]
 z_index = 6
 points = PackedVector2Array(1415.6508, 338.16193, 1418.1545, 346.41602)
 width = 2.0
 
-[node name="@Line2D@282" type="Line2D" parent="." unique_id=782775501]
+[node name="@Line2D@282" type="Line2D" parent="." unique_id=2060600903]
 z_index = 6
 points = PackedVector2Array(1418.1545, 346.41602, 1419, 355)
 width = 2.0
 
-[node name="@Polygon2D@283" type="Polygon2D" parent="." unique_id=1224802413]
+[node name="@Polygon2D@283" type="Polygon2D" parent="." unique_id=1447656105]
 z_index = 6
 polygon = PackedVector2Array(1378.5, 355, 1377.8315, 357.05725, 1376.0815, 358.3287, 1373.9185, 358.3287, 1372.1685, 357.05725, 1371.5, 355, 1372.1685, 352.94275, 1373.9185, 351.6713, 1376.0815, 351.6713, 1377.8315, 352.94275)
 
-[node name="@ColorRect@284" type="ColorRect" parent="." unique_id=185170491]
+[node name="@ColorRect@284" type="ColorRect" parent="." unique_id=1179019095]
 z_index = 6
 offset_left = 1138.0
 offset_top = 265.0
 offset_right = 1213.0
 offset_bottom = 267.0
 
-[node name="@ColorRect@285" type="ColorRect" parent="." unique_id=1774288089]
+[node name="@ColorRect@285" type="ColorRect" parent="." unique_id=1938876547]
 z_index = 6
 offset_left = 1138.0
 offset_top = 443.0
 offset_right = 1213.0
 offset_bottom = 445.0
 
-[node name="@ColorRect@286" type="ColorRect" parent="." unique_id=1071680782]
+[node name="@ColorRect@286" type="ColorRect" parent="." unique_id=1652243859]
 z_index = 6
 offset_left = 1211.0
 offset_top = 265.0
 offset_right = 1213.0
 offset_bottom = 445.0
 
-[node name="@ColorRect@287" type="ColorRect" parent="." unique_id=414237404]
+[node name="@ColorRect@287" type="ColorRect" parent="." unique_id=2085622307]
 z_index = 6
 offset_left = 1537.0
 offset_top = 265.0
 offset_right = 1612.0
 offset_bottom = 267.0
 
-[node name="@ColorRect@288" type="ColorRect" parent="." unique_id=196068319]
+[node name="@ColorRect@288" type="ColorRect" parent="." unique_id=2144927790]
 z_index = 6
 offset_left = 1537.0
 offset_top = 443.0
 offset_right = 1612.0
 offset_bottom = 445.0
 
-[node name="@ColorRect@289" type="ColorRect" parent="." unique_id=1130210534]
+[node name="@ColorRect@289" type="ColorRect" parent="." unique_id=1419043802]
 z_index = 6
 offset_left = 1537.0
 offset_top = 265.0
 offset_right = 1539.0
 offset_bottom = 445.0
 
-[node name="@ColorRect@290" type="ColorRect" parent="." unique_id=1532420515]
+[node name="@ColorRect@290" type="ColorRect" parent="." unique_id=964305506]
 z_index = 6
 offset_left = 1138.0
 offset_top = 310.0
 offset_right = 1170.0
 offset_bottom = 312.0
 
-[node name="@ColorRect@291" type="ColorRect" parent="." unique_id=15256158]
+[node name="@ColorRect@291" type="ColorRect" parent="." unique_id=1592544639]
 z_index = 6
 offset_left = 1138.0
 offset_top = 398.0
 offset_right = 1170.0
 offset_bottom = 400.0
 
-[node name="@ColorRect@292" type="ColorRect" parent="." unique_id=2001244769]
+[node name="@ColorRect@292" type="ColorRect" parent="." unique_id=1980074958]
 z_index = 6
 offset_left = 1168.0
 offset_top = 310.0
 offset_right = 1170.0
 offset_bottom = 400.0
 
-[node name="@ColorRect@293" type="ColorRect" parent="." unique_id=277953600]
+[node name="@ColorRect@293" type="ColorRect" parent="." unique_id=2027542824]
 z_index = 6
 offset_left = 1580.0
 offset_top = 310.0
 offset_right = 1612.0
 offset_bottom = 312.0
 
-[node name="@ColorRect@294" type="ColorRect" parent="." unique_id=1316392938]
+[node name="@ColorRect@294" type="ColorRect" parent="." unique_id=941876337]
 z_index = 6
 offset_left = 1580.0
 offset_top = 398.0
 offset_right = 1612.0
 offset_bottom = 400.0
 
-[node name="@ColorRect@295" type="ColorRect" parent="." unique_id=487556489]
+[node name="@ColorRect@295" type="ColorRect" parent="." unique_id=505604902]
 z_index = 6
 offset_left = 1580.0
 offset_top = 310.0
 offset_right = 1582.0
 offset_bottom = 400.0
 
-[node name="@Polygon2D@296" type="Polygon2D" parent="." unique_id=1937278145]
+[node name="@Polygon2D@296" type="Polygon2D" parent="." unique_id=364893232]
 z_index = 6
 polygon = PackedVector2Array(1196, 355, 1195.427, 356.76337, 1193.927, 357.85318, 1192.073, 357.85318, 1190.573, 356.76337, 1190, 355, 1190.573, 353.23663, 1192.073, 352.14682, 1193.927, 352.14682, 1195.427, 353.23663)
 
-[node name="@Polygon2D@297" type="Polygon2D" parent="." unique_id=226584703]
+[node name="@Polygon2D@297" type="Polygon2D" parent="." unique_id=1068695212]
 z_index = 6
 polygon = PackedVector2Array(1560, 355, 1559.427, 356.76337, 1557.927, 357.85318, 1556.073, 357.85318, 1554.573, 356.76337, 1554, 355, 1554.573, 353.23663, 1556.073, 352.14682, 1557.927, 352.14682, 1559.427, 353.23663)
 
-[node name="@ColorRect@298" type="ColorRect" parent="." unique_id=215906585]
+[node name="@ColorRect@298" type="ColorRect" parent="." unique_id=2010761109]
 z_index = 7
 offset_left = 1108.0
 offset_top = 315.0
 offset_right = 1130.0
 offset_bottom = 317.0
 
-[node name="@ColorRect@299" type="ColorRect" parent="." unique_id=773303257]
+[node name="@ColorRect@299" type="ColorRect" parent="." unique_id=1376533430]
 z_index = 7
 offset_left = 1108.0
 offset_top = 393.0
 offset_right = 1130.0
 offset_bottom = 395.0
 
-[node name="@ColorRect@300" type="ColorRect" parent="." unique_id=984309347]
+[node name="@ColorRect@300" type="ColorRect" parent="." unique_id=1865935692]
 z_index = 7
 offset_left = 1108.0
 offset_top = 315.0
 offset_right = 1110.0
 offset_bottom = 395.0
 
-[node name="@ColorRect@301" type="ColorRect" parent="." unique_id=741162049]
+[node name="@ColorRect@301" type="ColorRect" parent="." unique_id=1223811251]
 z_index = 6
 offset_left = 1110.0
 offset_top = 317.0
@@ -1936,28 +1936,28 @@ offset_right = 1128.0
 offset_bottom = 393.0
 color = Color(0.85, 0.85, 0.85, 0.25)
 
-[node name="@ColorRect@302" type="ColorRect" parent="." unique_id=1168460641]
+[node name="@ColorRect@302" type="ColorRect" parent="." unique_id=152487581]
 z_index = 7
 offset_left = 1620.0
 offset_top = 315.0
 offset_right = 1642.0
 offset_bottom = 317.0
 
-[node name="@ColorRect@303" type="ColorRect" parent="." unique_id=676472309]
+[node name="@ColorRect@303" type="ColorRect" parent="." unique_id=1717062007]
 z_index = 7
 offset_left = 1620.0
 offset_top = 393.0
 offset_right = 1642.0
 offset_bottom = 395.0
 
-[node name="@ColorRect@304" type="ColorRect" parent="." unique_id=1913765042]
+[node name="@ColorRect@304" type="ColorRect" parent="." unique_id=678089505]
 z_index = 7
 offset_left = 1640.0
 offset_top = 315.0
 offset_right = 1642.0
 offset_bottom = 395.0
 
-[node name="@ColorRect@305" type="ColorRect" parent="." unique_id=25301504]
+[node name="@ColorRect@305" type="ColorRect" parent="." unique_id=960106093]
 z_index = 6
 offset_left = 1622.0
 offset_top = 317.0
@@ -1965,7 +1965,7 @@ offset_right = 1640.0
 offset_bottom = 393.0
 color = Color(0.85, 0.85, 0.85, 0.25)
 
-[node name="@ColorRect@306" type="ColorRect" parent="." unique_id=251496757]
+[node name="@ColorRect@306" type="ColorRect" parent="." unique_id=765726346]
 z_index = 8
 offset_left = 1118.0
 offset_top = 188.0
@@ -1973,12 +1973,12 @@ offset_right = 1123.0
 offset_bottom = 240.0
 color = Color(0.28, 0.3, 0.34, 1)
 
-[node name="@Polygon2D@307" type="Polygon2D" parent="." unique_id=306119596]
+[node name="@Polygon2D@307" type="Polygon2D" parent="." unique_id=1699692279]
 z_index = 9
 color = Color(1, 0.95, 0.8, 0.9)
 polygon = PackedVector2Array(1127.5, 184, 1125.4497, 187.53554, 1120.5, 189, 1115.5503, 187.53554, 1113.5, 184, 1115.5503, 180.46446, 1120.5, 179, 1125.4497, 180.46446)
 
-[node name="@ColorRect@308" type="ColorRect" parent="." unique_id=906990261]
+[node name="@ColorRect@308" type="ColorRect" parent="." unique_id=523748382]
 z_index = 8
 offset_left = 1626.0
 offset_top = 188.0
@@ -1986,12 +1986,12 @@ offset_right = 1631.0
 offset_bottom = 240.0
 color = Color(0.28, 0.3, 0.34, 1)
 
-[node name="@Polygon2D@309" type="Polygon2D" parent="." unique_id=1486767577]
+[node name="@Polygon2D@309" type="Polygon2D" parent="." unique_id=177491035]
 z_index = 9
 color = Color(1, 0.95, 0.8, 0.9)
 polygon = PackedVector2Array(1635.5, 184, 1633.4497, 187.53554, 1628.5, 189, 1623.5503, 187.53554, 1621.5, 184, 1623.5503, 180.46446, 1628.5, 179, 1633.4497, 180.46446)
 
-[node name="@ColorRect@310" type="ColorRect" parent="." unique_id=900076605]
+[node name="@ColorRect@310" type="ColorRect" parent="." unique_id=788582903]
 z_index = 8
 offset_left = 1118.0
 offset_top = 466.0
@@ -1999,12 +1999,12 @@ offset_right = 1123.0
 offset_bottom = 518.0
 color = Color(0.28, 0.3, 0.34, 1)
 
-[node name="@Polygon2D@311" type="Polygon2D" parent="." unique_id=1958380268]
+[node name="@Polygon2D@311" type="Polygon2D" parent="." unique_id=1171760547]
 z_index = 9
 color = Color(1, 0.95, 0.8, 0.9)
 polygon = PackedVector2Array(1127.5, 462, 1125.4497, 465.53552, 1120.5, 467, 1115.5503, 465.53552, 1113.5, 462, 1115.5503, 458.46448, 1120.5, 457, 1125.4497, 458.46448)
 
-[node name="@ColorRect@312" type="ColorRect" parent="." unique_id=1677850851]
+[node name="@ColorRect@312" type="ColorRect" parent="." unique_id=389315387]
 z_index = 8
 offset_left = 1626.0
 offset_top = 466.0
@@ -2012,12 +2012,12 @@ offset_right = 1631.0
 offset_bottom = 518.0
 color = Color(0.28, 0.3, 0.34, 1)
 
-[node name="@Polygon2D@313" type="Polygon2D" parent="." unique_id=1360652972]
+[node name="@Polygon2D@313" type="Polygon2D" parent="." unique_id=932453799]
 z_index = 9
 color = Color(1, 0.95, 0.8, 0.9)
 polygon = PackedVector2Array(1635.5, 462, 1633.4497, 465.53552, 1628.5, 467, 1623.5503, 465.53552, 1621.5, 462, 1623.5503, 458.46448, 1628.5, 457, 1633.4497, 458.46448)
 
-[node name="@ColorRect@314" type="ColorRect" parent="." unique_id=1591891006]
+[node name="@ColorRect@314" type="ColorRect" parent="." unique_id=1198963570]
 z_index = 3
 offset_left = 1088.0
 offset_top = 265.0
@@ -2025,7 +2025,7 @@ offset_right = 1110.0
 offset_bottom = 273.0
 color = Color(0.48, 0.32, 0.16, 1)
 
-[node name="@ColorRect@315" type="ColorRect" parent="." unique_id=470327775]
+[node name="@ColorRect@315" type="ColorRect" parent="." unique_id=6727077]
 z_index = 3
 offset_left = 1090.0
 offset_top = 273.0
@@ -2033,7 +2033,7 @@ offset_right = 1094.0
 offset_bottom = 279.0
 color = Color(0.36, 0.24, 0.1, 1)
 
-[node name="@ColorRect@316" type="ColorRect" parent="." unique_id=1425911836]
+[node name="@ColorRect@316" type="ColorRect" parent="." unique_id=1138941009]
 z_index = 3
 offset_left = 1104.0
 offset_top = 273.0
@@ -2041,7 +2041,7 @@ offset_right = 1108.0
 offset_bottom = 279.0
 color = Color(0.36, 0.24, 0.1, 1)
 
-[node name="@ColorRect@317" type="ColorRect" parent="." unique_id=1046338433]
+[node name="@ColorRect@317" type="ColorRect" parent="." unique_id=314794250]
 z_index = 3
 offset_left = 1088.0
 offset_top = 335.0
@@ -2049,7 +2049,7 @@ offset_right = 1110.0
 offset_bottom = 343.0
 color = Color(0.48, 0.32, 0.16, 1)
 
-[node name="@ColorRect@318" type="ColorRect" parent="." unique_id=32341511]
+[node name="@ColorRect@318" type="ColorRect" parent="." unique_id=1405643796]
 z_index = 3
 offset_left = 1090.0
 offset_top = 343.0
@@ -2057,7 +2057,7 @@ offset_right = 1094.0
 offset_bottom = 349.0
 color = Color(0.36, 0.24, 0.1, 1)
 
-[node name="@ColorRect@319" type="ColorRect" parent="." unique_id=1557178638]
+[node name="@ColorRect@319" type="ColorRect" parent="." unique_id=1813865855]
 z_index = 3
 offset_left = 1104.0
 offset_top = 343.0
@@ -2065,7 +2065,7 @@ offset_right = 1108.0
 offset_bottom = 349.0
 color = Color(0.36, 0.24, 0.1, 1)
 
-[node name="@ColorRect@320" type="ColorRect" parent="." unique_id=1804091185]
+[node name="@ColorRect@320" type="ColorRect" parent="." unique_id=1118950755]
 z_index = 3
 offset_left = 1088.0
 offset_top = 405.0
@@ -2073,7 +2073,7 @@ offset_right = 1110.0
 offset_bottom = 413.0
 color = Color(0.48, 0.32, 0.16, 1)
 
-[node name="@ColorRect@321" type="ColorRect" parent="." unique_id=1554651363]
+[node name="@ColorRect@321" type="ColorRect" parent="." unique_id=1095449314]
 z_index = 3
 offset_left = 1090.0
 offset_top = 413.0
@@ -2081,7 +2081,7 @@ offset_right = 1094.0
 offset_bottom = 419.0
 color = Color(0.36, 0.24, 0.1, 1)
 
-[node name="@ColorRect@322" type="ColorRect" parent="." unique_id=1242924150]
+[node name="@ColorRect@322" type="ColorRect" parent="." unique_id=1279704160]
 z_index = 3
 offset_left = 1104.0
 offset_top = 413.0
@@ -2089,7 +2089,7 @@ offset_right = 1108.0
 offset_bottom = 419.0
 color = Color(0.36, 0.24, 0.1, 1)
 
-[node name="@ColorRect@323" type="ColorRect" parent="." unique_id=804685729]
+[node name="@ColorRect@323" type="ColorRect" parent="." unique_id=1264435279]
 z_index = 8
 offset_left = 1341.0
 offset_top = 508.0
@@ -2097,7 +2097,7 @@ offset_right = 1346.0
 offset_bottom = 528.0
 color = Color(0.2, 0.24, 0.28, 1)
 
-[node name="@ColorRect@324" type="ColorRect" parent="." unique_id=738008252]
+[node name="@ColorRect@324" type="ColorRect" parent="." unique_id=1300265019]
 z_index = 8
 offset_left = 1404.0
 offset_top = 508.0
@@ -2105,7 +2105,7 @@ offset_right = 1409.0
 offset_bottom = 528.0
 color = Color(0.2, 0.24, 0.28, 1)
 
-[node name="@ColorRect@325" type="ColorRect" parent="." unique_id=56824790]
+[node name="@ColorRect@325" type="ColorRect" parent="." unique_id=765993838]
 z_index = 9
 offset_left = 1343.0
 offset_top = 518.0
@@ -2113,7 +2113,7 @@ offset_right = 1407.0
 offset_bottom = 521.0
 color = Color(0.2, 0.24, 0.28, 1)
 
-[node name="@ColorRect@326" type="ColorRect" parent="." unique_id=1337865733]
+[node name="@ColorRect@326" type="ColorRect" parent="." unique_id=374466202]
 z_index = 2
 offset_left = 1363.0
 offset_top = 524.0
@@ -2121,7 +2121,7 @@ offset_right = 1387.0
 offset_bottom = 552.0
 color = Color(0.58, 0.52, 0.42, 1)
 
-[node name="@ColorRect@327" type="ColorRect" parent="." unique_id=1489598080]
+[node name="@ColorRect@327" type="ColorRect" parent="." unique_id=2044752601]
 z_index = 4
 offset_left = 1315.0
 offset_top = 550.0
@@ -2129,7 +2129,7 @@ offset_right = 1435.0
 offset_bottom = 576.0
 color = Color(0.2, 0.18, 0.1, 1)
 
-[node name="@Label@328" type="Label" parent="." unique_id=1934526857]
+[node name="@Label@328" type="Label" parent="." unique_id=1381241750]
 z_index = 5
 offset_left = 1319.0
 offset_top = 554.0
@@ -2139,7 +2139,7 @@ theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
 text = "YILDIZ KRAMPON"
 
-[node name="@Label@329" type="Label" parent="." unique_id=200802497]
+[node name="@Label@329" type="Label" parent="." unique_id=1111776737]
 z_index = 5
 offset_left = 1339.0
 offset_top = 160.0
@@ -2149,42 +2149,42 @@ theme_override_font_sizes/font_size = 12
 theme_override_colors/font_color = Color(0.3, 0.5, 0.9, 1)
 text = "MAC VAR!"
 
-[node name="PFenceN" type="StaticBody2D" parent="." unique_id=2006123258]
+[node name="PFenceN" type="StaticBody2D" parent="." unique_id=1998363994]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@330" type="CollisionShape2D" parent="PFenceN" unique_id=1581362533]
+[node name="@CollisionShape2D@330" type="CollisionShape2D" parent="PFenceN" unique_id=662690287]
 position = Vector2(1375, 189)
 shape = SubResource("RectangleShape2D_pdh0q")
 
-[node name="PFenceSL" type="StaticBody2D" parent="." unique_id=613839380]
+[node name="PFenceSL" type="StaticBody2D" parent="." unique_id=1395262338]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@331" type="CollisionShape2D" parent="PFenceSL" unique_id=688612431]
+[node name="@CollisionShape2D@331" type="CollisionShape2D" parent="PFenceSL" unique_id=382050291]
 position = Vector2(1230, 521)
 shape = SubResource("RectangleShape2D_h1bdy")
 
-[node name="PFenceSR" type="StaticBody2D" parent="." unique_id=406636588]
+[node name="PFenceSR" type="StaticBody2D" parent="." unique_id=677863760]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@332" type="CollisionShape2D" parent="PFenceSR" unique_id=1059549371]
+[node name="@CollisionShape2D@332" type="CollisionShape2D" parent="PFenceSR" unique_id=131846197]
 position = Vector2(1520, 521)
 shape = SubResource("RectangleShape2D_7c4bj")
 
-[node name="PFenceW" type="StaticBody2D" parent="." unique_id=1712956359]
+[node name="PFenceW" type="StaticBody2D" parent="." unique_id=155653753]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@333" type="CollisionShape2D" parent="PFenceW" unique_id=2072345395]
+[node name="@CollisionShape2D@333" type="CollisionShape2D" parent="PFenceW" unique_id=692373216]
 position = Vector2(1119, 355)
 shape = SubResource("RectangleShape2D_nrtoj")
 
-[node name="PFenceE" type="StaticBody2D" parent="." unique_id=188087128]
+[node name="PFenceE" type="StaticBody2D" parent="." unique_id=195582289]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@334" type="CollisionShape2D" parent="PFenceE" unique_id=1935816529]
+[node name="@CollisionShape2D@334" type="CollisionShape2D" parent="PFenceE" unique_id=989244417]
 position = Vector2(1631, 355)
 shape = SubResource("RectangleShape2D_i4b1j")

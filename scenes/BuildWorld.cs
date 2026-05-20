@@ -88,7 +88,7 @@ public partial class BuildWorld : SceneBuilderBase
         {
             Name                     = "Camera",
             UniqueNameInOwner        = true,
-            Zoom                     = new Vector2(2.0f, 2.0f),
+            Zoom                     = new Vector2(0.75f, 0.75f),
             PositionSmoothingEnabled = true,
             PositionSmoothingSpeed   = 8f,
             LimitLeft   = 0, LimitTop    = 0,

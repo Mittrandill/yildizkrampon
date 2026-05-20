@@ -25,6 +25,7 @@ public partial class BuildMatch : SceneBuilderBase
         _BuildPitchLines(root);
         _BuildGoals(root);
         _BuildWalls(root);
+        _BuildCornerFlags(root);
         _BuildPlayers(root);
         _BuildBall(root);
         _BuildCamera(root);
@@ -277,40 +278,47 @@ public partial class BuildMatch : SceneBuilderBase
         var ctr = new Node { Name = "Players" };
         root.AddChild(ctr);
 
-        // Human player (blue team, starts centre-left)
+        // Human player (blue team FWD, starts centre-left)
         var human = new MatchPlayer { Name = "MatchPlayer", ZIndex = 5 };
-        human.Position = new Vector2(-160f, 0f);
+        human.UniqueNameInOwner = true;
+        human.Position = new Vector2(-50f, 30f);
         ctr.AddChild(human);
 
-        // Blue AI
-        var blueSlots = new (string n, Vector2 p)[]
+        // Blue AI: GK, DEF_L, DEF_R, MID  (human covers FWD slot)
+        var blueSlots = new (string n, Vector2 p, FootballAI.Role r)[]
         {
-            ("BlueGK",  new Vector2(-455f,   0f)),
-            ("BlueCB0", new Vector2(-290f, -95f)),
-            ("BlueCB1", new Vector2(-290f,  95f)),
-            ("BlueMF",  new Vector2(-130f, -72f)),
+            ("BlueGK",  new Vector2(-455f,   0f), FootballAI.Role.GK),
+            ("BlueCB0", new Vector2(-290f, -95f), FootballAI.Role.DEF_L),
+            ("BlueCB1", new Vector2(-290f,  95f), FootballAI.Role.DEF_R),
+            ("BlueMF",  new Vector2(-130f, -72f), FootballAI.Role.MID),
         };
-        foreach (var (n, pos) in blueSlots)
+        foreach (var (n, pos, role) in blueSlots)
         {
             var ai = new FootballAI { Name = n, ZIndex = 5, Position = pos };
-            ai.IsBlueTeam = true; ai.BasePos = pos;
+            ai.IsBlueTeam  = true;
+            ai.BasePos     = pos;
+            ai.PlayerRole  = role;
+            ai.AttacksRight = true; // blue attacks right by default
             ai.AddToGroup("team_blue");
             ctr.AddChild(ai);
         }
 
-        // Red AI
-        var redSlots = new (string n, Vector2 p)[]
+        // Red AI: GK, DEF_L, DEF_R, MID, FWD
+        var redSlots = new (string n, Vector2 p, FootballAI.Role r)[]
         {
-            ("RedGK",  new Vector2(455f,   0f)),
-            ("RedCB0", new Vector2(290f, -95f)),
-            ("RedCB1", new Vector2(290f,  95f)),
-            ("RedMF",  new Vector2(130f, -72f)),
-            ("RedFW",  new Vector2(210f,   0f)),
+            ("RedGK",  new Vector2(455f,   0f), FootballAI.Role.GK),
+            ("RedCB0", new Vector2(290f, -95f), FootballAI.Role.DEF_L),
+            ("RedCB1", new Vector2(290f,  95f), FootballAI.Role.DEF_R),
+            ("RedMF",  new Vector2(130f, -72f), FootballAI.Role.MID),
+            ("RedFW",  new Vector2(210f,   0f), FootballAI.Role.FWD),
         };
-        foreach (var (n, pos) in redSlots)
+        foreach (var (n, pos, role) in redSlots)
         {
             var ai = new FootballAI { Name = n, ZIndex = 5, Position = pos };
-            ai.IsBlueTeam = false; ai.BasePos = pos;
+            ai.IsBlueTeam  = false;
+            ai.BasePos     = pos;
+            ai.PlayerRole  = role;
+            ai.AttacksRight = false; // red attacks left by default
             ai.AddToGroup("team_red");
             ctr.AddChild(ai);
         }
@@ -325,6 +333,46 @@ public partial class BuildMatch : SceneBuilderBase
         ball.CollisionMask  = 16u;
         ball.Position = Vector2.Zero;
         root.AddChild(ball);
+    }
+
+    // ─── Corner Flags ────────────────────────────────────────────────────────────
+
+    private static void _BuildCornerFlags(Node root)
+    {
+        float hw = PW / 2f, hh = PH / 2f;
+        Color flagColor = new Color(0.0f, 0.9f, 0.85f);
+        foreach (var (cx2, cy2) in new (float, float)[]
+        {
+            (-hw, -hh), (hw, -hh), (-hw, hh), (hw, hh)
+        })
+        {
+            // Flag pole
+            root.AddChild(new ColorRect
+            {
+                Color    = Colors.White,
+                Position = new Vector2(cx2 - 1f, cy2 - 12f),
+                Size     = new Vector2(2f, 14f),
+                ZIndex   = 5
+            });
+            // Flag pennant
+            var pts = new Vector2[]
+            {
+                new Vector2(cx2 + 1f, cy2 - 12f),
+                new Vector2(cx2 + 8f, cy2 - 9f),
+                new Vector2(cx2 + 1f, cy2 - 6f),
+            };
+            root.AddChild(new Polygon2D { Polygon = pts, Color = flagColor, ZIndex = 5 });
+            // Corner spot
+            var spot = new Polygon2D { Color = flagColor, ZIndex = 4 };
+            var spts = new Vector2[8];
+            for (int i = 0; i < 8; i++)
+            {
+                float a = i / 8f * Mathf.Tau;
+                spts[i] = new Vector2(cx2 + Mathf.Cos(a)*4f, cy2 + Mathf.Sin(a)*4f);
+            }
+            spot.Polygon = spts;
+            root.AddChild(spot);
+        }
     }
 
     // ─── Camera ──────────────────────────────────────────────────────────────────
@@ -399,12 +447,20 @@ public partial class BuildMatch : SceneBuilderBase
         hud.AddChild(ann);
 
         // Controls hint
-        var ctrl = new Label { Text = "WASD: Hareket   SPACE: Şut   SHIFT: Sprint   ESC: Çık" };
+        var ctrl = new Label { Text = "WASD: Hareket   SPACE: Şut/Kafa   SHIFT: Sprint   CTRL: Kayma   ESC: Çık" };
         ctrl.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
         ctrl.Position = new Vector2(8f, -22f);
         ctrl.AddThemeColorOverride("font_color", new Color(0.52f, 0.52f, 0.52f));
         ctrl.AddThemeFontSizeOverride("font_size", 11);
         hud.AddChild(ctrl);
+
+        // Stamina label bottom-left above controls
+        var staLbl = new Label { Text = "KONDISYON" };
+        staLbl.SetAnchorsPreset(Control.LayoutPreset.BottomLeft);
+        staLbl.Position = new Vector2(8f, -52f);
+        staLbl.AddThemeColorOverride("font_color", new Color(0.7f, 0.7f, 0.7f));
+        staLbl.AddThemeFontSizeOverride("font_size", 10);
+        hud.AddChild(staLbl);
     }
 
     private static void _HudLabel(Node parent, string text, Color color, int size)

@@ -47,10 +47,10 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Match" type="Node2D" unique_id=2006947676]
+[node name="Match" type="Node2D" unique_id=1515883863]
 script = ExtResource("1_y3yhn")
 
-[node name="@ColorRect@2" type="ColorRect" parent="." unique_id=1420009162]
+[node name="@ColorRect@2" type="ColorRect" parent="." unique_id=689408225]
 z_index = -20
 offset_left = -1200.0
 offset_top = -700.0
@@ -58,7 +58,7 @@ offset_right = 1200.0
 offset_bottom = 700.0
 color = Color(0.1, 0.12, 0.08, 1)
 
-[node name="@ColorRect@3" type="ColorRect" parent="." unique_id=1617405739]
+[node name="@ColorRect@3" type="ColorRect" parent="." unique_id=1141326190]
 z_index = -15
 offset_left = -500.0
 offset_top = -280.0
@@ -66,7 +66,7 @@ offset_right = 500.0
 offset_bottom = 280.0
 color = Color(0.22, 0.52, 0.18, 1)
 
-[node name="@ColorRect@4" type="ColorRect" parent="." unique_id=1607154465]
+[node name="@ColorRect@4" type="ColorRect" parent="." unique_id=1590659501]
 z_index = -14
 offset_left = -500.0
 offset_top = -280.0
@@ -74,7 +74,7 @@ offset_right = -400.0
 offset_bottom = 280.0
 color = Color(0.18, 0.46, 0.15, 1)
 
-[node name="@ColorRect@5" type="ColorRect" parent="." unique_id=285893807]
+[node name="@ColorRect@5" type="ColorRect" parent="." unique_id=72629373]
 z_index = -14
 offset_left = -300.0
 offset_top = -280.0
@@ -82,14 +82,14 @@ offset_right = -200.0
 offset_bottom = 280.0
 color = Color(0.18, 0.46, 0.15, 1)
 
-[node name="@ColorRect@6" type="ColorRect" parent="." unique_id=2031697203]
+[node name="@ColorRect@6" type="ColorRect" parent="." unique_id=2093675639]
 z_index = -14
 offset_left = -100.0
 offset_top = -280.0
 offset_bottom = 280.0
 color = Color(0.18, 0.46, 0.15, 1)
 
-[node name="@ColorRect@7" type="ColorRect" parent="." unique_id=1283893119]
+[node name="@ColorRect@7" type="ColorRect" parent="." unique_id=1996812733]
 z_index = -14
 offset_left = 100.0
 offset_top = -280.0
@@ -97,7 +97,7 @@ offset_right = 200.0
 offset_bottom = 280.0
 color = Color(0.18, 0.46, 0.15, 1)
 
-[node name="@ColorRect@8" type="ColorRect" parent="." unique_id=1372926976]
+[node name="@ColorRect@8" type="ColorRect" parent="." unique_id=1886326059]
 z_index = -14
 offset_left = 300.0
 offset_top = -280.0
@@ -105,7 +105,7 @@ offset_right = 400.0
 offset_bottom = 280.0
 color = Color(0.18, 0.46, 0.15, 1)
 
-[node name="@ColorRect@9" type="ColorRect" parent="." unique_id=1943339781]
+[node name="@ColorRect@9" type="ColorRect" parent="." unique_id=1172232827]
 z_index = -13
 offset_left = -500.0
 offset_top = -280.0
@@ -113,7 +113,7 @@ offset_right = 500.0
 offset_bottom = -276.0
 color = Color(0, 0, 0, 0.3)
 
-[node name="@ColorRect@10" type="ColorRect" parent="." unique_id=9518041]
+[node name="@ColorRect@10" type="ColorRect" parent="." unique_id=1436631167]
 z_index = -13
 offset_left = -500.0
 offset_top = 276.0
@@ -121,7 +121,7 @@ offset_right = 500.0
 offset_bottom = 280.0
 color = Color(0, 0, 0, 0.3)
 
-[node name="@ColorRect@11" type="ColorRect" parent="." unique_id=1263695786]
+[node name="@ColorRect@11" type="ColorRect" parent="." unique_id=1392488048]
 z_index = -13
 offset_left = -500.0
 offset_top = -280.0
@@ -129,7 +129,7 @@ offset_right = -496.0
 offset_bottom = 280.0
 color = Color(0, 0, 0, 0.3)
 
-[node name="@ColorRect@12" type="ColorRect" parent="." unique_id=537652642]
+[node name="@ColorRect@12" type="ColorRect" parent="." unique_id=1647356648]
 z_index = -13
 offset_left = 496.0
 offset_top = -280.0
@@ -137,326 +137,326 @@ offset_right = 500.0
 offset_bottom = 280.0
 color = Color(0, 0, 0, 0.3)
 
-[node name="@ColorRect@13" type="ColorRect" parent="." unique_id=711044098]
+[node name="@ColorRect@13" type="ColorRect" parent="." unique_id=998514804]
 offset_left = -480.0
 offset_top = -260.0
 offset_right = 480.0
 offset_bottom = -257.0
 
-[node name="@ColorRect@14" type="ColorRect" parent="." unique_id=1675892333]
+[node name="@ColorRect@14" type="ColorRect" parent="." unique_id=688366036]
 offset_left = -480.0
 offset_top = 257.0
 offset_right = 480.0
 offset_bottom = 260.0
 
-[node name="@ColorRect@15" type="ColorRect" parent="." unique_id=722793723]
+[node name="@ColorRect@15" type="ColorRect" parent="." unique_id=473935799]
 offset_left = -480.0
 offset_top = -260.0
 offset_right = -477.0
 offset_bottom = 260.0
 
-[node name="@ColorRect@16" type="ColorRect" parent="." unique_id=1332975837]
+[node name="@ColorRect@16" type="ColorRect" parent="." unique_id=1478965184]
 offset_left = 477.0
 offset_top = -260.0
 offset_right = 480.0
 offset_bottom = 260.0
 
-[node name="@ColorRect@17" type="ColorRect" parent="." unique_id=716101760]
+[node name="@ColorRect@17" type="ColorRect" parent="." unique_id=1894294399]
 offset_left = -1.5
 offset_top = -260.0
 offset_right = 1.5
 offset_bottom = 260.0
 
-[node name="@Line2D@18" type="Line2D" parent="." unique_id=1720726658]
+[node name="@Line2D@18" type="Line2D" parent="." unique_id=2110060013]
 points = PackedVector2Array(66, 0, 65.43536, 8.614729)
 width = 3.0
 
-[node name="@Line2D@19" type="Line2D" parent="." unique_id=1927479586]
+[node name="@Line2D@19" type="Line2D" parent="." unique_id=2061775145]
 points = PackedVector2Array(65.43536, 8.614729, 63.751102, 17.082056)
 width = 3.0
 
-[node name="@Line2D@20" type="Line2D" parent="." unique_id=1592890703]
+[node name="@Line2D@20" type="Line2D" parent="." unique_id=1266562207]
 points = PackedVector2Array(63.751102, 17.082056, 60.976048, 25.257109)
 width = 3.0
 
-[node name="@Line2D@21" type="Line2D" parent="." unique_id=2031715163]
+[node name="@Line2D@21" type="Line2D" parent="." unique_id=284336031]
 points = PackedVector2Array(60.976048, 25.257109, 57.157677, 33)
 width = 3.0
 
-[node name="@Line2D@22" type="Line2D" parent="." unique_id=1395247656]
+[node name="@Line2D@22" type="Line2D" parent="." unique_id=82159407]
 points = PackedVector2Array(57.157677, 33, 52.36132, 40.178253)
 width = 3.0
 
-[node name="@Line2D@23" type="Line2D" parent="." unique_id=1380614288]
+[node name="@Line2D@23" type="Line2D" parent="." unique_id=44983534]
 points = PackedVector2Array(52.36132, 40.178253, 46.66905, 46.66905)
 width = 3.0
 
-[node name="@Line2D@24" type="Line2D" parent="." unique_id=19891017]
+[node name="@Line2D@24" type="Line2D" parent="." unique_id=340493830]
 points = PackedVector2Array(46.66905, 46.66905, 40.178253, 52.36132)
 width = 3.0
 
-[node name="@Line2D@25" type="Line2D" parent="." unique_id=663689040]
+[node name="@Line2D@25" type="Line2D" parent="." unique_id=51626951]
 points = PackedVector2Array(40.178253, 52.36132, 32.999996, 57.15768)
 width = 3.0
 
-[node name="@Line2D@26" type="Line2D" parent="." unique_id=1360060229]
+[node name="@Line2D@26" type="Line2D" parent="." unique_id=2116813990]
 points = PackedVector2Array(32.999996, 57.15768, 25.257107, 60.976048)
 width = 3.0
 
-[node name="@Line2D@27" type="Line2D" parent="." unique_id=223278684]
+[node name="@Line2D@27" type="Line2D" parent="." unique_id=1247229936]
 points = PackedVector2Array(25.257107, 60.976048, 17.082058, 63.751102)
 width = 3.0
 
-[node name="@Line2D@28" type="Line2D" parent="." unique_id=1607541435]
+[node name="@Line2D@28" type="Line2D" parent="." unique_id=1685107923]
 points = PackedVector2Array(17.082058, 63.751102, 8.614724, 65.43536)
 width = 3.0
 
-[node name="@Line2D@29" type="Line2D" parent="." unique_id=1568274196]
+[node name="@Line2D@29" type="Line2D" parent="." unique_id=1849672401]
 points = PackedVector2Array(8.614724, 65.43536, -2.8849515e-06, 66)
 width = 3.0
 
-[node name="@Line2D@30" type="Line2D" parent="." unique_id=1311379755]
+[node name="@Line2D@30" type="Line2D" parent="." unique_id=1408003296]
 points = PackedVector2Array(-2.8849515e-06, 66, -8.614738, 65.435356)
 width = 3.0
 
-[node name="@Line2D@31" type="Line2D" parent="." unique_id=1528112587]
+[node name="@Line2D@31" type="Line2D" parent="." unique_id=141535974]
 points = PackedVector2Array(-8.614738, 65.435356, -17.082056, 63.751102)
 width = 3.0
 
-[node name="@Line2D@32" type="Line2D" parent="." unique_id=422700869]
+[node name="@Line2D@32" type="Line2D" parent="." unique_id=198942455]
 points = PackedVector2Array(-17.082056, 63.751102, -25.257113, 60.976048)
 width = 3.0
 
-[node name="@Line2D@33" type="Line2D" parent="." unique_id=916485848]
+[node name="@Line2D@33" type="Line2D" parent="." unique_id=562599455]
 points = PackedVector2Array(-25.257113, 60.976048, -33.000004, 57.157677)
 width = 3.0
 
-[node name="@Line2D@34" type="Line2D" parent="." unique_id=1877845569]
+[node name="@Line2D@34" type="Line2D" parent="." unique_id=1123348781]
 points = PackedVector2Array(-33.000004, 57.157677, -40.178253, 52.36132)
 width = 3.0
 
-[node name="@Line2D@35" type="Line2D" parent="." unique_id=230149301]
+[node name="@Line2D@35" type="Line2D" parent="." unique_id=727766519]
 points = PackedVector2Array(-40.178253, 52.36132, -46.66905, 46.66905)
 width = 3.0
 
-[node name="@Line2D@36" type="Line2D" parent="." unique_id=435264634]
+[node name="@Line2D@36" type="Line2D" parent="." unique_id=903957690]
 points = PackedVector2Array(-46.66905, 46.66905, -52.361332, 40.17824)
 width = 3.0
 
-[node name="@Line2D@37" type="Line2D" parent="." unique_id=93708458]
+[node name="@Line2D@37" type="Line2D" parent="." unique_id=2080025686]
 points = PackedVector2Array(-52.361332, 40.17824, -57.157677, 33.000004)
 width = 3.0
 
-[node name="@Line2D@38" type="Line2D" parent="." unique_id=469231171]
+[node name="@Line2D@38" type="Line2D" parent="." unique_id=89127708]
 points = PackedVector2Array(-57.157677, 33.000004, -60.976055, 25.257095)
 width = 3.0
 
-[node name="@Line2D@39" type="Line2D" parent="." unique_id=1519494397]
+[node name="@Line2D@39" type="Line2D" parent="." unique_id=2084976798]
 points = PackedVector2Array(-60.976055, 25.257095, -63.751106, 17.082048)
 width = 3.0
 
-[node name="@Line2D@40" type="Line2D" parent="." unique_id=1822801756]
+[node name="@Line2D@40" type="Line2D" parent="." unique_id=1161550744]
 points = PackedVector2Array(-63.751106, 17.082048, -65.43536, 8.614721)
 width = 3.0
 
-[node name="@Line2D@41" type="Line2D" parent="." unique_id=49382521]
+[node name="@Line2D@41" type="Line2D" parent="." unique_id=1485450263]
 points = PackedVector2Array(-65.43536, 8.614721, -66, -5.769903e-06)
 width = 3.0
 
-[node name="@Line2D@42" type="Line2D" parent="." unique_id=1230157598]
+[node name="@Line2D@42" type="Line2D" parent="." unique_id=296213452]
 points = PackedVector2Array(-66, -5.769903e-06, -65.435356, -8.614733)
 width = 3.0
 
-[node name="@Line2D@43" type="Line2D" parent="." unique_id=1391123742]
+[node name="@Line2D@43" type="Line2D" parent="." unique_id=1932973383]
 points = PackedVector2Array(-65.435356, -8.614733, -63.7511, -17.082075)
 width = 3.0
 
-[node name="@Line2D@44" type="Line2D" parent="." unique_id=817169031]
+[node name="@Line2D@44" type="Line2D" parent="." unique_id=1741847144]
 points = PackedVector2Array(-63.7511, -17.082075, -60.976048, -25.257107)
 width = 3.0
 
-[node name="@Line2D@45" type="Line2D" parent="." unique_id=747059189]
+[node name="@Line2D@45" type="Line2D" parent="." unique_id=498509705]
 points = PackedVector2Array(-60.976048, -25.257107, -57.157677, -33)
 width = 3.0
 
-[node name="@Line2D@46" type="Line2D" parent="." unique_id=1327829313]
+[node name="@Line2D@46" type="Line2D" parent="." unique_id=22011524]
 points = PackedVector2Array(-57.157677, -33, -52.361313, -40.178265)
 width = 3.0
 
-[node name="@Line2D@47" type="Line2D" parent="." unique_id=459202533]
+[node name="@Line2D@47" type="Line2D" parent="." unique_id=963288653]
 points = PackedVector2Array(-52.361313, -40.178265, -46.66904, -46.669056)
 width = 3.0
 
-[node name="@Line2D@48" type="Line2D" parent="." unique_id=2106934625]
+[node name="@Line2D@48" type="Line2D" parent="." unique_id=1136530936]
 points = PackedVector2Array(-46.66904, -46.669056, -40.178257, -52.361317)
 width = 3.0
 
-[node name="@Line2D@49" type="Line2D" parent="." unique_id=787150250]
+[node name="@Line2D@49" type="Line2D" parent="." unique_id=1874858092]
 points = PackedVector2Array(-40.178257, -52.361317, -32.999992, -57.15768)
 width = 3.0
 
-[node name="@Line2D@50" type="Line2D" parent="." unique_id=1749307708]
+[node name="@Line2D@50" type="Line2D" parent="." unique_id=254974397]
 points = PackedVector2Array(-32.999992, -57.15768, -25.257086, -60.97606)
 width = 3.0
 
-[node name="@Line2D@51" type="Line2D" parent="." unique_id=1735297572]
+[node name="@Line2D@51" type="Line2D" parent="." unique_id=1762790941]
 points = PackedVector2Array(-25.257086, -60.97606, -17.082052, -63.751106)
 width = 3.0
 
-[node name="@Line2D@52" type="Line2D" parent="." unique_id=1860957333]
+[node name="@Line2D@52" type="Line2D" parent="." unique_id=1100867022]
 points = PackedVector2Array(-17.082052, -63.751106, -8.614711, -65.43536)
 width = 3.0
 
-[node name="@Line2D@53" type="Line2D" parent="." unique_id=286763793]
+[node name="@Line2D@53" type="Line2D" parent="." unique_id=1804440453]
 points = PackedVector2Array(-8.614711, -65.43536, 7.870421e-07, -66)
 width = 3.0
 
-[node name="@Line2D@54" type="Line2D" parent="." unique_id=1204065955]
+[node name="@Line2D@54" type="Line2D" parent="." unique_id=1338996675]
 points = PackedVector2Array(7.870421e-07, -66, 8.614743, -65.435356)
 width = 3.0
 
-[node name="@Line2D@55" type="Line2D" parent="." unique_id=1393720232]
+[node name="@Line2D@55" type="Line2D" parent="." unique_id=1707925080]
 points = PackedVector2Array(8.614743, -65.435356, 17.082085, -63.751095)
 width = 3.0
 
-[node name="@Line2D@56" type="Line2D" parent="." unique_id=975566847]
+[node name="@Line2D@56" type="Line2D" parent="." unique_id=1715574973]
 points = PackedVector2Array(17.082085, -63.751095, 25.257118, -60.976044)
 width = 3.0
 
-[node name="@Line2D@57" type="Line2D" parent="." unique_id=688998804]
+[node name="@Line2D@57" type="Line2D" parent="." unique_id=2011208778]
 points = PackedVector2Array(25.257118, -60.976044, 32.999992, -57.15768)
 width = 3.0
 
-[node name="@Line2D@58" type="Line2D" parent="." unique_id=367792052]
+[node name="@Line2D@58" type="Line2D" parent="." unique_id=801026016]
 points = PackedVector2Array(32.999992, -57.15768, 40.17826, -52.361317)
 width = 3.0
 
-[node name="@Line2D@59" type="Line2D" parent="." unique_id=1007814605]
+[node name="@Line2D@59" type="Line2D" parent="." unique_id=176152863]
 points = PackedVector2Array(40.17826, -52.361317, 46.669064, -46.66903)
 width = 3.0
 
-[node name="@Line2D@60" type="Line2D" parent="." unique_id=1205142757]
+[node name="@Line2D@60" type="Line2D" parent="." unique_id=1316415573]
 points = PackedVector2Array(46.669064, -46.66903, 52.361324, -40.17825)
 width = 3.0
 
-[node name="@Line2D@61" type="Line2D" parent="." unique_id=1263818631]
+[node name="@Line2D@61" type="Line2D" parent="." unique_id=932276208]
 points = PackedVector2Array(52.361324, -40.17825, 57.15769, -32.999985)
 width = 3.0
 
-[node name="@Line2D@62" type="Line2D" parent="." unique_id=1408156963]
+[node name="@Line2D@62" type="Line2D" parent="." unique_id=1449784687]
 points = PackedVector2Array(57.15769, -32.999985, 60.97605, -25.257107)
 width = 3.0
 
-[node name="@Line2D@63" type="Line2D" parent="." unique_id=67011396]
+[node name="@Line2D@63" type="Line2D" parent="." unique_id=1073161906]
 points = PackedVector2Array(60.97605, -25.257107, 63.751106, -17.082043)
 width = 3.0
 
-[node name="@Line2D@64" type="Line2D" parent="." unique_id=1767601957]
+[node name="@Line2D@64" type="Line2D" parent="." unique_id=1550902853]
 points = PackedVector2Array(63.751106, -17.082043, 65.43536, -8.614699)
 width = 3.0
 
-[node name="@Line2D@65" type="Line2D" parent="." unique_id=2047226165]
+[node name="@Line2D@65" type="Line2D" parent="." unique_id=920516474]
 points = PackedVector2Array(65.43536, -8.614699, 66, 1.1539806e-05)
 width = 3.0
 
-[node name="@Polygon2D@66" type="Polygon2D" parent="." unique_id=982965844]
+[node name="@Polygon2D@66" type="Polygon2D" parent="." unique_id=1628165805]
 polygon = PackedVector2Array(4.5, 0, 3.8971143, 2.25, 2.2499998, 3.8971145, -1.9670125e-07, 4.5, -2.2500002, 3.8971143, -3.8971143, 2.2500002, -4.5, -3.934025e-07, -3.8971143, -2.25, -2.2499995, -3.8971145, 5.3661964e-08, -4.5, 2.2499995, -3.8971145, 3.897115, -2.249999)
 
-[node name="@ColorRect@67" type="ColorRect" parent="." unique_id=614060206]
+[node name="@ColorRect@67" type="ColorRect" parent="." unique_id=1982200791]
 offset_left = -480.0
 offset_top = -120.0
 offset_right = -345.0
 offset_bottom = -117.0
 
-[node name="@ColorRect@68" type="ColorRect" parent="." unique_id=1257725903]
+[node name="@ColorRect@68" type="ColorRect" parent="." unique_id=253803198]
 offset_left = -480.0
 offset_top = 117.0
 offset_right = -345.0
 offset_bottom = 120.0
 
-[node name="@ColorRect@69" type="ColorRect" parent="." unique_id=1232426412]
+[node name="@ColorRect@69" type="ColorRect" parent="." unique_id=1560339340]
 offset_left = -348.0
 offset_top = -120.0
 offset_right = -345.0
 offset_bottom = 120.0
 
-[node name="@ColorRect@70" type="ColorRect" parent="." unique_id=942978027]
+[node name="@ColorRect@70" type="ColorRect" parent="." unique_id=1518341642]
 offset_left = 345.0
 offset_top = -120.0
 offset_right = 480.0
 offset_bottom = -117.0
 
-[node name="@ColorRect@71" type="ColorRect" parent="." unique_id=1033794895]
+[node name="@ColorRect@71" type="ColorRect" parent="." unique_id=1614124899]
 offset_left = 345.0
 offset_top = 117.0
 offset_right = 480.0
 offset_bottom = 120.0
 
-[node name="@ColorRect@72" type="ColorRect" parent="." unique_id=1412969825]
+[node name="@ColorRect@72" type="ColorRect" parent="." unique_id=1613348619]
 offset_left = 345.0
 offset_top = -120.0
 offset_right = 348.0
 offset_bottom = 120.0
 
-[node name="@ColorRect@73" type="ColorRect" parent="." unique_id=1595751388]
+[node name="@ColorRect@73" type="ColorRect" parent="." unique_id=575743557]
 offset_left = -480.0
 offset_top = -58.0
 offset_right = -425.0
 offset_bottom = -55.0
 
-[node name="@ColorRect@74" type="ColorRect" parent="." unique_id=549885907]
+[node name="@ColorRect@74" type="ColorRect" parent="." unique_id=1824023221]
 offset_left = -480.0
 offset_top = 55.0
 offset_right = -425.0
 offset_bottom = 58.0
 
-[node name="@ColorRect@75" type="ColorRect" parent="." unique_id=1546266340]
+[node name="@ColorRect@75" type="ColorRect" parent="." unique_id=1557326515]
 offset_left = -428.0
 offset_top = -58.0
 offset_right = -425.0
 offset_bottom = 58.0
 
-[node name="@ColorRect@76" type="ColorRect" parent="." unique_id=1256303744]
+[node name="@ColorRect@76" type="ColorRect" parent="." unique_id=72687844]
 offset_left = 425.0
 offset_top = -58.0
 offset_right = 480.0
 offset_bottom = -55.0
 
-[node name="@ColorRect@77" type="ColorRect" parent="." unique_id=1305871516]
+[node name="@ColorRect@77" type="ColorRect" parent="." unique_id=1114112996]
 offset_left = 425.0
 offset_top = 55.0
 offset_right = 480.0
 offset_bottom = 58.0
 
-[node name="@ColorRect@78" type="ColorRect" parent="." unique_id=1656037286]
+[node name="@ColorRect@78" type="ColorRect" parent="." unique_id=615777617]
 offset_left = 425.0
 offset_top = -58.0
 offset_right = 428.0
 offset_bottom = 58.0
 
-[node name="@Polygon2D@79" type="Polygon2D" parent="." unique_id=270678819]
+[node name="@Polygon2D@79" type="Polygon2D" parent="." unique_id=2117561331]
 polygon = PackedVector2Array(-376, 0, -376.5359, 2, -378, 3.4641018, -380, 4, -382, 3.4641016, -383.4641, 2.0000002, -384, -3.496911e-07, -383.4641, -2, -382, -3.4641018, -380, -4, -378, -3.4641018, -376.5359, -1.999999)
 
-[node name="@Polygon2D@80" type="Polygon2D" parent="." unique_id=2021586142]
+[node name="@Polygon2D@80" type="Polygon2D" parent="." unique_id=1051751253]
 polygon = PackedVector2Array(384, 0, 383.4641, 2, 382, 3.4641018, 380, 4, 378, 3.4641016, 376.5359, 2.0000002, 376, -3.496911e-07, 376.5359, -2, 378, -3.4641018, 380, -4, 382, -3.4641018, 383.4641, -1.999999)
 
-[node name="@Line2D@81" type="Line2D" parent="." unique_id=1788451081]
+[node name="@Line2D@81" type="Line2D" parent="." unique_id=315158023]
 points = PackedVector2Array(-465, -260, -465.18466, -257.65347, -465.73416, -255.36475, -466.6349, -253.19014, -467.86475, -251.18323, -469.3934, -249.3934, -471.18323, -247.86475, -473.19016, -246.6349, -475.36475, -245.73415, -477.65347, -245.18468, -480, -245)
 width = 3.0
 
-[node name="@Line2D@82" type="Line2D" parent="." unique_id=1385361086]
+[node name="@Line2D@82" type="Line2D" parent="." unique_id=1263157462]
 points = PackedVector2Array(480, -245, 477.65347, -245.18468, 475.36475, -245.73415, 473.19016, -246.6349, 471.18323, -247.86475, 469.3934, -249.3934, 467.86475, -251.18323, 466.6349, -253.19014, 465.73416, -255.36475, 465.18466, -257.65347, 465, -260)
 width = 3.0
 
-[node name="@Line2D@83" type="Line2D" parent="." unique_id=385317828]
+[node name="@Line2D@83" type="Line2D" parent="." unique_id=178742937]
 points = PackedVector2Array(-480, 245, -477.65347, 245.18468, -475.36475, 245.73415, -473.19016, 246.6349, -471.18323, 247.86475, -469.3934, 249.3934, -467.86475, 251.18323, -466.6349, 253.19014, -465.73416, 255.36475, -465.18466, 257.65347, -465, 260)
 width = 3.0
 
-[node name="@Line2D@84" type="Line2D" parent="." unique_id=116141609]
+[node name="@Line2D@84" type="Line2D" parent="." unique_id=390768264]
 points = PackedVector2Array(465, 260, 465.18466, 257.65347, 465.73416, 255.36475, 466.6349, 253.19014, 467.86475, 251.18323, 469.3934, 249.3934, 471.18323, 247.86475, 473.19012, 246.6349, 475.36475, 245.73415, 477.65347, 245.18468, 480, 245)
 width = 3.0
 
-[node name="@ColorRect@85" type="ColorRect" parent="." unique_id=529317884]
+[node name="@ColorRect@85" type="ColorRect" parent="." unique_id=103456225]
 z_index = 1
 offset_left = -532.0
 offset_top = -60.0
@@ -464,7 +464,7 @@ offset_right = -480.0
 offset_bottom = 60.0
 color = Color(0.78, 0.78, 0.78, 0.22)
 
-[node name="@ColorRect@86" type="ColorRect" parent="." unique_id=134631682]
+[node name="@ColorRect@86" type="ColorRect" parent="." unique_id=1159780053]
 z_index = 1
 offset_left = -532.0
 offset_top = -50.0
@@ -472,7 +472,7 @@ offset_right = -480.0
 offset_bottom = -49.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@87" type="ColorRect" parent="." unique_id=1789053678]
+[node name="@ColorRect@87" type="ColorRect" parent="." unique_id=447540175]
 z_index = 1
 offset_left = -532.0
 offset_top = -40.0
@@ -480,7 +480,7 @@ offset_right = -480.0
 offset_bottom = -39.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@88" type="ColorRect" parent="." unique_id=825347268]
+[node name="@ColorRect@88" type="ColorRect" parent="." unique_id=1193277549]
 z_index = 1
 offset_left = -532.0
 offset_top = -30.0
@@ -488,7 +488,7 @@ offset_right = -480.0
 offset_bottom = -29.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@89" type="ColorRect" parent="." unique_id=408829800]
+[node name="@ColorRect@89" type="ColorRect" parent="." unique_id=370257105]
 z_index = 1
 offset_left = -532.0
 offset_top = -20.0
@@ -496,7 +496,7 @@ offset_right = -480.0
 offset_bottom = -19.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@90" type="ColorRect" parent="." unique_id=334563926]
+[node name="@ColorRect@90" type="ColorRect" parent="." unique_id=882918500]
 z_index = 1
 offset_left = -532.0
 offset_top = -10.0
@@ -504,14 +504,14 @@ offset_right = -480.0
 offset_bottom = -9.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@91" type="ColorRect" parent="." unique_id=1837226699]
+[node name="@ColorRect@91" type="ColorRect" parent="." unique_id=1253865603]
 z_index = 1
 offset_left = -532.0
 offset_right = -480.0
 offset_bottom = 1.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@92" type="ColorRect" parent="." unique_id=790975231]
+[node name="@ColorRect@92" type="ColorRect" parent="." unique_id=311200561]
 z_index = 1
 offset_left = -532.0
 offset_top = 10.0
@@ -519,7 +519,7 @@ offset_right = -480.0
 offset_bottom = 11.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@93" type="ColorRect" parent="." unique_id=2038123107]
+[node name="@ColorRect@93" type="ColorRect" parent="." unique_id=1271411782]
 z_index = 1
 offset_left = -532.0
 offset_top = 20.0
@@ -527,7 +527,7 @@ offset_right = -480.0
 offset_bottom = 21.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@94" type="ColorRect" parent="." unique_id=1693998523]
+[node name="@ColorRect@94" type="ColorRect" parent="." unique_id=2099999602]
 z_index = 1
 offset_left = -532.0
 offset_top = 30.0
@@ -535,7 +535,7 @@ offset_right = -480.0
 offset_bottom = 31.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@95" type="ColorRect" parent="." unique_id=551573236]
+[node name="@ColorRect@95" type="ColorRect" parent="." unique_id=1827519152]
 z_index = 1
 offset_left = -532.0
 offset_top = 40.0
@@ -543,7 +543,7 @@ offset_right = -480.0
 offset_bottom = 41.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@96" type="ColorRect" parent="." unique_id=64576257]
+[node name="@ColorRect@96" type="ColorRect" parent="." unique_id=997968442]
 z_index = 1
 offset_left = -532.0
 offset_top = 50.0
@@ -551,7 +551,7 @@ offset_right = -480.0
 offset_bottom = 51.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@97" type="ColorRect" parent="." unique_id=1036735680]
+[node name="@ColorRect@97" type="ColorRect" parent="." unique_id=425549649]
 z_index = 1
 offset_left = -522.0
 offset_top = -60.0
@@ -559,7 +559,7 @@ offset_right = -521.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@98" type="ColorRect" parent="." unique_id=232055927]
+[node name="@ColorRect@98" type="ColorRect" parent="." unique_id=865076191]
 z_index = 1
 offset_left = -512.0
 offset_top = -60.0
@@ -567,7 +567,7 @@ offset_right = -511.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@99" type="ColorRect" parent="." unique_id=658145685]
+[node name="@ColorRect@99" type="ColorRect" parent="." unique_id=1902400319]
 z_index = 1
 offset_left = -502.0
 offset_top = -60.0
@@ -575,7 +575,7 @@ offset_right = -501.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@100" type="ColorRect" parent="." unique_id=559041472]
+[node name="@ColorRect@100" type="ColorRect" parent="." unique_id=261180472]
 z_index = 1
 offset_left = -492.0
 offset_top = -60.0
@@ -583,37 +583,37 @@ offset_right = -491.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@101" type="ColorRect" parent="." unique_id=464563340]
+[node name="@ColorRect@101" type="ColorRect" parent="." unique_id=1971841995]
 z_index = 3
 offset_left = -532.0
 offset_top = -60.0
 offset_right = -480.0
 offset_bottom = -56.0
 
-[node name="@ColorRect@102" type="ColorRect" parent="." unique_id=1061141719]
+[node name="@ColorRect@102" type="ColorRect" parent="." unique_id=1980465667]
 z_index = 3
 offset_left = -532.0
 offset_top = 56.0
 offset_right = -480.0
 offset_bottom = 60.0
 
-[node name="@ColorRect@103" type="ColorRect" parent="." unique_id=1723334975]
+[node name="@ColorRect@103" type="ColorRect" parent="." unique_id=1881832168]
 z_index = 3
 offset_left = -532.0
 offset_top = -60.0
 offset_right = -528.0
 offset_bottom = 60.0
 
-[node name="GoalLeft" type="Area2D" parent="." unique_id=981649876]
+[node name="GoalLeft" type="Area2D" parent="." unique_id=1349213189]
 unique_name_in_owner = true
 collision_layer = 8
 collision_mask = 4
 
-[node name="@CollisionShape2D@104" type="CollisionShape2D" parent="GoalLeft" unique_id=1171945732]
+[node name="@CollisionShape2D@104" type="CollisionShape2D" parent="GoalLeft" unique_id=847082647]
 position = Vector2(-506, 0)
 shape = SubResource("RectangleShape2D_y61ah")
 
-[node name="@ColorRect@105" type="ColorRect" parent="." unique_id=2135375594]
+[node name="@ColorRect@105" type="ColorRect" parent="." unique_id=1055690284]
 z_index = 1
 offset_left = 480.0
 offset_top = -60.0
@@ -621,7 +621,7 @@ offset_right = 532.0
 offset_bottom = 60.0
 color = Color(0.78, 0.78, 0.78, 0.22)
 
-[node name="@ColorRect@106" type="ColorRect" parent="." unique_id=1186621192]
+[node name="@ColorRect@106" type="ColorRect" parent="." unique_id=205087353]
 z_index = 1
 offset_left = 480.0
 offset_top = -50.0
@@ -629,7 +629,7 @@ offset_right = 532.0
 offset_bottom = -49.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@107" type="ColorRect" parent="." unique_id=904173050]
+[node name="@ColorRect@107" type="ColorRect" parent="." unique_id=119244504]
 z_index = 1
 offset_left = 480.0
 offset_top = -40.0
@@ -637,7 +637,7 @@ offset_right = 532.0
 offset_bottom = -39.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@108" type="ColorRect" parent="." unique_id=834978933]
+[node name="@ColorRect@108" type="ColorRect" parent="." unique_id=917812141]
 z_index = 1
 offset_left = 480.0
 offset_top = -30.0
@@ -645,7 +645,7 @@ offset_right = 532.0
 offset_bottom = -29.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@109" type="ColorRect" parent="." unique_id=947783791]
+[node name="@ColorRect@109" type="ColorRect" parent="." unique_id=2025404651]
 z_index = 1
 offset_left = 480.0
 offset_top = -20.0
@@ -653,7 +653,7 @@ offset_right = 532.0
 offset_bottom = -19.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@110" type="ColorRect" parent="." unique_id=684303717]
+[node name="@ColorRect@110" type="ColorRect" parent="." unique_id=1205278801]
 z_index = 1
 offset_left = 480.0
 offset_top = -10.0
@@ -661,14 +661,14 @@ offset_right = 532.0
 offset_bottom = -9.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@111" type="ColorRect" parent="." unique_id=642001538]
+[node name="@ColorRect@111" type="ColorRect" parent="." unique_id=825186600]
 z_index = 1
 offset_left = 480.0
 offset_right = 532.0
 offset_bottom = 1.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@112" type="ColorRect" parent="." unique_id=349671418]
+[node name="@ColorRect@112" type="ColorRect" parent="." unique_id=2006464203]
 z_index = 1
 offset_left = 480.0
 offset_top = 10.0
@@ -676,7 +676,7 @@ offset_right = 532.0
 offset_bottom = 11.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@113" type="ColorRect" parent="." unique_id=1019640729]
+[node name="@ColorRect@113" type="ColorRect" parent="." unique_id=1075671678]
 z_index = 1
 offset_left = 480.0
 offset_top = 20.0
@@ -684,7 +684,7 @@ offset_right = 532.0
 offset_bottom = 21.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@114" type="ColorRect" parent="." unique_id=1351797389]
+[node name="@ColorRect@114" type="ColorRect" parent="." unique_id=1157989772]
 z_index = 1
 offset_left = 480.0
 offset_top = 30.0
@@ -692,7 +692,7 @@ offset_right = 532.0
 offset_bottom = 31.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@115" type="ColorRect" parent="." unique_id=248157390]
+[node name="@ColorRect@115" type="ColorRect" parent="." unique_id=1152735167]
 z_index = 1
 offset_left = 480.0
 offset_top = 40.0
@@ -700,7 +700,7 @@ offset_right = 532.0
 offset_bottom = 41.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@116" type="ColorRect" parent="." unique_id=1263263366]
+[node name="@ColorRect@116" type="ColorRect" parent="." unique_id=2141577899]
 z_index = 1
 offset_left = 480.0
 offset_top = 50.0
@@ -708,7 +708,7 @@ offset_right = 532.0
 offset_bottom = 51.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@117" type="ColorRect" parent="." unique_id=224262169]
+[node name="@ColorRect@117" type="ColorRect" parent="." unique_id=1069835180]
 z_index = 1
 offset_left = 490.0
 offset_top = -60.0
@@ -716,7 +716,7 @@ offset_right = 491.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@118" type="ColorRect" parent="." unique_id=1796589861]
+[node name="@ColorRect@118" type="ColorRect" parent="." unique_id=2132250538]
 z_index = 1
 offset_left = 500.0
 offset_top = -60.0
@@ -724,7 +724,7 @@ offset_right = 501.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@119" type="ColorRect" parent="." unique_id=938070924]
+[node name="@ColorRect@119" type="ColorRect" parent="." unique_id=1324872421]
 z_index = 1
 offset_left = 510.0
 offset_top = -60.0
@@ -732,7 +732,7 @@ offset_right = 511.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@120" type="ColorRect" parent="." unique_id=302842419]
+[node name="@ColorRect@120" type="ColorRect" parent="." unique_id=7044695]
 z_index = 1
 offset_left = 520.0
 offset_top = -60.0
@@ -740,211 +740,287 @@ offset_right = 521.0
 offset_bottom = 60.0
 color = Color(1, 1, 1, 0.3)
 
-[node name="@ColorRect@121" type="ColorRect" parent="." unique_id=209257343]
+[node name="@ColorRect@121" type="ColorRect" parent="." unique_id=612168376]
 z_index = 3
 offset_left = 480.0
 offset_top = -60.0
 offset_right = 532.0
 offset_bottom = -56.0
 
-[node name="@ColorRect@122" type="ColorRect" parent="." unique_id=653943518]
+[node name="@ColorRect@122" type="ColorRect" parent="." unique_id=507229022]
 z_index = 3
 offset_left = 480.0
 offset_top = 56.0
 offset_right = 532.0
 offset_bottom = 60.0
 
-[node name="@ColorRect@123" type="ColorRect" parent="." unique_id=503370162]
+[node name="@ColorRect@123" type="ColorRect" parent="." unique_id=1286120651]
 z_index = 3
 offset_left = 528.0
 offset_top = -60.0
 offset_right = 532.0
 offset_bottom = 60.0
 
-[node name="GoalRight" type="Area2D" parent="." unique_id=189825610]
+[node name="GoalRight" type="Area2D" parent="." unique_id=1480455205]
 unique_name_in_owner = true
 collision_layer = 8
 collision_mask = 4
 
-[node name="@CollisionShape2D@124" type="CollisionShape2D" parent="GoalRight" unique_id=1672077507]
+[node name="@CollisionShape2D@124" type="CollisionShape2D" parent="GoalRight" unique_id=1001058548]
 position = Vector2(506, 0)
 shape = SubResource("RectangleShape2D_rh4j2")
 
-[node name="WallTop" type="StaticBody2D" parent="." unique_id=1521148653]
+[node name="WallTop" type="StaticBody2D" parent="." unique_id=782368153]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@125" type="CollisionShape2D" parent="WallTop" unique_id=417456082]
+[node name="@CollisionShape2D@125" type="CollisionShape2D" parent="WallTop" unique_id=1644709050]
 position = Vector2(0, -270)
 shape = SubResource("RectangleShape2D_5fpj3")
 
-[node name="WallBottom" type="StaticBody2D" parent="." unique_id=415326529]
+[node name="WallBottom" type="StaticBody2D" parent="." unique_id=1794420342]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@126" type="CollisionShape2D" parent="WallBottom" unique_id=1822587581]
+[node name="@CollisionShape2D@126" type="CollisionShape2D" parent="WallBottom" unique_id=709984833]
 position = Vector2(0, 270)
 shape = SubResource("RectangleShape2D_y0c11")
 
-[node name="LeftWallTop" type="StaticBody2D" parent="." unique_id=2132494239]
+[node name="LeftWallTop" type="StaticBody2D" parent="." unique_id=287465711]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@127" type="CollisionShape2D" parent="LeftWallTop" unique_id=1210730424]
+[node name="@CollisionShape2D@127" type="CollisionShape2D" parent="LeftWallTop" unique_id=1878527150]
 position = Vector2(-484, -162)
 shape = SubResource("RectangleShape2D_tlb25")
 
-[node name="LeftWallBot" type="StaticBody2D" parent="." unique_id=627690209]
+[node name="LeftWallBot" type="StaticBody2D" parent="." unique_id=65713931]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@128" type="CollisionShape2D" parent="LeftWallBot" unique_id=826924104]
+[node name="@CollisionShape2D@128" type="CollisionShape2D" parent="LeftWallBot" unique_id=995454057]
 position = Vector2(-484, 162)
 shape = SubResource("RectangleShape2D_bmo7d")
 
-[node name="LeftGoalBack" type="StaticBody2D" parent="." unique_id=1897000535]
+[node name="LeftGoalBack" type="StaticBody2D" parent="." unique_id=1600693654]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@129" type="CollisionShape2D" parent="LeftGoalBack" unique_id=862180382]
+[node name="@CollisionShape2D@129" type="CollisionShape2D" parent="LeftGoalBack" unique_id=1048831975]
 position = Vector2(-536, 0)
 shape = SubResource("RectangleShape2D_viwak")
 
-[node name="RightWallTop" type="StaticBody2D" parent="." unique_id=1226122979]
+[node name="RightWallTop" type="StaticBody2D" parent="." unique_id=579383763]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@130" type="CollisionShape2D" parent="RightWallTop" unique_id=1361236061]
+[node name="@CollisionShape2D@130" type="CollisionShape2D" parent="RightWallTop" unique_id=621008490]
 position = Vector2(484, -162)
 shape = SubResource("RectangleShape2D_40kkc")
 
-[node name="RightWallBot" type="StaticBody2D" parent="." unique_id=35951098]
+[node name="RightWallBot" type="StaticBody2D" parent="." unique_id=1349631213]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@131" type="CollisionShape2D" parent="RightWallBot" unique_id=1523566887]
+[node name="@CollisionShape2D@131" type="CollisionShape2D" parent="RightWallBot" unique_id=1485990636]
 position = Vector2(484, 162)
 shape = SubResource("RectangleShape2D_4ie6o")
 
-[node name="RightGoalBack" type="StaticBody2D" parent="." unique_id=1575245695]
+[node name="RightGoalBack" type="StaticBody2D" parent="." unique_id=1603217119]
 collision_layer = 16
 collision_mask = 0
 
-[node name="@CollisionShape2D@132" type="CollisionShape2D" parent="RightGoalBack" unique_id=354331918]
+[node name="@CollisionShape2D@132" type="CollisionShape2D" parent="RightGoalBack" unique_id=179204753]
 position = Vector2(536, 0)
 shape = SubResource("RectangleShape2D_a3msi")
 
-[node name="Players" type="Node" parent="." unique_id=1831820146]
-
-[node name="MatchPlayer" type="CharacterBody2D" parent="Players" unique_id=830903164]
+[node name="@ColorRect@133" type="ColorRect" parent="." unique_id=83636228]
 z_index = 5
-position = Vector2(-160, 0)
+offset_left = -481.0
+offset_top = -272.0
+offset_right = -479.0
+offset_bottom = -258.0
+
+[node name="@Polygon2D@134" type="Polygon2D" parent="." unique_id=1299481521]
+z_index = 5
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(-479, -272, -472, -269, -479, -266)
+
+[node name="@Polygon2D@135" type="Polygon2D" parent="." unique_id=644218305]
+z_index = 4
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(-476, -260, -477.17157, -257.17157, -480, -256, -482.82843, -257.17157, -484, -260, -482.82843, -262.82843, -480, -264, -477.17157, -262.82843)
+
+[node name="@ColorRect@136" type="ColorRect" parent="." unique_id=1156392632]
+z_index = 5
+offset_left = 479.0
+offset_top = -272.0
+offset_right = 481.0
+offset_bottom = -258.0
+
+[node name="@Polygon2D@137" type="Polygon2D" parent="." unique_id=1188626229]
+z_index = 5
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(481, -272, 488, -269, 481, -266)
+
+[node name="@Polygon2D@138" type="Polygon2D" parent="." unique_id=498663435]
+z_index = 4
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(484, -260, 482.82843, -257.17157, 480, -256, 477.17157, -257.17157, 476, -260, 477.17157, -262.82843, 480, -264, 482.82843, -262.82843)
+
+[node name="@ColorRect@139" type="ColorRect" parent="." unique_id=584044163]
+z_index = 5
+offset_left = -481.0
+offset_top = 248.0
+offset_right = -479.0
+offset_bottom = 262.0
+
+[node name="@Polygon2D@140" type="Polygon2D" parent="." unique_id=150645117]
+z_index = 5
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(-479, 248, -472, 251, -479, 254)
+
+[node name="@Polygon2D@141" type="Polygon2D" parent="." unique_id=882124123]
+z_index = 4
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(-476, 260, -477.17157, 262.82843, -480, 264, -482.82843, 262.82843, -484, 260, -482.82843, 257.17157, -480, 256, -477.17157, 257.17157)
+
+[node name="@ColorRect@142" type="ColorRect" parent="." unique_id=624156993]
+z_index = 5
+offset_left = 479.0
+offset_top = 248.0
+offset_right = 481.0
+offset_bottom = 262.0
+
+[node name="@Polygon2D@143" type="Polygon2D" parent="." unique_id=1629043755]
+z_index = 5
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(481, 248, 488, 251, 481, 254)
+
+[node name="@Polygon2D@144" type="Polygon2D" parent="." unique_id=13826827]
+z_index = 4
+color = Color(0, 0.9, 0.85, 1)
+polygon = PackedVector2Array(484, 260, 482.82843, 262.82843, 480, 264, 477.17157, 262.82843, 476, 260, 477.17157, 257.17157, 480, 256, 482.82843, 257.17157)
+
+[node name="Players" type="Node" parent="." unique_id=1938151979]
+
+[node name="MatchPlayer" type="CharacterBody2D" parent="Players" unique_id=2012424600]
+unique_name_in_owner = true
+z_index = 5
+position = Vector2(-50, 30)
 script = ExtResource("2_lx5da")
 
-[node name="BlueGK" type="CharacterBody2D" parent="Players" unique_id=1020496825]
+[node name="BlueGK" type="CharacterBody2D" parent="Players" unique_id=1729536730]
 z_index = 5
 position = Vector2(-455, 0)
 script = ExtResource("3_qn3w3")
 IsBlueTeam = true
 BasePos = Vector2(-455, 0)
+PlayerRole = 0
 
-[node name="BlueCB0" type="CharacterBody2D" parent="Players" unique_id=732608435]
+[node name="BlueCB0" type="CharacterBody2D" parent="Players" unique_id=1461884002]
 z_index = 5
 position = Vector2(-290, -95)
 script = ExtResource("3_qn3w3")
 IsBlueTeam = true
 BasePos = Vector2(-290, -95)
+PlayerRole = 1
 
-[node name="BlueCB1" type="CharacterBody2D" parent="Players" unique_id=500002101]
+[node name="BlueCB1" type="CharacterBody2D" parent="Players" unique_id=546405127]
 z_index = 5
 position = Vector2(-290, 95)
 script = ExtResource("3_qn3w3")
 IsBlueTeam = true
 BasePos = Vector2(-290, 95)
+PlayerRole = 2
 
-[node name="BlueMF" type="CharacterBody2D" parent="Players" unique_id=399193209]
+[node name="BlueMF" type="CharacterBody2D" parent="Players" unique_id=190988245]
 z_index = 5
 position = Vector2(-130, -72)
 script = ExtResource("3_qn3w3")
 IsBlueTeam = true
 BasePos = Vector2(-130, -72)
 
-[node name="RedGK" type="CharacterBody2D" parent="Players" unique_id=654214971]
+[node name="RedGK" type="CharacterBody2D" parent="Players" unique_id=530691956]
 z_index = 5
 position = Vector2(455, 0)
 script = ExtResource("3_qn3w3")
 BasePos = Vector2(455, 0)
+PlayerRole = 0
 
-[node name="RedCB0" type="CharacterBody2D" parent="Players" unique_id=1593736795]
+[node name="RedCB0" type="CharacterBody2D" parent="Players" unique_id=534818320]
 z_index = 5
 position = Vector2(290, -95)
 script = ExtResource("3_qn3w3")
 BasePos = Vector2(290, -95)
+PlayerRole = 1
 
-[node name="RedCB1" type="CharacterBody2D" parent="Players" unique_id=32543928]
+[node name="RedCB1" type="CharacterBody2D" parent="Players" unique_id=1524578892]
 z_index = 5
 position = Vector2(290, 95)
 script = ExtResource("3_qn3w3")
 BasePos = Vector2(290, 95)
+PlayerRole = 2
 
-[node name="RedMF" type="CharacterBody2D" parent="Players" unique_id=956429289]
+[node name="RedMF" type="CharacterBody2D" parent="Players" unique_id=998513792]
 z_index = 5
 position = Vector2(130, -72)
 script = ExtResource("3_qn3w3")
 BasePos = Vector2(130, -72)
 
-[node name="RedFW" type="CharacterBody2D" parent="Players" unique_id=2046783258]
+[node name="RedFW" type="CharacterBody2D" parent="Players" unique_id=48471077]
 z_index = 5
 position = Vector2(210, 0)
 script = ExtResource("3_qn3w3")
 BasePos = Vector2(210, 0)
+PlayerRole = 4
 
-[node name="Ball" type="RigidBody2D" parent="." unique_id=1937283103]
+[node name="Ball" type="RigidBody2D" parent="." unique_id=2115437191]
 z_index = 6
 collision_layer = 4
 collision_mask = 16
 script = ExtResource("4_bt7kc")
 
-[node name="Camera" type="Camera2D" parent="." unique_id=1943926674]
+[node name="Camera" type="Camera2D" parent="." unique_id=617921315]
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=393892843]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1061973373]
 layer = 10
 
-[node name="@PanelContainer@133" type="PanelContainer" parent="HUD" unique_id=539325425]
+[node name="@PanelContainer@145" type="PanelContainer" parent="HUD" unique_id=316532523]
 offset_left = 470.0
 offset_top = 8.0
 offset_right = 470.0
 offset_bottom = 8.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_j1f23")
 
-[node name="@VBoxContainer@134" type="VBoxContainer" parent="HUD/@PanelContainer@133" unique_id=865618162]
+[node name="@VBoxContainer@146" type="VBoxContainer" parent="HUD/@PanelContainer@145" unique_id=62174358]
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="@HBoxContainer@135" type="HBoxContainer" parent="HUD/@PanelContainer@133/@VBoxContainer@134" unique_id=1976345631]
+[node name="@HBoxContainer@147" type="HBoxContainer" parent="HUD/@PanelContainer@145/@VBoxContainer@146" unique_id=996244714]
 layout_mode = 2
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="@Label@136" type="Label" parent="HUD/@PanelContainer@133/@VBoxContainer@134/@HBoxContainer@135" unique_id=80540561]
+[node name="@Label@148" type="Label" parent="HUD/@PanelContainer@145/@VBoxContainer@146/@HBoxContainer@147" unique_id=392533129]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.5, 0.78, 1, 1)
 text = "MAVİ"
 
-[node name="@Label@137" type="Label" parent="HUD/@PanelContainer@133/@VBoxContainer@134/@HBoxContainer@135" unique_id=129077130]
+[node name="@Label@149" type="Label" parent="HUD/@PanelContainer@145/@VBoxContainer@146/@HBoxContainer@147" unique_id=351490750]
 layout_mode = 2
 theme_override_font_sizes/font_size = 10
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 text = "vs"
 
-[node name="@Label@138" type="Label" parent="HUD/@PanelContainer@133/@VBoxContainer@134/@HBoxContainer@135" unique_id=1968357712]
+[node name="@Label@150" type="Label" parent="HUD/@PanelContainer@145/@VBoxContainer@146/@HBoxContainer@147" unique_id=568556940]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(1, 0.45, 0.45, 1)
 text = "KIRMIZI"
 
-[node name="ScoreLabel" type="Label" parent="HUD/@PanelContainer@133/@VBoxContainer@134" unique_id=1394800219]
+[node name="ScoreLabel" type="Label" parent="HUD/@PanelContainer@145/@VBoxContainer@146" unique_id=1989100607]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
@@ -952,7 +1028,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "0  —  0"
 horizontal_alignment = 1
 
-[node name="TimerLabel" type="Label" parent="HUD/@PanelContainer@133/@VBoxContainer@134" unique_id=2066113260]
+[node name="TimerLabel" type="Label" parent="HUD/@PanelContainer@145/@VBoxContainer@146" unique_id=1861534227]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
@@ -960,7 +1036,7 @@ theme_override_colors/font_color = Color(0.72, 0.72, 0.72, 1)
 text = "3:00"
 horizontal_alignment = 1
 
-[node name="GoalAnnounce" type="Label" parent="HUD" unique_id=506561790]
+[node name="GoalAnnounce" type="Label" parent="HUD" unique_id=484934743]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 8
@@ -975,7 +1051,7 @@ offset_bottom = -22.0
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 
-[node name="@Label@139" type="Label" parent="HUD" unique_id=2000759215]
+[node name="@Label@151" type="Label" parent="HUD" unique_id=142765364]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -985,7 +1061,19 @@ offset_right = 8.0
 offset_bottom = -22.0
 theme_override_font_sizes/font_size = 11
 theme_override_colors/font_color = Color(0.52, 0.52, 0.52, 1)
-text = "WASD: Hareket   SPACE: Şut   SHIFT: Sprint   ESC: Çık"
+text = "WASD: Hareket   SPACE: Şut/Kafa   SHIFT: Sprint   CTRL: Kayma   ESC: Çık"
 
-[node name="MatchManager" type="Node" parent="." unique_id=581164307]
+[node name="@Label@152" type="Label" parent="HUD" unique_id=1016862560]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -52.0
+offset_right = 8.0
+offset_bottom = -52.0
+theme_override_font_sizes/font_size = 10
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "KONDISYON"
+
+[node name="MatchManager" type="Node" parent="." unique_id=243240794]
 script = ExtResource("5_qvw6d")
