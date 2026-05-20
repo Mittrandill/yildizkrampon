@@ -17,6 +17,12 @@ public partial class GameManager : Node
     // Oyuncu adı
     public string PlayerName { get; set; } = "Kahraman";
 
+    // Match system stats (used by NeighborhoodMatch)
+    public int   ShotPower { get; set; } = 50;
+    public int   SoccerIq  { get; set; } = 50;
+    public float Morale    { get; set; } = 100f;
+    public float Fatigue   { get; set; } = 0f;
+
     public override void _Ready()
     {
         Instance = this;
@@ -28,4 +34,10 @@ public partial class GameManager : Node
 
     public void EarnMoney(int amount)
         => Money += amount;
+
+    public string CompletePlayableMatch(int goalsScored, int goalsConceded, float rating = 6f)
+    {
+        Fatigue = Mathf.Min(100f, Fatigue + 20f);
+        return goalsScored > goalsConceded ? "win" : goalsScored < goalsConceded ? "loss" : "draw";
+    }
 }

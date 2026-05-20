@@ -29,6 +29,6 @@ public partial class WorldScene : Node2D
     {
         if (_player == null) return;
         if (_player.GlobalPosition.DistanceTo(PitchGate) < INTERACT_DIST)
-            WorldManager.Instance?.GoTo("Match");
+            WorldManager.Instance?.GoTo("NeighborhoodMatch");
     }
 }
