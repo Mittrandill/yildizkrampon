@@ -48,11 +48,6 @@ public partial class MatchManager : Node
         _timerLabel = GetNodeOrNull<Label>("%TimerLabel");
         _announce   = GetNodeOrNull<Label>("%GoalAnnounce");
 
-        var gl = GetNodeOrNull<Area2D>("%GoalLeft");
-        var gr = GetNodeOrNull<Area2D>("%GoalRight");
-        if (gl != null) gl.BodyEntered += b => _OnGoalEntered(b, isLeft: true);
-        if (gr != null) gr.BodyEntered += b => _OnGoalEntered(b, isLeft: false);
-
         // Collect player references
         _human = GetNodeOrNull<MatchPlayer>("%MatchPlayer");
         foreach (var node in GetTree().GetNodesInGroup("team_blue"))
@@ -82,9 +77,13 @@ public partial class MatchManager : Node
             if (_setPieceTimer <= 0f)
             {
                 _phase = Phase.Playing;
-                _setPieceAction?.Invoke();
+                // Save + clear BEFORE invoke so any chained _StartSetPiece call
+                // inside the action can set its own new action without being wiped.
+                var action = _setPieceAction;
                 _setPieceAction = null;
-                _SetInputFrozen(false);
+                action?.Invoke();
+                if (_phase == Phase.Playing) // only unfreeze if action didn't chain into another set piece
+                    _SetInputFrozen(false);
             }
             return;
         }
@@ -120,15 +119,19 @@ public partial class MatchManager : Node
 
         if (Mathf.Abs(bp.X) > PW_HALF + 2f)
         {
-            bool inGoalY = Mathf.Abs(bp.Y) < 62f; // GH/2 + margin
-            if (inGoalY) return; // goal handled by Area2D
+            bool inGoalY = Mathf.Abs(bp.Y) < 63f; // GH/2 + margin
+            if (inGoalY)
+            {
+                // Ball crossed the goal line inside the post width → goal!
+                _ScoreGoal(isLeft: bp.X < 0f);
+                return;
+            }
 
-            int lastTeam = Football.Instance.LastTouchedTeam;
-            bool exitedLeft  = bp.X < 0f;
-            bool exitedRight = bp.X > 0f;
+            int  lastTeam     = Football.Instance.LastTouchedTeam;
+            bool exitedLeft   = bp.X < 0f;
+            bool exitedRight  = bp.X > 0f;
 
             // Goal kick if last touched by attacker, corner if defender
-            bool leftGoalDefendsLeft  = !_blueAttacksRight; // blue defends left
             bool attackerTouchedLeft  = exitedLeft  && (lastTeam == (_blueAttacksRight ? 0 : 1));
             bool attackerTouchedRight = exitedRight && (lastTeam == (_blueAttacksRight ? 1 : 0));
 
@@ -218,21 +221,22 @@ public partial class MatchManager : Node
 
     // ── Goal scored ─────────────────────────────────────────────────────────────
 
-    private void _OnGoalEntered(Node2D body, bool isLeft)
+    private void _ScoreGoal(bool isLeft)
     {
-        if (body is not Football || _phase != Phase.Playing) return;
+        if (_phase != Phase.Playing) return;
 
-        // If ball entered left goal → right side scored
-        // Right side = red if blue attacks right, else blue
+        // Ball entered left goal → right side scored (and vice versa)
         bool blueScored = isLeft ? !_blueAttacksRight : _blueAttacksRight;
         if (blueScored) _score[0]++; else _score[1]++;
         _UpdateHUD();
+
+        Football.Instance!.Frozen = true; // freeze ball immediately
 
         var color = blueScored ? new Color(0.5f, 0.75f, 1f) : new Color(1f, 0.4f, 0.4f);
         _ShowAnnounce(blueScored ? "← GOL!  MAVİ" : "GOL!  KIRMIZI →", color);
 
         // Scored-against team kicks off
-        bool redKicksOff = blueScored; // blue scored → red kicks off
+        bool redKicksOff = blueScored;
         _StartSetPiece(2.5f, () =>
         {
             if (_announce != null) _announce.Visible = false;
