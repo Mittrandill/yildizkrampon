@@ -23,6 +23,7 @@ public partial class MatchManager : Node
     private bool  _blueAttacksRight = true;   // blue attacks right in first half
     private float _setPieceTimer = 0f;
     private System.Action? _setPieceAction;
+    private bool  _goalThisPhase = false;     // prevents double-counting a single goal
 
     public bool IsSetPiece => _phase == Phase.SetPiece || _phase == Phase.HalfTime;
 
@@ -223,7 +224,8 @@ public partial class MatchManager : Node
 
     private void _ScoreGoal(bool isLeft)
     {
-        if (_phase != Phase.Playing) return;
+        if (_phase != Phase.Playing || _goalThisPhase) return;
+        _goalThisPhase = true;
 
         // Ball entered left goal → right side scored (and vice versa)
         bool blueScored = isLeft ? !_blueAttacksRight : _blueAttacksRight;
@@ -248,6 +250,7 @@ public partial class MatchManager : Node
 
     private void _DoKickOff(bool blueKicksOff)
     {
+        _goalThisPhase = false;
         Football.Instance?.ResetTo(Vector2.Zero);
         if (Football.Instance != null) Football.Instance.Frozen = true;
 

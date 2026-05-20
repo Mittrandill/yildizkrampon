@@ -1,37 +1,41 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class MatchPlayer : CharacterBody2D
 {
-    private const float SPEED         = 225f;
-    private const float SPRINT_SPEED  = 345f;
-    private const float KICK_RADIUS   = 36f;
-    private const float KICK_FORCE    = 730f;
-    private const float HEADER_FORCE  = 380f;
-    private const float PUSH_FORCE    = 210f;
-    private const float SLIDE_SPEED   = 500f;
-    private const float SLIDE_KICK    = 480f;
-    private const float SLIDE_DIST    = 35f;
+    private const float SPEED        = 170f;
+    private const float SPRINT_SPEED = 260f;
+    private const float KICK_RADIUS  = 36f;
+    private const float KICK_FORCE   = 560f;
+    private const float HEADER_FORCE = 350f;
+    private const float PUSH_FORCE   = 170f;
+    private const float SLIDE_SPEED  = 420f;
+    private const float SLIDE_KICK   = 400f;
+    private const float SLIDE_DIST   = 35f;
 
     // Stamina
     private float _stamina      = 100f;
     private const float STA_DRAIN_SPRINT = 25f;
-    private const float STA_DRAIN_RUN    = 5f;
-    private const float STA_RECOVER      = 8f;
+    private const float STA_DRAIN_RUN    = 4f;
+    private const float STA_RECOVER      = 9f;
 
     // Slide
     private float   _slideCooldown;
     private float   _slideTimer;
     private Vector2 _slideDir;
-    private const float SLIDE_DURATION = 0.5f;
+    private const float SLIDE_DURATION = 0.45f;
     private const float SLIDE_COOLDOWN = 1.2f;
 
     private float   _kickCooldown;
-    private Vector2 _facing = Vector2.Right;
+    private Vector2 _facing = Vector2.Down;
 
-    // HUD bar
+    // Visual
+    private Node2D     _visual    = null!;
+    private Polygon2D  _leftLeg   = null!;
+    private Polygon2D  _rightLeg  = null!;
     private ColorRect? _staminaBar;
+    private float      _legPhase;
 
-    // MatchManager gate: frozen by set pieces / kickoff
     public bool InputFrozen { get; set; } = false;
 
     public override void _Ready()
@@ -44,8 +48,8 @@ public partial class MatchPlayer : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         float dt = (float)delta;
-        _kickCooldown   -= dt;
-        _slideCooldown  -= dt;
+        _kickCooldown  -= dt;
+        _slideCooldown -= dt;
 
         if (InputFrozen)
         {
@@ -54,46 +58,45 @@ public partial class MatchPlayer : CharacterBody2D
             return;
         }
 
-        // Sliding takes over movement
         if (_slideTimer > 0f)
         {
             _slideTimer -= dt;
             Velocity = _slideDir * SLIDE_SPEED;
             _TrySlideTackle();
             MoveAndSlide();
+            _UpdateVisual(dt);
             return;
         }
 
-        var input  = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        bool sprint = Input.IsActionPressed("sprint") && _stamina > 1f;
-
+        var   input  = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        bool  sprint = Input.IsActionPressed("sprint") && _stamina > 1f;
         float spd;
+
         if (input.LengthSquared() > 0.01f)
         {
             _facing = input.Normalized();
+            float factor = _stamina < 10f ? 0.6f : _stamina < 30f ? 0.8f : 1.0f;
             if (sprint)
             {
-                float factor = _stamina < 10f ? 0.6f : _stamina < 30f ? 0.8f : 1.0f;
-                spd = SPRINT_SPEED * factor;
+                spd      = SPRINT_SPEED * factor;
                 _stamina = Mathf.Max(0f, _stamina - STA_DRAIN_SPRINT * dt);
             }
             else
             {
-                float factor = _stamina < 10f ? 0.6f : _stamina < 30f ? 0.8f : 1.0f;
-                spd = SPEED * factor;
+                spd      = SPEED * factor;
                 _stamina = Mathf.Max(0f, _stamina - STA_DRAIN_RUN * dt);
             }
         }
         else
         {
-            spd = 0f;
+            spd      = 0f;
             _stamina = Mathf.Min(100f, _stamina + STA_RECOVER * dt);
         }
 
         Velocity = input * spd;
         MoveAndSlide();
-
         _PassivePush();
+        _UpdateVisual(dt);
         _UpdateStaminaBar();
     }
 
@@ -103,10 +106,8 @@ public partial class MatchPlayer : CharacterBody2D
 
         if (e is InputEventKey k && k.Pressed && !k.Echo)
         {
-            if (k.Keycode == Key.Space)
-                _TryKickOrHeader();
-            else if (k.Keycode == Key.Ctrl)
-                _TrySlide();
+            if (k.Keycode == Key.Space)   _TryKickOrHeader();
+            else if (k.Keycode == Key.Ctrl) _TrySlide();
         }
     }
 
@@ -131,7 +132,6 @@ public partial class MatchPlayer : CharacterBody2D
         var d = Football.Instance.GlobalPosition - GlobalPosition;
         if (d.Length() > KICK_RADIUS) return;
 
-        // Header if ball is aerial and close enough
         if (Football.Instance.IsAerial && d.Length() < 30f)
         {
             Football.Instance.Kick(_facing * HEADER_FORCE, 0);
@@ -139,15 +139,14 @@ public partial class MatchPlayer : CharacterBody2D
             return;
         }
 
-        // Power kick with curve (if moving sideways relative to kick direction)
-        var kickDir = Velocity.LengthSquared() > 100f ? Velocity.Normalized() : _facing;
-        float cross = Velocity.X * kickDir.Y - Velocity.Y * kickDir.X;
-        float spin  = cross * 0.15f;
+        var   kickDir = Velocity.LengthSquared() > 100f ? Velocity.Normalized() : _facing;
+        float cross   = Velocity.X * kickDir.Y - Velocity.Y * kickDir.X;
+        float spin    = cross * 0.12f;
         Football.Instance.Kick(kickDir * KICK_FORCE, 0, spin);
         _kickCooldown = 0.28f;
     }
 
-    // ── Slide tackle ───────────────────────────────────────────────────────────
+    // ── Slide tackle ────────────────────────────────────────────────────────────
 
     private void _TrySlide()
     {
@@ -168,52 +167,127 @@ public partial class MatchPlayer : CharacterBody2D
         }
     }
 
-    // ── Stamina bar ────────────────────────────────────────────────────────────
+    // ── Visual update ────────────────────────────────────────────────────────────
+
+    private void _UpdateVisual(float dt)
+    {
+        float speed = Velocity.Length();
+        if (speed > 20f)
+        {
+            float targetAngle = Velocity.Angle() + Mathf.Pi * 0.5f;
+            _visual.Rotation = Mathf.LerpAngle(_visual.Rotation, targetAngle, 0.25f);
+        }
+        if (speed > 10f)
+        {
+            _legPhase += dt * speed * 0.045f;
+            float amp = Mathf.Min(speed / SPEED, 1f) * 4f;
+            _leftLeg.Position  = new Vector2(-5f, 8f + Mathf.Sin(_legPhase) * amp);
+            _rightLeg.Position = new Vector2( 5f, 8f + Mathf.Sin(_legPhase + Mathf.Pi) * amp);
+        }
+    }
+
+    // ── Stamina bar ─────────────────────────────────────────────────────────────
 
     private void _UpdateStaminaBar()
     {
         if (_staminaBar == null) return;
-        _staminaBar.Size = new Vector2(60f * (_stamina / 100f), 5f);
-        var c = _stamina > 50f ? new Color(0.3f, 0.9f, 0.3f)
+        _staminaBar.Size = new Vector2(40f * (_stamina / 100f), 5f);
+        var c = _stamina > 50f ? new Color(0.2f, 0.9f, 0.2f)
               : _stamina > 25f ? new Color(0.9f, 0.8f, 0.1f)
               :                  new Color(0.9f, 0.2f, 0.2f);
         _staminaBar.Color = c;
     }
 
+    // ── Visual build ─────────────────────────────────────────────────────────────
+
     private void _BuildVisual()
     {
-        var body = new Polygon2D { Color = new Color(0.12f, 0.38f, 0.92f), ZIndex = 0 };
-        body.Polygon = _Circle(10f, 16);
-        AddChild(body);
+        Color skin   = new Color(0.87f, 0.70f, 0.55f);
+        Color kit    = new Color(0.12f, 0.38f, 0.92f);
+        Color shorts = new Color(0.9f,  0.9f,  0.9f);
+        Color hair   = new Color(0.22f, 0.14f, 0.04f);
 
-        var crest = new Polygon2D { Color = Colors.White, ZIndex = 1 };
-        crest.Polygon = _Circle(4.5f, 6);
-        AddChild(crest);
+        // Selection ring (yellow, non-rotating, below player)
+        var ring = new Polygon2D { Color = new Color(1f, 0.92f, 0.1f, 0.30f), ZIndex = -2 };
+        ring.Polygon = _Circle(16f, 20);
+        AddChild(ring);
 
-        // Yellow triangle indicator
-        var arrow = new Polygon2D { Color = new Color(1f, 0.88f, 0.1f), ZIndex = 2 };
-        arrow.Polygon = new Vector2[] { new(0, -16f), new(-5f, -10f), new(5f, -10f) };
-        AddChild(arrow);
+        // Ground shadow (non-rotating)
+        var shadow = new Polygon2D { Color = new Color(0f, 0f, 0f, 0.2f), ZIndex = -1 };
+        shadow.Polygon = _Ellipse(12f, 5f, 14);
+        shadow.Position = new Vector2(0f, 4f);
+        AddChild(shadow);
 
-        // Stamina bar background
+        // Rotating visual group
+        _visual = new Node2D();
+        AddChild(_visual);
+
+        // Legs
+        _leftLeg = new Polygon2D { Color = skin, ZIndex = 0 };
+        _leftLeg.Polygon = _Circle(4.5f, 8);
+        _leftLeg.Position = new Vector2(-5f, 8f);
+        _visual.AddChild(_leftLeg);
+
+        _rightLeg = new Polygon2D { Color = skin, ZIndex = 0 };
+        _rightLeg.Polygon = _Circle(4.5f, 8);
+        _rightLeg.Position = new Vector2(5f, 8f);
+        _visual.AddChild(_rightLeg);
+
+        // Shorts
+        var shortsP = new Polygon2D { Color = shorts, ZIndex = 1 };
+        shortsP.Polygon = _Ellipse(7.5f, 4.5f, 10);
+        shortsP.Position = new Vector2(0f, 3f);
+        _visual.AddChild(shortsP);
+
+        // Shirt (blue)
+        var body = new Polygon2D { Color = kit, ZIndex = 2 };
+        body.Polygon = _Ellipse(9f, 7f, 14);
+        body.Position = new Vector2(0f, -2f);
+        _visual.AddChild(body);
+
+        // Shirt crest
+        var crest = new Polygon2D { Color = Colors.White, ZIndex = 3 };
+        crest.Polygon = _Circle(2.5f, 6);
+        crest.Position = new Vector2(0f, -2f);
+        _visual.AddChild(crest);
+
+        // Head
+        var head = new Polygon2D { Color = skin, ZIndex = 4 };
+        head.Polygon = _Circle(6.5f, 12);
+        head.Position = new Vector2(0f, -11f);
+        _visual.AddChild(head);
+
+        // Hair (upper half of head)
+        var hairList = new List<Vector2>();
+        for (int i = 0; i <= 7; i++)
+        {
+            float a = i / 7f * Mathf.Pi + Mathf.Pi;
+            hairList.Add(new Vector2(0f, -11f) + new Vector2(Mathf.Cos(a) * 6.5f, Mathf.Sin(a) * 6.5f));
+        }
+        var hairP = new Polygon2D { Color = hair, ZIndex = 5 };
+        hairP.Polygon = hairList.ToArray();
+        _visual.AddChild(hairP);
+
+        // Stamina bar background (non-rotating, above player)
         var bgBar = new ColorRect
         {
-            Color    = new Color(0.2f, 0.2f, 0.2f, 0.7f),
-            Size     = new Vector2(60f, 5f),
-            Position = new Vector2(-30f, -26f),
-            ZIndex   = 3,
+            Color    = new Color(0.15f, 0.15f, 0.15f, 0.75f),
+            Size     = new Vector2(40f, 5f),
+            Position = new Vector2(-20f, -34f),
+            ZIndex   = 10,
         };
         AddChild(bgBar);
 
         _staminaBar = new ColorRect
         {
-            Color    = new Color(0.3f, 0.9f, 0.3f),
-            Size     = new Vector2(60f, 5f),
-            Position = new Vector2(-30f, -26f),
-            ZIndex   = 4,
+            Color    = new Color(0.2f, 0.9f, 0.2f),
+            Size     = new Vector2(40f, 5f),
+            Position = new Vector2(-20f, -34f),
+            ZIndex   = 11,
         };
         AddChild(_staminaBar);
 
+        // Collision
         var col = new CollisionShape2D();
         col.Shape    = new CapsuleShape2D { Radius = 8f, Height = 14f };
         col.Position = new Vector2(0f, 2f);
@@ -227,6 +301,17 @@ public partial class MatchPlayer : CharacterBody2D
         {
             float a = i / (float)seg * Mathf.Tau;
             pts[i] = new Vector2(Mathf.Cos(a) * r, Mathf.Sin(a) * r);
+        }
+        return pts;
+    }
+
+    private static Vector2[] _Ellipse(float rx, float ry, int seg)
+    {
+        var pts = new Vector2[seg];
+        for (int i = 0; i < seg; i++)
+        {
+            float a = i / (float)seg * Mathf.Tau;
+            pts[i] = new Vector2(Mathf.Cos(a) * rx, Mathf.Sin(a) * ry);
         }
         return pts;
     }

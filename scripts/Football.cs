@@ -29,7 +29,7 @@ public partial class Football : RigidBody2D
     {
         Instance    = this;
         GravityScale = 0;
-        LinearDamp   = 1.6f;
+        LinearDamp   = 1.2f;
         AngularDamp  = 4f;
         PhysicsMaterialOverride = new PhysicsMaterial { Bounce = 0.55f, Friction = 0.18f };
         _BuildVisual();

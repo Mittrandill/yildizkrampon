@@ -5,22 +5,29 @@ public partial class FootballAI : CharacterBody2D
 {
     public enum Role { GK, DEF_L, DEF_R, MID, FWD }
 
-    [Export] public bool   IsBlueTeam      { get; set; } = false;
-    [Export] public Vector2 BasePos        { get; set; } = Vector2.Zero;
-    [Export] public Role    PlayerRole     { get; set; } = Role.MID;
+    [Export] public bool    IsBlueTeam  { get; set; } = false;
+    [Export] public Vector2 BasePos     { get; set; } = Vector2.Zero;
+    [Export] public Role    PlayerRole  { get; set; } = Role.MID;
 
-    // Set by MatchManager each frame based on which side we attack
     public bool AttacksRight { get; set; } = true;
 
-    private const float SPEED         = 190f;
-    private const float KICK_RADIUS   = 38f;
-    private const float KICK_FORCE    = 600f;
-    private const float PASS_FORCE    = 460f;
+    private const float SPEED       = 155f;
+    private const float KICK_RADIUS = 38f;
+    private const float KICK_FORCE  = 500f;
+    private const float PASS_FORCE  = 420f;
     private const float GK_CATCH_DIST = 28f;
+    // GK stays within this many px forward of goal line X
+    private const float GK_MAX_FORWARD = 70f;
 
     private float _kickCooldown;
-    private float _gkCatchTimer;   // >0 = holding ball
+    private float _gkCatchTimer;
     private bool  _initialized;
+
+    // Visual
+    private Node2D    _visual   = null!;
+    private Polygon2D _leftLeg  = null!;
+    private Polygon2D _rightLeg = null!;
+    private float     _legPhase;
 
     public override void _Ready()
     {
@@ -41,7 +48,7 @@ public partial class FootballAI : CharacterBody2D
 
         switch (PlayerRole)
         {
-            case Role.GK:  _BehaveGK(dt);  break;
+            case Role.GK:    _BehaveGK(dt);  break;
             case Role.DEF_L:
             case Role.DEF_R: _BehaveDef(dt); break;
             case Role.MID:   _BehaveMid(dt); break;
@@ -49,11 +56,11 @@ public partial class FootballAI : CharacterBody2D
         }
 
         MoveAndSlide();
+        _UpdateVisual(dt);
     }
 
     // ── Tactical helpers ────────────────────────────────────────────────────────
 
-    // Returns the tactical base position for our role given current attack direction
     public Vector2 TacticalBase()
     {
         float sign = AttacksRight ? 1f : -1f;
@@ -68,17 +75,15 @@ public partial class FootballAI : CharacterBody2D
         };
     }
 
-    // Shifted tactical position that moves as a block toward/away from the ball
     private Vector2 _ShiftedTactical()
     {
-        var ball  = Football.Instance!.GlobalPosition;
-        float bx  = Mathf.Clamp(ball.X, -480f, 480f);
+        var   ball  = Football.Instance!.GlobalPosition;
+        float bx    = Mathf.Clamp(ball.X, -480f, 480f);
         float shift = bx * 0.18f;
-        var tb = TacticalBase();
-        return tb + new Vector2(shift, 0f);
+        return TacticalBase() + new Vector2(shift, 0f);
     }
 
-    // ── GK ─────────────────────────────────────────────────────────────────────
+    // ── GK ──────────────────────────────────────────────────────────────────────
 
     private void _BehaveGK(float dt)
     {
@@ -88,7 +93,7 @@ public partial class FootballAI : CharacterBody2D
         if (_gkCatchTimer > 0f)
         {
             _gkCatchTimer -= dt;
-            Football.Instance.Frozen   = true;
+            Football.Instance.Frozen = true;
             Football.Instance.GlobalPosition = GlobalPosition + new Vector2(AttacksRight ? -16f : 16f, 0f);
             Velocity = Vector2.Zero;
             if (_gkCatchTimer <= 0f)
@@ -99,31 +104,36 @@ public partial class FootballAI : CharacterBody2D
             return;
         }
 
-        var ball    = Football.Instance.GlobalPosition;
-        var toBall  = ball - GlobalPosition;
-        float dist  = toBall.Length();
+        var   ball   = Football.Instance.GlobalPosition;
+        var   toBall = ball - GlobalPosition;
+        float dist   = toBall.Length();
 
         // Catch if close enough and ball is on ground
-        bool ballGrounded = !Football.Instance.IsAerial;
-        if (dist < GK_CATCH_DIST && _kickCooldown <= 0f && ballGrounded)
+        if (dist < GK_CATCH_DIST && _kickCooldown <= 0f && !Football.Instance.IsAerial)
         {
             _gkCatchTimer = 1.0f;
             return;
         }
 
-        // Dive toward incoming shots (quick burst)
-        bool ballComingTowardGoal = _BallApproachingOurGoal();
-        if (dist < 200f && ballComingTowardGoal)
+        // Goal line X for this GK – never leave this X beyond GK_MAX_FORWARD
+        float lineX = AttacksRight ? -450f : 450f;
+
+        // When ball is threatening the goal, slide laterally (stay on/near line)
+        bool ballApproaching = _BallApproachingOurGoal();
+        if (ballApproaching && dist < 180f)
         {
-            Velocity = toBall.Normalized() * SPEED * 1.5f;
+            // Clamp forward movement: GK can step at most GK_MAX_FORWARD px from goal
+            float forwardClamp = AttacksRight
+                ? Mathf.Clamp(ball.X, lineX, lineX + GK_MAX_FORWARD)
+                : Mathf.Clamp(ball.X, lineX - GK_MAX_FORWARD, lineX);
+            var target = new Vector2(forwardClamp, Mathf.Clamp(ball.Y, -55f, 55f));
+            _MoveToward(target, SPEED * 1.6f);
             return;
         }
 
-        // Hug goal line at ball Y
-        float lineX    = AttacksRight ? -450f : 450f;
+        // Default: hug goal line at ball Y
         float clampedY = Mathf.Clamp(ball.Y, -55f, 55f);
-        var   target   = new Vector2(lineX, clampedY);
-        _MoveToward(target, SPEED * 0.9f);
+        _MoveToward(new Vector2(lineX, clampedY), SPEED * 0.9f);
     }
 
     private void _GKKickUpfield()
@@ -131,54 +141,41 @@ public partial class FootballAI : CharacterBody2D
         float targetX = AttacksRight ? 200f : -200f;
         float spread  = (float)GD.RandRange(-80.0, 80.0);
         var   dir     = (new Vector2(targetX, spread) - GlobalPosition).Normalized();
-        int   team    = IsBlueTeam ? 0 : 1;
-        Football.Instance?.Kick(dir * KICK_FORCE * 1.1f, team);
+        Football.Instance?.Kick(dir * KICK_FORCE * 1.1f, IsBlueTeam ? 0 : 1);
         _kickCooldown = 0.5f;
     }
 
     private bool _BallApproachingOurGoal()
     {
         if (Football.Instance == null) return false;
-        var vel  = Football.Instance.LinearVelocity;
-        float myGoalX = AttacksRight ? -480f : 480f;
-        float ballX   = Football.Instance.GlobalPosition.X;
-        // Ball moving toward our goal side
-        return AttacksRight ? (vel.X < -60f && ballX < 0f) : (vel.X > 60f && ballX > 0f);
+        var vel = Football.Instance.LinearVelocity;
+        return AttacksRight
+            ? (vel.X < -60f && Football.Instance.GlobalPosition.X < 0f)
+            : (vel.X >  60f && Football.Instance.GlobalPosition.X > 0f);
     }
 
-    // ── DEF ────────────────────────────────────────────────────────────────────
+    // ── DEF ─────────────────────────────────────────────────────────────────────
 
     private void _BehaveDef(float dt)
     {
         if (Football.Instance == null) return;
-        var ball    = Football.Instance.GlobalPosition;
-        var toBall  = ball - GlobalPosition;
-        float dist  = toBall.Length();
+        var   ball   = Football.Instance.GlobalPosition;
+        var   toBall = ball - GlobalPosition;
+        float dist   = toBall.Length();
 
-        // Kick if on ball
         if (dist < KICK_RADIUS && _kickCooldown <= 0f)
         {
             _ClearBall();
             return;
         }
 
-        float myGoalX = AttacksRight ? -480f : 480f;
-        bool  ballInOwnHalf = AttacksRight ? ball.X < 0f : ball.X > 0f;
-
+        bool ballInOwnHalf = AttacksRight ? ball.X < 0f : ball.X > 0f;
         if (ballInOwnHalf && dist < 280f)
         {
-            // Check if another DEF is pressing — if so, hold deeper
-            bool partnerPressing = _IsPartnerDefPressingCloser();
-            if (partnerPressing)
-            {
-                // Cover behind: retreat 80px toward goal
-                var coverPos = _ShiftedTactical() + new Vector2(AttacksRight ? -80f : 80f, 0f);
-                _MoveToward(coverPos, SPEED * 0.85f);
-            }
+            if (_IsPartnerDefPressingCloser())
+                _MoveToward(_ShiftedTactical() + new Vector2(AttacksRight ? -80f : 80f, 0f), SPEED * 0.85f);
             else
-            {
                 _MoveToward(ball, SPEED);
-            }
         }
         else
         {
@@ -189,8 +186,8 @@ public partial class FootballAI : CharacterBody2D
     private bool _IsPartnerDefPressingCloser()
     {
         if (Football.Instance == null) return false;
-        string group = IsBlueTeam ? "team_blue" : "team_red";
-        float myDist = (Football.Instance.GlobalPosition - GlobalPosition).Length();
+        string group  = IsBlueTeam ? "team_blue" : "team_red";
+        float  myDist = (Football.Instance.GlobalPosition - GlobalPosition).Length();
         foreach (var node in GetTree().GetNodesInGroup(group))
         {
             if (node == this) continue;
@@ -209,18 +206,17 @@ public partial class FootballAI : CharacterBody2D
         float targetX = AttacksRight ? 300f : -300f;
         float spread  = (float)GD.RandRange(-60.0, 60.0);
         var   dir     = (new Vector2(targetX, spread) - Football.Instance.GlobalPosition).Normalized();
-        int   team    = IsBlueTeam ? 0 : 1;
-        Football.Instance.Kick(dir * KICK_FORCE, team);
+        Football.Instance.Kick(dir * KICK_FORCE, IsBlueTeam ? 0 : 1);
         _kickCooldown = 0.5f;
         Velocity = Vector2.Zero;
     }
 
-    // ── MID ────────────────────────────────────────────────────────────────────
+    // ── MID ─────────────────────────────────────────────────────────────────────
 
     private void _BehaveMid(float dt)
     {
         if (Football.Instance == null) return;
-        var ball   = Football.Instance.GlobalPosition;
+        var   ball = Football.Instance.GlobalPosition;
         float dist = (ball - GlobalPosition).Length();
 
         if (dist < KICK_RADIUS && _kickCooldown <= 0f)
@@ -229,7 +225,6 @@ public partial class FootballAI : CharacterBody2D
             return;
         }
 
-        // Press in midfield or near ball
         bool inMidfield = Mathf.Abs(ball.X) < 200f;
         if (dist < 260f || inMidfield)
             _MoveToward(ball, SPEED);
@@ -237,12 +232,12 @@ public partial class FootballAI : CharacterBody2D
             _MoveToward(_ShiftedTactical(), SPEED * 0.9f);
     }
 
-    // ── FWD ────────────────────────────────────────────────────────────────────
+    // ── FWD ─────────────────────────────────────────────────────────────────────
 
     private void _BehaveFwd(float dt)
     {
         if (Football.Instance == null) return;
-        var ball   = Football.Instance.GlobalPosition;
+        var   ball = Football.Instance.GlobalPosition;
         float dist = (ball - GlobalPosition).Length();
 
         if (dist < KICK_RADIUS && _kickCooldown <= 0f)
@@ -254,13 +249,11 @@ public partial class FootballAI : CharacterBody2D
         bool ballInAttackHalf = AttacksRight ? ball.X > 0f : ball.X < 0f;
         if (ballInAttackHalf)
         {
-            // Make a run into space behind defense
-            float runX = AttacksRight ? Mathf.Min(ball.X + 120f, 420f) : Mathf.Max(ball.X - 120f, -420f);
+            float runX = AttacksRight
+                ? Mathf.Min(ball.X + 120f, 420f)
+                : Mathf.Max(ball.X - 120f, -420f);
             var runTarget = new Vector2(runX, Mathf.Lerp(GlobalPosition.Y, ball.Y * 0.4f, 0.15f));
-            if (dist < 300f)
-                _MoveToward(ball, SPEED);
-            else
-                _MoveToward(runTarget, SPEED * 0.9f);
+            _MoveToward(dist < 300f ? ball : runTarget, SPEED * (dist < 300f ? 1f : 0.9f));
         }
         else
         {
@@ -268,28 +261,25 @@ public partial class FootballAI : CharacterBody2D
         }
     }
 
-    // ── Smart kick: pass or shoot ───────────────────────────────────────────────
+    // ── Smart kick ──────────────────────────────────────────────────────────────
 
     private void _SmartKick()
     {
         if (Football.Instance == null) return;
+        int team = IsBlueTeam ? 0 : 1;
 
-        // Try passing if a teammate is in better position
         var passTarget = _FindPassTarget();
         if (passTarget != null)
         {
             var dir = (passTarget.GlobalPosition - Football.Instance.GlobalPosition).Normalized();
-            int team = IsBlueTeam ? 0 : 1;
             Football.Instance.Kick(dir * PASS_FORCE, team);
             _kickCooldown = 0.6f;
         }
         else
         {
-            // Shoot toward goal
-            float goalX = AttacksRight ? 506f : -506f;
+            float goalX  = AttacksRight ? 506f : -506f;
             float spread = (float)GD.RandRange(-30.0, 30.0);
-            var dir = (new Vector2(goalX, spread) - Football.Instance.GlobalPosition).Normalized();
-            int team = IsBlueTeam ? 0 : 1;
+            var   dir    = (new Vector2(goalX, spread) - Football.Instance.GlobalPosition).Normalized();
             Football.Instance.Kick(dir * KICK_FORCE, team);
             _kickCooldown = 0.45f;
         }
@@ -299,25 +289,21 @@ public partial class FootballAI : CharacterBody2D
     private FootballAI? _FindPassTarget()
     {
         if (Football.Instance == null) return null;
-        string group    = IsBlueTeam ? "team_blue" : "team_red";
-        float  goalX    = AttacksRight ? 506f : -506f;
-        float  myDistToGoal = Mathf.Abs(Football.Instance.GlobalPosition.X - goalX);
-        FootballAI? best = null;
-        float  bestDist = myDistToGoal - 80f; // teammate must be significantly closer to goal
+        string group       = IsBlueTeam ? "team_blue" : "team_red";
+        float  goalX       = AttacksRight ? 506f : -506f;
+        float  myDistGoal  = Mathf.Abs(Football.Instance.GlobalPosition.X - goalX);
+        FootballAI? best   = null;
+        float  bestDist    = myDistGoal - 80f;
 
         foreach (var node in GetTree().GetNodesInGroup(group))
         {
             if (node == this) continue;
             if (node is not FootballAI ai) continue;
-            float teammateDist = Mathf.Abs(ai.GlobalPosition.X - goalX);
-            if (teammateDist < bestDist)
+            float d = Mathf.Abs(ai.GlobalPosition.X - goalX);
+            if (d < bestDist && _PassLaneClear(ai.GlobalPosition))
             {
-                // Check not blocked (simplified: no opponent within 60px of line)
-                if (_PassLaneClear(ai.GlobalPosition))
-                {
-                    bestDist = teammateDist;
-                    best     = ai;
-                }
+                bestDist = d;
+                best     = ai;
             }
         }
         return best;
@@ -328,7 +314,7 @@ public partial class FootballAI : CharacterBody2D
         if (Football.Instance == null) return false;
         string oppGroup = IsBlueTeam ? "team_red" : "team_blue";
         var    from     = Football.Instance.GlobalPosition;
-        var    dir      = (targetPos - from);
+        var    dir      = targetPos - from;
         float  len      = dir.Length();
         if (len < 0.01f) return true;
         var dn = dir / len;
@@ -336,16 +322,15 @@ public partial class FootballAI : CharacterBody2D
         foreach (var node in GetTree().GetNodesInGroup(oppGroup))
         {
             if (node is not CharacterBody2D opp) continue;
-            var toOpp = opp.GlobalPosition - from;
-            float proj = toOpp.Dot(dn);
+            var   toOpp = opp.GlobalPosition - from;
+            float proj  = toOpp.Dot(dn);
             if (proj < 0f || proj > len) continue;
-            float cross = Mathf.Abs(toOpp.X * dn.Y - toOpp.Y * dn.X);
-            if (cross < 60f) return false;
+            if (Mathf.Abs(toOpp.X * dn.Y - toOpp.Y * dn.X) < 60f) return false;
         }
         return true;
     }
 
-    // ── Movement helper ─────────────────────────────────────────────────────────
+    // ── Movement ────────────────────────────────────────────────────────────────
 
     private void _MoveToward(Vector2 target, float speed)
     {
@@ -353,31 +338,102 @@ public partial class FootballAI : CharacterBody2D
         Velocity = delta.LengthSquared() > 16f ? delta.Normalized() * speed : Vector2.Zero;
     }
 
-    // ── Visual ─────────────────────────────────────────────────────────────────
+    // ── Visual update ────────────────────────────────────────────────────────────
+
+    private void _UpdateVisual(float dt)
+    {
+        float speed = Velocity.Length();
+        if (speed > 20f)
+        {
+            float targetAngle = Velocity.Angle() + Mathf.Pi * 0.5f;
+            _visual.Rotation = Mathf.LerpAngle(_visual.Rotation, targetAngle, 0.22f);
+        }
+        if (speed > 10f)
+        {
+            _legPhase += dt * speed * 0.045f;
+            float amp = Mathf.Min(speed / SPEED, 1f) * 3.5f;
+            _leftLeg.Position  = new Vector2(-5f, 8f + Mathf.Sin(_legPhase) * amp);
+            _rightLeg.Position = new Vector2( 5f, 8f + Mathf.Sin(_legPhase + Mathf.Pi) * amp);
+        }
+    }
+
+    // ── Visual build ─────────────────────────────────────────────────────────────
 
     private void _BuildVisual()
     {
-        Color kit = IsBlueTeam ? new Color(0.20f, 0.50f, 0.92f) : new Color(0.88f, 0.18f, 0.18f);
+        Color kit      = IsBlueTeam ? new Color(0.12f, 0.38f, 0.92f) : new Color(0.88f, 0.18f, 0.18f);
+        Color skin     = new Color(0.87f, 0.70f, 0.55f);
+        Color shorts   = new Color(0.9f,  0.9f,  0.9f);
+        Color hair     = new Color(0.22f, 0.14f, 0.04f);
 
-        var body = new Polygon2D { Color = kit, ZIndex = 0 };
-        body.Polygon = _Circle(9f, 16);
-        AddChild(body);
+        // Ground shadow (doesn't rotate)
+        var shadow = new Polygon2D { Color = new Color(0f, 0f, 0f, 0.18f), ZIndex = -1 };
+        shadow.Polygon = _Ellipse(12f, 5f, 14);
+        shadow.Position = new Vector2(0f, 4f);
+        AddChild(shadow);
 
-        var inner = new Polygon2D { Color = Colors.White, ZIndex = 1 };
-        inner.Polygon = _Circle(4f, 10);
-        AddChild(inner);
+        // Rotating group
+        _visual = new Node2D();
+        AddChild(_visual);
 
-        // Role indicator letter
+        // Legs (skin colour circles)
+        _leftLeg = new Polygon2D { Color = skin, ZIndex = 0 };
+        _leftLeg.Polygon = _Circle(4.2f, 8);
+        _leftLeg.Position = new Vector2(-5f, 8f);
+        _visual.AddChild(_leftLeg);
+
+        _rightLeg = new Polygon2D { Color = skin, ZIndex = 0 };
+        _rightLeg.Polygon = _Circle(4.2f, 8);
+        _rightLeg.Position = new Vector2(5f, 8f);
+        _visual.AddChild(_rightLeg);
+
+        // Shorts
+        var shortsP = new Polygon2D { Color = shorts, ZIndex = 1 };
+        shortsP.Polygon = _Ellipse(7f, 4.5f, 10);
+        shortsP.Position = new Vector2(0f, 3f);
+        _visual.AddChild(shortsP);
+
+        // Shirt / body
+        var body = new Polygon2D { Color = kit, ZIndex = 2 };
+        body.Polygon = _Ellipse(9f, 7f, 14);
+        body.Position = new Vector2(0f, -2f);
+        _visual.AddChild(body);
+
+        // Shirt crest
+        var crest = new Polygon2D { Color = Colors.White, ZIndex = 3 };
+        crest.Polygon = _Circle(2.5f, 6);
+        crest.Position = new Vector2(0f, -2f);
+        _visual.AddChild(crest);
+
+        // Head
+        var head = new Polygon2D { Color = skin, ZIndex = 4 };
+        head.Polygon = _Circle(6f, 12);
+        head.Position = new Vector2(0f, -11f);
+        _visual.AddChild(head);
+
+        // Hair (top half of head)
+        var hairPts = new List<Vector2>();
+        for (int i = 0; i <= 6; i++)
+        {
+            float a = i / 6f * Mathf.Pi + Mathf.Pi;
+            hairPts.Add(new Vector2(0f, -11f) + new Vector2(Mathf.Cos(a) * 6f, Mathf.Sin(a) * 6f));
+        }
+        var hairP = new Polygon2D { Color = hair, ZIndex = 5 };
+        hairP.Polygon = hairPts.ToArray();
+        _visual.AddChild(hairP);
+
+        // Role letter
         var lbl = new Label
         {
             Text     = PlayerRole.ToString().Split('_')[0][0].ToString(),
-            ZIndex   = 2,
-            Position = new Vector2(-5f, -18f),
+            ZIndex   = 6,
+            Position = new Vector2(-4f, -7f),
         };
-        lbl.AddThemeFontSizeOverride("font_size", 9);
+        lbl.AddThemeFontSizeOverride("font_size", 7);
         lbl.AddThemeColorOverride("font_color", Colors.White);
         AddChild(lbl);
 
+        // Collision
         var col = new CollisionShape2D();
         col.Shape    = new CapsuleShape2D { Radius = 8f, Height = 14f };
         col.Position = new Vector2(0f, 2f);
@@ -391,6 +447,17 @@ public partial class FootballAI : CharacterBody2D
         {
             float a = i / (float)seg * Mathf.Tau;
             pts[i] = new Vector2(Mathf.Cos(a) * r, Mathf.Sin(a) * r);
+        }
+        return pts;
+    }
+
+    private static Vector2[] _Ellipse(float rx, float ry, int seg)
+    {
+        var pts = new Vector2[seg];
+        for (int i = 0; i < seg; i++)
+        {
+            float a = i / (float)seg * Mathf.Tau;
+            pts[i] = new Vector2(Mathf.Cos(a) * rx, Mathf.Sin(a) * ry);
         }
         return pts;
     }
