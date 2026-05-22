@@ -56,6 +56,17 @@ public partial class NeighborhoodMatchController : Node2D
         GD.Randomize();
         _camera = GetNodeOrNull<Camera2D>("Camera");
         _camera?.MakeCurrent();
+
+        // Expand camera limits to include goal posts and nets which extend
+        // ~50 px beyond each field boundary (left goal sits at x≈25-80, right at x≈1040-1095).
+        if (_camera != null)
+        {
+            _camera.LimitLeft   = (int)(LeftGoalX  - 58f);
+            _camera.LimitRight  = (int)(RightGoalX + 58f);
+            _camera.LimitTop    = (int)(FieldBounds.Position.Y - 20f);
+            _camera.LimitBottom = (int)(FieldBounds.End.Y     + 20f);
+        }
+
         BuildPitch();
         SpawnBall();
         SpawnTeams();
@@ -1328,26 +1339,66 @@ public partial class NeighborhoodMatchController : Node2D
 
     private void AddFieldGrass()
     {
-        // Alternating grass-green strips fill the whole playing area at ZIndex -24.
-        // They sit above the backdrop (-25) so they cover the baked-in lines on the
-        // backdrop image, then the procedural field markings (-15) are drawn on top
-        // of these clean green strips — no more doubled or offset line artefacts.
-        float x  = FieldBounds.Position.X;
-        float w  = FieldBounds.Size.X;
-        float y0 = FieldBounds.Position.Y;
-        float y1 = FieldBounds.End.Y;
+        // Pixel-art style grass texture generated at runtime.
+        // Each "art pixel" is a 4×4 block for a deliberate retro look.
+        // Extends 58 px beyond the field on each X side so goal frames
+        // (which sit outside the field boundary) also stand on grass.
+        const int   pxBlock = 4;
+        const float xPad    = 58f;
 
-        const float stripH    = 46f;
-        var lightGreen = new Color(0.20f, 0.54f, 0.22f);
-        var darkGreen  = new Color(0.16f, 0.46f, 0.18f);
+        float gx = FieldBounds.Position.X - xPad;
+        float gy = FieldBounds.Position.Y;
+        int   fw = (int)(FieldBounds.Size.X + xPad * 2f);
+        int   fh = (int) FieldBounds.Size.Y;
 
-        int band = 0;
-        for (float y = y0; y < y1; y += stripH, band++)
+        // Mow-stripe palette: two bands, each with a 2-colour checker micro-detail.
+        var lightA = new Color(0.224f, 0.553f, 0.235f);
+        var lightB = new Color(0.200f, 0.514f, 0.216f);
+        var darkA  = new Color(0.161f, 0.455f, 0.173f);
+        var darkB  = new Color(0.145f, 0.412f, 0.153f);
+
+        const float stripPx = 46f;   // mow-band height in screen pixels
+
+        int artW = fw / pxBlock;
+        int artH = fh / pxBlock;
+
+        var img = Image.CreateEmpty(fw, fh, false, Image.Format.Rgba8);
+
+        for (int ay = 0; ay < artH; ay++)
         {
-            float h = Mathf.Min(stripH, y1 - y);
-            Color c = band % 2 == 0 ? lightGreen : darkGreen;
-            Rect(new Vector2(x, y), new Vector2(w, h), c, $"GrassBand{band}", -24);
+            bool light = ((int)(ay * pxBlock / stripPx)) % 2 == 0;
+
+            for (int ax = 0; ax < artW; ax++)
+            {
+                bool checker = (ax + ay) % 2 == 0;
+                Color c = light
+                    ? (checker ? lightA : lightB)
+                    : (checker ? darkA  : darkB);
+
+                // Sparse "blade" highlight — pixel-art grass character.
+                if ((ax * 7 + ay * 5) % 13 == 0) c = c.Lightened(0.05f);
+                // Occasional shadow patch.
+                if ((ax * 3 + ay * 11) % 19 == 0) c = c.Darkened(0.04f);
+
+                int x0 = ax * pxBlock;
+                int y0 = ay * pxBlock;
+                for (int dy = 0; dy < pxBlock && y0 + dy < fh; dy++)
+                    for (int dx = 0; dx < pxBlock && x0 + dx < fw; dx++)
+                        img.SetPixel(x0 + dx, y0 + dy, c);
+            }
         }
+
+        var tex = ImageTexture.CreateFromImage(img);
+        var sprite = new Sprite2D
+        {
+            Name          = "FieldGrass",
+            Texture       = tex,
+            Centered      = false,
+            Position      = new Vector2(gx, gy),
+            ZIndex        = -24,
+            TextureFilter = CanvasItem.TextureFilterEnum.Nearest   // no blur — crisp pixel art
+        };
+        AddChild(sprite);
     }
 
     private void AddPitchTexture()

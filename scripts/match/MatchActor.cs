@@ -214,7 +214,13 @@ public partial class MatchActor : Node2D
 			rawTarget = _ball.Position;
 
 		WantsPass = _controller.ActorWantsPass(this);
-		float blend = shouldPress ? 0.32f : _ball.Holder == this ? 0.42f : _ball.Holder != null && _ball.Holder.Team == Team ? 0.22f : 0.11f;
+
+		// Higher blend → faster reaction. Pressing and ball-carrying actors
+		// need snappier tracking; off-ball positioning can be smoother.
+		float blend = shouldPress       ? 0.42f
+		            : _ball.Holder == this ? 0.52f
+		            : _ball.Holder != null && _ball.Holder.Team == Team ? 0.28f
+		            : 0.16f;
 		_aiTargetMemory = _aiTargetMemory.Lerp(rawTarget, blend);
 		Vector2 target = IsGoalkeeper ? _controller.GetGoalkeeperTarget(this) : _aiTargetMemory;
 
@@ -240,19 +246,36 @@ public partial class MatchActor : Node2D
 		{
 			Vector2 moveDirection = SteeredDirection(toTarget.Normalized());
 			_lastMoveDirection = moveDirection;
-			float speed = _moveSpeed * (0.62f + Stamina / 460f);
-			if (shouldPress)
-				speed *= 1.15f;
-			if (_ball.Holder == this && Stamina > 26f && _controller.IsLaneClearForCarry(Position, Position + _controller.GetAttackDirection(Team) * 130f, Team))
-			{
-				speed *= 1.2f;
-				UseStamina(4f * dt);
-			}
-			Position += moveDirection * Mathf.Min(toTarget.Length(), speed * dt);
+
+			float dist          = toTarget.Length();
+			float staminaFactor = Mathf.Lerp(0.84f, 1.04f, Mathf.Clamp(Stamina / 100f, 0f, 1f));
+
+			// ── Sprint conditions ────────────────────────────────────────────
+			// 1. Pressing: always sprint toward the ball holder.
+			// 2. Loose ball: nearest actor sprints to claim it.
+			// 3. Long run (>140 px): sprint into space — makes diagonal runs
+			//    and positioning runs actually look dynamic.
+			// 4. Ball carrier in clear space: burst of speed on dribble.
+			bool pressSprint   = shouldPress && Stamina > 14f;
+			bool looseSprint   = _ball.Holder == null && dist > 55f && Stamina > 18f;
+			bool longRunSprint = dist > 140f && Stamina > 22f
+			                     && (_ball.Holder == null || _ball.Holder.Team == Team);
+			bool carrierSprint = _ball.Holder == this && Stamina > 26f
+			                     && _controller.IsLaneClearForCarry(Position,
+			                         Position + _controller.GetAttackDirection(Team) * 130f, Team);
+
+			bool aiSprint = pressSprint || looseSprint || longRunSprint || carrierSprint;
+
+			float speed = aiSprint
+			    ? _sprintSpeed * staminaFactor
+			    : _moveSpeed   * staminaFactor;
+
+			if (aiSprint)
+				UseStamina((shouldPress ? 5.5f : 3.8f) * dt);
+
+			Position += moveDirection * Mathf.Min(dist, speed * dt);
 			_moveVisualAmount = 1f;
-			_sprintingVisual = shouldPress || _ball.Holder == this;
-			if (shouldPress)
-				UseStamina(2.5f * dt);
+			_sprintingVisual  = aiSprint;
 		}
 	}
 
@@ -305,9 +328,11 @@ public partial class MatchActor : Node2D
 			}
 		}
 
-		if (!IsGoalkeeper && _controller.CanActorShoot(this) && goalDistance < 390f && shotScore > 0.28f && shotScore >= Mathf.Max(passScore - 0.08f, carryScore - 0.12f))
+		// Forwards are more trigger-happy; other roles need a cleaner chance.
+		float minShotScore = Role == "forward" ? 0.22f : 0.28f;
+		if (!IsGoalkeeper && _controller.CanActorShoot(this) && goalDistance < 390f && shotScore > minShotScore && shotScore >= Mathf.Max(passScore - 0.08f, carryScore - 0.12f))
 		{
-			TryKick(_controller.GetShotDirection(this), 585f * RatingFactor(ShootingRating, 0.94f, 1.18f) * StaminaPowerFactor(), 0.05f);
+			TryKick(_controller.GetShotDirection(this), 595f * RatingFactor(ShootingRating, 0.94f, 1.18f) * StaminaPowerFactor(), 0.05f);
 			_controller.ShowRefereeMessage("Sut");
 		}
 		else if (hasThroughPass && throughScore > Mathf.Max(passScore, carryScore) && TryKick(throughTarget - Position, PassPowerToPoint(throughTarget) * RatingFactor(PassingRating, 0.92f, 1.13f), selfPressure > 0.55f ? 0.24f : 0.10f, true))
