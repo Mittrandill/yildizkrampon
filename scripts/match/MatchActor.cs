@@ -188,7 +188,9 @@ public partial class MatchActor : Node2D
 		{
 			Vector2 aim = HumanAimDirection();
 			float power = Mathf.Lerp(310f, 640f, ShotCharge) * RatingFactor(ShootingRating, 0.92f, 1.16f) * StaminaPowerFactor();
-			TryKick(aim, power, 0.16f);
+			// Hold longer = more aerial: quick tap stays ground, full charge goes max height.
+			float liftRatio = Mathf.Lerp(0.06f, 0.55f, ShotCharge);
+			TryKick(aim, power, liftRatio);
 			ShotCharging = false;
 			ShotCharge = 0f;
 		}
@@ -997,7 +999,7 @@ public partial class MatchActor : Node2D
 		return "right";
 	}
 
-	private static SpriteFrames BuildFrames()
+	private SpriteFrames BuildFrames()
 	{
 		var frames = new SpriteFrames();
 		string[] names = { "idle_down", "walk_down", "idle_up", "walk_up", "idle_right", "walk_right" };
@@ -1008,15 +1010,20 @@ public partial class MatchActor : Node2D
 			frames.SetAnimationSpeed(name, name.StartsWith("walk") ? 8f : 2f);
 		}
 
-		Texture2D south = Tex("res://assets/characters/player_south.png");
-		Texture2D north = Tex("res://assets/characters/player_north.png");
-		Texture2D side = Tex("res://assets/characters/player_side.png");
+		// Team 1 (away / blue) uses the npc_blue sprite set; Team 0 uses the player sprites.
+		string p = Team == 1
+			? "res://assets/characters/npc_blue"
+			: "res://assets/characters/player";
+
+		Texture2D south = Tex($"{p}_south.png");
+		Texture2D north = Tex($"{p}_north.png");
+		Texture2D side  = Tex($"{p}_side.png");
 		Fill(frames, "idle_down", south);
-		Fill(frames, "walk_down", south, Tex("res://assets/characters/player_walk_south_a.png"), south, Tex("res://assets/characters/player_walk_south_b.png"));
+		Fill(frames, "walk_down", south, Tex($"{p}_walk_south_a.png"), south, Tex($"{p}_walk_south_b.png"));
 		Fill(frames, "idle_up", north);
-		Fill(frames, "walk_up", north, Tex("res://assets/characters/player_walk_north_a.png"), north, Tex("res://assets/characters/player_walk_north_b.png"));
+		Fill(frames, "walk_up", north, Tex($"{p}_walk_north_a.png"), north, Tex($"{p}_walk_north_b.png"));
 		Fill(frames, "idle_right", side);
-		Fill(frames, "walk_right", side, Tex("res://assets/characters/player_walk_a.png"), side, Tex("res://assets/characters/player_walk_side_b.png"));
+		Fill(frames, "walk_right", side, Tex($"{p}_walk_a.png"), side, Tex($"{p}_walk_side_b.png"));
 		return frames;
 	}
 

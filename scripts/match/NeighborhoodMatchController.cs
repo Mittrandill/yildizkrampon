@@ -1221,6 +1221,10 @@ public partial class NeighborhoodMatchController : Node2D
     private void BuildPitch()
     {
         AddFieldBackdrop();
+        AddGoalPosts(true);    // left goal frame
+        AddGoalPosts(false);   // right goal frame
+        AddGoalNet(true);      // left net lines
+        AddGoalNet(false);     // right net lines
     }
 
     private void AddFieldBackdrop()
@@ -1278,6 +1282,42 @@ public partial class NeighborhoodMatchController : Node2D
             Color color = i % 2 == 0 ? new Color(0.13f, 0.40f, 0.18f, 0.25f) : new Color(0.28f, 0.62f, 0.25f, 0.22f);
             Rect(new Vector2(x, y), size, color, $"GrassFleck{i}", -20);
         }
+    }
+
+    private void AddGoalPosts(bool left)
+    {
+        float gx   = left ? LeftGoalX : RightGoalX;
+        string pfx = left ? "Left" : "Right";
+        const float pw    = 6f;    // post / bar thickness (px)
+        const float depth = 42f;   // depth behind goal line — matches AddGoalNet
+
+        // barX: X-start of the horizontal bar spans
+        // For the left goal the bar goes LEFT (into the net area at X < gx).
+        // For the right goal the bar goes RIGHT (into the net area at X > gx).
+        float barX  = left ? gx - depth : gx;
+        float barW  = depth + pw;
+        float postX = left ? gx - pw : gx;  // main upright at goal line
+
+        Color col  = new Color(0.94f, 0.95f, 0.90f);          // off-white post
+        Color dark = col.Darkened(0.18f);                      // shadowed back face
+        Color shad = new Color(0f, 0f, 0f, 0.22f);            // ground shadow
+
+        // ── Back of goal (far/top side) — stays behind players ───────────────
+        // Back crossbar (horizontal, low ZIndex)
+        Rect(new Vector2(barX, GoalY.X - pw), new Vector2(barW, pw), col, $"{pfx}GoalBackBar", -19);
+        // Far upright (back post, behind the net depth — very low ZIndex)
+        float backPostX = left ? barX : barX + barW - pw;
+        Rect(new Vector2(backPostX, GoalY.X - pw), new Vector2(pw, GoalY.Y - GoalY.X + pw * 2f), dark, $"{pfx}GoalBackPost", -17);
+
+        // ── Main upright at goal line ─────────────────────────────────────────
+        // ZIndex 100: above field markings, sorts with players by Y once they pass the line.
+        Rect(new Vector2(postX, GoalY.X - pw), new Vector2(pw, GoalY.Y - GoalY.X + pw * 2f), col, $"{pfx}GoalPost", 100);
+
+        // ── Front crossbar (near/bottom side) — always in front of players ────
+        // ZIndex 450 ensures it draws over any actor that walks into the goal area.
+        Rect(new Vector2(barX, GoalY.Y), new Vector2(barW, pw), col, $"{pfx}GoalFrontBar", 450);
+        // Ground shadow under the front bar
+        Rect(new Vector2(barX + (left ? 4f : 1f), GoalY.Y + pw), new Vector2(barW - 4f, 4f), shad, $"{pfx}GoalFrontBarShadow", 449);
     }
 
     private void AddGoalNet(bool left)
