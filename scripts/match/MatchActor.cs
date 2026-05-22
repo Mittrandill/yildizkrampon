@@ -895,21 +895,30 @@ public partial class MatchActor : Node2D
 			float diveAmount = _saveAnimTimer > 0f ? Mathf.Sin(saveProgress * Mathf.Pi) : 0f;
 			float slideProgress = _slideTimer > 0f ? 1f - _slideTimer / SlideDuration : 0f;
 			float slideAmount = _slideTimer > 0f ? Mathf.Sin(Mathf.Clamp(slideProgress, 0f, 1f) * Mathf.Pi) : 0f;
-			Vector2 diveOffset = _saveDiveDirection * 25f * diveAmount;
+			Vector2 diveOffset = _saveDiveDirection * 42f * diveAmount;
+			float airLift = diveAmount * 28f; // keeper rises off the ground at dive peak
 			Vector2 slideOffset = _slideDirection * 14f * slideAmount;
 			Vector2 headerOffset = _headerAnimTimer > 0f ? new Vector2(0f, -7f * Mathf.Sin((_headerAnimTimer / 0.26f) * Mathf.Pi)) : Vector2.Zero;
 			float kickStep = _kickAnimTimer > 0f ? Mathf.Sin((_kickAnimTimer / 0.26f) * Mathf.Pi) * 4f : 0f;
 			float passStep = _passAnimTimer > 0f ? Mathf.Sin(Mathf.Clamp(_passAnimTimer / 0.30f, 0f, 1f) * Mathf.Pi) * 3f : 0f;
 			float pressureStep = _pressingVisual ? Mathf.Sin(time * 12f) * 1.6f : 0f;
 			float saveYOffset = Mathf.Abs(_saveDiveDirection.Y) > 0.35f ? diveOffset.Y * 0.85f : diveOffset.Y * 0.35f;
-			_anim.Position = new Vector2(diveOffset.X + slideOffset.X + visualDirection.X * (kickStep + passStep + dribblePulse * 2.3f + pressureStep) + keeperReady * 1.5f, -33f + bob + idleBreath * 0.75f + celebrationBob + saveYOffset + slideOffset.Y * 0.28f + headerOffset.Y + (_saveAnimTimer > 0f ? 5f : 0f) + (_slideTimer > 0f ? 8f : 0f) + visualDirection.Y * (kickStep + passStep + dribblePulse * 2.1f) * 0.35f);
+			_anim.Position = new Vector2(diveOffset.X + slideOffset.X + visualDirection.X * (kickStep + passStep + dribblePulse * 2.3f + pressureStep) + keeperReady * 1.5f, -33f + bob + idleBreath * 0.75f + celebrationBob + saveYOffset + slideOffset.Y * 0.28f + headerOffset.Y + (_saveAnimTimer > 0f ? -airLift : 0f) + (_slideTimer > 0f ? 8f : 0f) + visualDirection.Y * (kickStep + passStep + dribblePulse * 2.1f) * 0.35f);
 			if (_saveAnimTimer > 0f)
-				_anim.Rotation = Mathf.Clamp(_saveDiveDirection.Y, -1f, 1f) * 0.25f + (_anim.FlipH ? -0.08f : 0.08f);
+			{
+				// Body tilts along the dive direction and rolls during the arc peak.
+				float diveRoll = Mathf.Abs(_saveDiveDirection.X) > 0.1f
+					? Mathf.Sign(_saveDiveDirection.X) * diveAmount * 0.58f
+					: 0f;
+				_anim.Rotation = Mathf.Clamp(_saveDiveDirection.Y, -1f, 1f) * 0.60f
+					+ diveRoll
+					+ (_anim.FlipH ? -0.16f : 0.16f);
+			}
 			else if (_slideTimer > 0f)
 				_anim.Rotation = Mathf.Clamp(_slideDirection.Y, -1f, 1f) * 0.16f + (_slideDirection.X < 0f ? -0.10f : 0.10f);
 			else
 				_anim.Rotation = actionLean * (_anim.FlipH ? -1f : 1f) + keeperReady * 0.025f;
-			Vector2 baseScale = _saveAnimTimer > 0f ? new Vector2(0.35f, 0.26f) : _slideTimer > 0f ? new Vector2(0.35f, 0.24f) : _kickAnimTimer > 0f ? new Vector2(0.32f, 0.29f) : _passAnimTimer > 0f ? new Vector2(0.31f, 0.30f) : _headerAnimTimer > 0f ? new Vector2(0.31f, 0.33f) : _pressingVisual ? new Vector2(0.315f, 0.292f) : dribblePulse > 0f ? new Vector2(0.305f + dribblePulse * 0.01f, 0.30f - dribblePulse * 0.006f) : new Vector2(0.30f, 0.30f);
+			Vector2 baseScale = _saveAnimTimer > 0f ? new Vector2(0.27f, 0.38f) : _slideTimer > 0f ? new Vector2(0.35f, 0.24f) : _kickAnimTimer > 0f ? new Vector2(0.32f, 0.29f) : _passAnimTimer > 0f ? new Vector2(0.31f, 0.30f) : _headerAnimTimer > 0f ? new Vector2(0.31f, 0.33f) : _pressingVisual ? new Vector2(0.315f, 0.292f) : dribblePulse > 0f ? new Vector2(0.305f + dribblePulse * 0.01f, 0.30f - dribblePulse * 0.006f) : new Vector2(0.30f, 0.30f);
 			baseScale *= _controller?.VisualScaleForFieldY(Position.Y) ?? 1f;
 			_anim.Scale = idlePose ? new Vector2(baseScale.X + idleBreath * 0.004f, baseScale.Y - idleBreath * 0.004f) : baseScale;
 			UpdateActionTrail(diveAmount, slideAmount, diveOffset, slideOffset);
