@@ -69,10 +69,17 @@ public partial class MatchBall : Node2D
         Position += Velocity * dt;
         UpdateHeight(dt);
         float speed = Velocity.Length();
-        if (speed > 0f)
+        if (speed > 0.01f)
         {
-            float newSpeed = Mathf.Max(speed - Friction * dt, 0f);
-            Velocity = speed > 0.01f ? Velocity.Normalized() * newSpeed : Vector2.Zero;
+            // Airborne: aerodynamic drag (proportional to speed, much lighter than ground).
+            // Grounded: constant rolling friction — ball decelerates steadily.
+            float decel = Height > 2f ? speed * 0.048f : Friction;
+            float newSpeed = Mathf.Max(speed - decel * dt, 0f);
+            Velocity = Velocity.Normalized() * newSpeed;
+        }
+        else
+        {
+            Velocity = Vector2.Zero;
         }
         // Spin the ball visual proportional to ground speed (direction mirrors X movement).
         if (speed > 18f)
@@ -191,10 +198,10 @@ public partial class MatchBall : Node2D
         if (Height < 0f)
         {
             Height = 0f;
-            if (Velocity.Length() > 155f && Mathf.Abs(VerticalVelocity) > 80f)
+            if (Velocity.Length() > 100f && Mathf.Abs(VerticalVelocity) > 55f)
             {
-                VerticalVelocity = -VerticalVelocity * 0.32f;
-                Velocity *= 0.92f;
+                VerticalVelocity = -VerticalVelocity * 0.44f;  // more elastic bounce
+                Velocity *= 0.90f;
             }
             else
             {

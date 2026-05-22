@@ -110,13 +110,21 @@ public partial class NeighborhoodMatchController : Node2D
         if (_camera == null || _ball == null)
             return;
 
-        // Camera target: blend ball position toward the controlled player.
-        Vector2 focusTarget = _ball.Position;
-        MatchActor? controlled = Actors.Find(a => a.Controlled);
-        if (controlled != null)
-            focusTarget = _ball.Position.Lerp(controlled.Position, 0.28f);
+        // Look-ahead: shift focus in the direction the ball is moving so the
+        // camera shows what's ahead rather than lagging behind the action.
+        float ballSpeed = _ball.Velocity.Length();
+        Vector2 lookAhead = ballSpeed > 80f
+            ? _ball.Velocity.Normalized() * Mathf.Clamp(ballSpeed * 0.09f, 0f, 50f)
+            : Vector2.Zero;
+        Vector2 ballFocus = _ball.Position + lookAhead;
 
-        // Quirk: snap on first frame to avoid camera swooping from (0,0).
+        // Blend toward the controlled player so they stay in frame.
+        MatchActor? controlled = Actors.Find(a => a.Controlled);
+        Vector2 focusTarget = controlled != null
+            ? ballFocus.Lerp(controlled.Position, 0.26f)
+            : ballFocus;
+
+        // Snap on first frame to avoid swooping from (0,0).
         if (!_cameraInitialized)
         {
             _camera.Position = focusTarget;
@@ -124,10 +132,13 @@ public partial class NeighborhoodMatchController : Node2D
         }
         else
         {
-            _camera.Position = _camera.Position.Lerp(focusTarget, 6.5f * dt);
+            // Variable lerp: camera catches up faster when it's far behind.
+            float dist      = _camera.Position.DistanceTo(focusTarget);
+            float lerpSpeed = Mathf.Clamp(2.5f + dist / 75f, 4f, 11f);
+            _camera.Position = _camera.Position.Lerp(focusTarget, lerpSpeed * dt);
         }
 
-        // Camera shake decays and then resets offset.
+        // Shake with smooth return to centre (no sudden snap).
         if (_cameraShakeTimer > 0f)
         {
             _cameraShakeTimer -= dt;
@@ -139,7 +150,7 @@ public partial class NeighborhoodMatchController : Node2D
         }
         else if (_camera.Offset != Vector2.Zero)
         {
-            _camera.Offset = Vector2.Zero;
+            _camera.Offset = _camera.Offset.Lerp(Vector2.Zero, 14f * dt);
         }
     }
 
@@ -218,6 +229,26 @@ public partial class NeighborhoodMatchController : Node2D
         return actor.Role == "forward" && _ball.Position.DistanceTo(actor.Position) < 118f;
     }
 
+    // Predict where the ball will be `seconds` from now (simple friction-aware Euler step).
+    private Vector2 PredictBallPosition(float seconds)
+    {
+        if (_ball == null) return FieldBounds.GetCenter();
+        if (_ball.Holder != null) return _ball.Holder.Position;
+        float speed = _ball.Velocity.Length();
+        if (speed < 1f) return _ball.Position;
+        // Approximate deceleration (use ground friction; air is handled similarly).
+        float friction   = _ball.Friction;
+        float timeToStop = speed / friction;
+        float t          = Mathf.Min(seconds, timeToStop);
+        // s = v*t - 0.5*a*t²  (constant deceleration)
+        float dist = speed * t - 0.5f * friction * t * t;
+        Vector2 predicted = _ball.Position + _ball.Velocity.Normalized() * dist;
+        return new Vector2(
+            Mathf.Clamp(predicted.X, FieldBounds.Position.X + 4f, FieldBounds.End.X - 4f),
+            Mathf.Clamp(predicted.Y, FieldBounds.Position.Y + 4f, FieldBounds.End.Y - 4f)
+        );
+    }
+
     public Vector2 GetAiTarget(MatchActor actor)
     {
         if (_ball == null)
@@ -225,12 +256,19 @@ public partial class NeighborhoodMatchController : Node2D
         if (actor.IsGoalkeeper)
             return GetGoalkeeperTarget(actor);
         if (_ball.Holder == null)
-            return NearestTeamActorToBall(actor.Team) == actor ? _ball.Position : LooseBallShapeTarget(actor);
-        if (_ball.Holder != null && _ball.Holder.Team == actor.Team)
+        {
+            if (NearestTeamActorToBall(actor.Team) == actor)
+            {
+                // Primary chaser: intercept the projected ball path instead of chasing current position.
+                float dist    = actor.Position.DistanceTo(_ball.Position);
+                float lookAhead = Mathf.Clamp(dist / 210f, 0.15f, 0.70f);
+                return PredictBallPosition(lookAhead);
+            }
+            return LooseBallShapeTarget(actor);
+        }
+        if (_ball.Holder.Team == actor.Team)
             return InPossessionTarget(actor);
-        if (_ball.Holder != null && _ball.Holder.Team != actor.Team)
-            return OutOfPossessionTarget(actor);
-        return actor.HomePosition;
+        return OutOfPossessionTarget(actor);
     }
 
     public Vector2 GetGoalkeeperTarget(MatchActor keeper)
@@ -248,6 +286,22 @@ public partial class NeighborhoodMatchController : Node2D
             if (inKeeperZone && keeperDistance < 178f && ballSpeed < 255f)
                 return ClampActorPosition(_ball.Position, keeper.Team, true);
         }
+        // If a fast ball is heading toward the goal, cut off its trajectory rather
+        // than just tracking its current position (makes keeper feel reactive).
+        if (_ball.Holder == null && _ball.Velocity.Length() > 200f)
+        {
+            bool movingTowardGoal = goalX < FieldBounds.GetCenter().X
+                ? _ball.Velocity.X < -50f
+                : _ball.Velocity.X > 50f;
+            if (movingTowardGoal)
+            {
+                Vector2 predicted = PredictBallPosition(0.38f);
+                float trajY  = Mathf.Clamp(predicted.Y, GoalY.X + 18f, GoalY.Y - 18f);
+                float trajX  = goalX + GetAttackDirection(keeper.Team).X * 34f;
+                return new Vector2(trajX, trajY);
+            }
+        }
+
         Vector2 threat = _ball.Holder != null ? _ball.Holder.Position : _ball.Position;
         float distanceToGoal = Mathf.Abs(threat.X - goalX);
         float threatWeight = 1f - Mathf.Clamp(distanceToGoal / 520f, 0f, 1f);
@@ -1221,10 +1275,12 @@ public partial class NeighborhoodMatchController : Node2D
     private void BuildPitch()
     {
         AddFieldBackdrop();
+        AddFieldLines();       // white pitch markings
         AddGoalPosts(true);    // left goal frame
         AddGoalPosts(false);   // right goal frame
-        AddGoalNet(true);      // left net lines
-        AddGoalNet(false);     // right net lines
+        AddGoalNet(true);      // left net
+        AddGoalNet(false);     // right net
+        AddCornerFlags();      // corner flags
     }
 
     private void AddFieldBackdrop()
@@ -1284,61 +1340,186 @@ public partial class NeighborhoodMatchController : Node2D
         }
     }
 
+    // ── Field line helpers (z-aware versions of the drawing primitives) ─────────
+
+    private void FieldRect(Rect2 r, float width, Color color, string name, int z)
+    {
+        var line = new Line2D { Name = name, Width = width, DefaultColor = color, ZIndex = z, Closed = true };
+        line.AddPoint(r.Position);
+        line.AddPoint(new Vector2(r.End.X, r.Position.Y));
+        line.AddPoint(r.End);
+        line.AddPoint(new Vector2(r.Position.X, r.End.Y));
+        AddChild(line);
+    }
+
+    private void FieldCircle(Vector2 center, float radius, float width, Color color, int z)
+    {
+        var line = new Line2D { Width = width, DefaultColor = color, ZIndex = z, Closed = true };
+        for (int i = 0; i < 40; i++)
+        {
+            float a = Mathf.Tau * i / 40f;
+            line.AddPoint(center + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * radius);
+        }
+        AddChild(line);
+    }
+
+    private void FieldArc(Vector2 center, float radius, float start, float end, float width, Color color, string name, int z)
+    {
+        var line = new Line2D { Name = name, Width = width, DefaultColor = color, ZIndex = z };
+        for (int i = 0; i <= 24; i++)
+        {
+            float a = Mathf.Lerp(start, end, i / 24f);
+            line.AddPoint(center + new Vector2(Mathf.Cos(a), Mathf.Sin(a)) * radius);
+        }
+        AddChild(line);
+    }
+
+    private void AddFieldLines()
+    {
+        const float lw  = 2.5f;   // main line width
+        const float lw2 = 2.0f;   // secondary line width
+        const int   fz  = -15;    // z-index for field lines (above backdrop, below players)
+        var lc = new Color(1f, 1f, 1f, 0.82f);
+
+        float fx1 = FieldBounds.Position.X;  // 80
+        float fy1 = FieldBounds.Position.Y;  // 70
+        float fx2 = FieldBounds.End.X;       // 1040
+        float fy2 = FieldBounds.End.Y;       // 590
+        float cx  = (fx1 + fx2) * 0.5f;     // 560
+        float cy  = GoalCenterY();           // 340
+
+        // ── Touchlines ──────────────────────────────────────────────────────
+        Line(new Vector2(fx1, fy1), new Vector2(fx2, fy1), lw, lc, "TLTop",   fz);
+        Line(new Vector2(fx1, fy2), new Vector2(fx2, fy2), lw, lc, "TLBot",   fz);
+        Line(new Vector2(fx1, fy1), new Vector2(fx1, fy2), lw, lc, "TLLeft",  fz);
+        Line(new Vector2(fx2, fy1), new Vector2(fx2, fy2), lw, lc, "TLRight", fz);
+
+        // ── Halfway line ─────────────────────────────────────────────────────
+        Line(new Vector2(cx, fy1), new Vector2(cx, fy2), lw, lc, "HalfLine", fz);
+
+        // ── Centre circle ─────────────────────────────────────────────────────
+        FieldCircle(new Vector2(cx, cy), 66f, lw, lc, fz);
+        Oval("CentreSpot", new Vector2(cx, cy), new Vector2(4f, 3.5f), lc, fz);
+
+        // ── Penalty areas ─────────────────────────────────────────────────────
+        const float paDepth = 185f;
+        const float paHalfH = 110f;   // extends 110 px each side of goal centre
+        FieldRect(new Rect2(fx1,           cy - paHalfH, paDepth, paHalfH * 2f), lw,  lc, "LPA", fz);
+        FieldRect(new Rect2(fx2 - paDepth, cy - paHalfH, paDepth, paHalfH * 2f), lw,  lc, "RPA", fz);
+
+        // ── Goal areas (6-yard boxes) ─────────────────────────────────────────
+        const float gaDepth = 52f;
+        const float gaHalfH = 50f;
+        FieldRect(new Rect2(fx1,           cy - gaHalfH, gaDepth, gaHalfH * 2f), lw2, lc, "LGA", fz);
+        FieldRect(new Rect2(fx2 - gaDepth, cy - gaHalfH, gaDepth, gaHalfH * 2f), lw2, lc, "RGA", fz);
+
+        // ── Penalty spots ─────────────────────────────────────────────────────
+        float leftSpotX  = fx1 + 150f;   // 230
+        float rightSpotX = fx2 - 150f;   // 890
+        Oval("LPenSpot", new Vector2(leftSpotX,  cy), new Vector2(4f, 3.5f), lc, fz);
+        Oval("RPenSpot", new Vector2(rightSpotX, cy), new Vector2(4f, 3.5f), lc, fz);
+
+        // ── Penalty D arcs (the curved line outside each penalty area) ────────
+        float dRad    = 66f;
+        float lPAEdge = fx1 + paDepth;   // 265
+        float lArcA   = Mathf.Acos(Mathf.Clamp((lPAEdge - leftSpotX)  / dRad, -1f, 1f));
+        FieldArc(new Vector2(leftSpotX,  cy), dRad, -lArcA,            lArcA,            lw, lc, "LDarc", fz);
+
+        float rPAEdge = fx2 - paDepth;   // 855
+        float rArcA   = Mathf.Acos(Mathf.Clamp((rightSpotX - rPAEdge) / dRad, -1f, 1f));
+        FieldArc(new Vector2(rightSpotX, cy), dRad, Mathf.Pi - rArcA, Mathf.Pi + rArcA, lw, lc, "RDarc", fz);
+
+        // ── Corner quarter-circles ────────────────────────────────────────────
+        const float cr = 12f;
+        FieldArc(new Vector2(fx1, fy1), cr,  0f,              Mathf.Pi * 0.5f, lw2, lc, "CTL", fz);
+        FieldArc(new Vector2(fx2, fy1), cr,  Mathf.Pi * 0.5f, Mathf.Pi,       lw2, lc, "CTR", fz);
+        FieldArc(new Vector2(fx1, fy2), cr, -Mathf.Pi * 0.5f, 0f,             lw2, lc, "CBL", fz);
+        FieldArc(new Vector2(fx2, fy2), cr,  Mathf.Pi,        Mathf.Pi * 1.5f,lw2, lc, "CBR", fz);
+    }
+
     private void AddGoalPosts(bool left)
     {
         float gx   = left ? LeftGoalX : RightGoalX;
         string pfx = left ? "Left" : "Right";
-        const float pw    = 6f;    // post / bar thickness (px)
-        const float depth = 42f;   // depth behind goal line — matches AddGoalNet
+        const float pw = 7f;   // post/bar thickness
+        const float nd = 42f;  // net depth — same value used by AddGoalNet
+        float dir  = left ? -1f : 1f;   // direction the net extends from goal line
 
-        // barX: X-start of the horizontal bar spans
-        // For the left goal the bar goes LEFT (into the net area at X < gx).
-        // For the right goal the bar goes RIGHT (into the net area at X > gx).
-        float barX  = left ? gx - depth : gx;
-        float barW  = depth + pw;
-        float postX = left ? gx - pw : gx;  // main upright at goal line
+        // Two-tone post colours (simulates a round pipe with one lit side).
+        var col  = new Color(0.96f, 0.96f, 0.93f);          // main body
+        var hi   = new Color(1.00f, 1.00f, 1.00f, 0.92f);  // bright highlight strip
+        var sh   = new Color(0.58f, 0.60f, 0.56f, 0.95f);  // shadow strip
+        var dark = col.Darkened(0.24f);                     // back-post (always behind)
+        var shad = new Color(0f, 0f, 0f, 0.18f);           // ground shadow
 
-        Color col  = new Color(0.94f, 0.95f, 0.90f);          // off-white post
-        Color dark = col.Darkened(0.18f);                      // shadowed back face
-        Color shad = new Color(0f, 0f, 0f, 0.22f);            // ground shadow
+        float topY  = GoalY.X - pw;
+        float botY  = GoalY.Y;
+        float postH = GoalY.Y - GoalY.X + pw * 2f;
 
-        // ── Back of goal (far/top side) — stays behind players ───────────────
-        // Back crossbar (horizontal, low ZIndex)
-        Rect(new Vector2(barX, GoalY.X - pw), new Vector2(barW, pw), col, $"{pfx}GoalBackBar", -19);
-        // Far upright (back post, behind the net depth — very low ZIndex)
-        float backPostX = left ? barX : barX + barW - pw;
-        Rect(new Vector2(backPostX, GoalY.X - pw), new Vector2(pw, GoalY.Y - GoalY.X + pw * 2f), dark, $"{pfx}GoalBackPost", -17);
+        // ── Front upright at goal line (ZIndex 100) ───────────────────────────
+        float frontX = left ? gx - pw : gx;
+        Rect(new Vector2(frontX, topY), new Vector2(pw, postH), col, $"{pfx}Post",   100);
+        Rect(new Vector2(frontX + (left ? 0f : pw - 2f), topY), new Vector2(2f, postH), hi, $"{pfx}PostHi", 101);
+        Rect(new Vector2(frontX + (left ? pw - 2f : 0f), topY), new Vector2(2f, postH), sh, $"{pfx}PostSh", 101);
 
-        // ── Main upright at goal line ─────────────────────────────────────────
-        // ZIndex 100: above field markings, sorts with players by Y once they pass the line.
-        Rect(new Vector2(postX, GoalY.X - pw), new Vector2(pw, GoalY.Y - GoalY.X + pw * 2f), col, $"{pfx}GoalPost", 100);
+        // ── Back upright (far side of net, ZIndex -20) ───────────────────────
+        float backX = left ? gx + dir * nd : gx + dir * nd - pw;
+        Rect(new Vector2(backX, topY), new Vector2(pw, postH), dark, $"{pfx}BackPost", -20);
 
-        // ── Front crossbar (near/bottom side) — always in front of players ────
-        // ZIndex 450 ensures it draws over any actor that walks into the goal area.
-        Rect(new Vector2(barX, GoalY.Y), new Vector2(barW, pw), col, $"{pfx}GoalFrontBar", 450);
-        // Ground shadow under the front bar
-        Rect(new Vector2(barX + (left ? 4f : 1f), GoalY.Y + pw), new Vector2(barW - 4f, 4f), shad, $"{pfx}GoalFrontBarShadow", 449);
+        // ── Top bar (far/top side, ZIndex -19 — behind far players) ──────────
+        float barX = left ? backX : gx;
+        float barW = nd + pw;
+        Rect(new Vector2(barX, topY), new Vector2(barW, pw), col.Darkened(0.14f), $"{pfx}TopBar",     -19);
+        Rect(new Vector2(barX, topY + pw), new Vector2(barW, 3f), shad,           $"{pfx}TopBarShad", -19);
+
+        // ── Bottom bar (near/front side, ZIndex 450 — always in front) ────────
+        Rect(new Vector2(barX, botY), new Vector2(barW, pw),  col,  $"{pfx}FrontBar",     450);
+        Rect(new Vector2(barX, botY), new Vector2(barW, 2f),  hi,   $"{pfx}FrontBarHi",   451);
+        Rect(new Vector2(barX + 3f, botY + pw + 1f), new Vector2(barW - 4f, 4f), shad, $"{pfx}FrontBarShad", 449);
     }
 
     private void AddGoalNet(bool left)
     {
-        float goalX = left ? LeftGoalX : RightGoalX;
-        float netX = left ? goalX - 42f : goalX + 8f;
-        var rect = new Rect2(new Vector2(netX, GoalY.X - 18f), new Vector2(34f, GoalY.Y - GoalY.X + 36f));
-        string prefix = left ? "Left" : "Right";
-        Rect(rect.Position + new Vector2(left ? -4f : 4f, 8f), rect.Size, new Color(0.02f, 0.05f, 0.03f, 0.26f), $"{prefix}GoalNetShadow", -22);
-        LineRect(rect, 2.5f, new Color(0.86f, 0.90f, 0.82f, 0.72f), $"{prefix}GoalNet");
+        float gx   = left ? LeftGoalX : RightGoalX;
+        string pfx = left ? "Left" : "Right";
+        const float pw = 7f;   // matches AddGoalPosts
+        const float nd = 42f;
 
-        for (int i = 1; i <= 3; i++)
+        // Net interior: between the two uprights, between top and bottom bars.
+        float nx1 = left ? gx - nd : gx + pw;   // inner X start
+        float nx2 = left ? gx - pw : gx + nd;   // inner X end
+        float ny1 = GoalY.X;                     // top
+        float ny2 = GoalY.Y;                     // bottom
+
+        // Very faint net depth fill.
+        Rect(new Vector2(nx1, ny1), new Vector2(nx2 - nx1, ny2 - ny1),
+             new Color(0.90f, 0.94f, 0.88f, 0.05f), $"{pfx}NetFill", -21);
+
+        // Net cable colour — horizontal lines get slightly more opaque toward
+        // the front (near camera), creating a basic perspective depth effect.
+        const int hLines = 10;   // horizontal cables
+        const int vLines =  5;   // vertical cables
+        float nc_r = 0.86f, nc_g = 0.90f, nc_b = 0.84f;
+
+        for (int i = 0; i <= hLines; i++)
         {
-            float x = rect.Position.X + i * rect.Size.X / 4f;
-            Line(new Vector2(x, rect.Position.Y), new Vector2(x, rect.End.Y), 1.5f, new Color(0.86f, 0.90f, 0.82f, 0.26f), $"{prefix}GoalNetVertical{i}", -18);
+            float t = (float)i / hLines;
+            float y = Mathf.Lerp(ny1, ny2, t);
+            float alpha = Mathf.Lerp(0.28f, 0.58f, t);  // front cables more visible
+            Line(new Vector2(nx1, y), new Vector2(nx2, y), 1.2f,
+                 new Color(nc_r, nc_g, nc_b, alpha), $"{pfx}NH{i}", -20);
         }
-        for (int i = 1; i <= 4; i++)
+        for (int i = 0; i <= vLines; i++)
         {
-            float y = rect.Position.Y + i * rect.Size.Y / 5f;
-            Line(new Vector2(rect.Position.X, y), new Vector2(rect.End.X, y), 1.5f, new Color(0.86f, 0.90f, 0.82f, 0.25f), $"{prefix}GoalNetHorizontal{i}", -18);
+            float x = Mathf.Lerp(nx1, nx2, (float)i / vLines);
+            Line(new Vector2(x, ny1), new Vector2(x, ny2), 1.2f,
+                 new Color(nc_r, nc_g, nc_b, 0.38f), $"{pfx}NV{i}", -20);
         }
+
+        // Subtle ground shadow behind the goal (gives depth on the field surface).
+        float shX  = left ? nx1 - 6f : nx1 + 2f;
+        Rect(new Vector2(shX, ny1 + 8f), new Vector2(nx2 - nx1 + 4f, ny2 - ny1),
+             new Color(0.01f, 0.04f, 0.02f, 0.22f), $"{pfx}NetShadow", -22);
     }
 
     private void AddCornerFlags()
