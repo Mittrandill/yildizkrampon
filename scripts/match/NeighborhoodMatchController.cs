@@ -418,7 +418,14 @@ public partial class NeighborhoodMatchController : Node2D
         if (GetPressure(actor) > 0.72f)
             return false;
         float gain = ForwardGainForTeam(actor.Team, _ball.Holder.Position, actor.Position);
-        return gain > 40f && ForwardRoomForTeam(actor.Team, actor.Position) > 105f && IsPassLaneClear(_ball.Holder.Position, actor.Position, actor.Team);
+        // Classic: actor is ahead of the holder with room to run.
+        if (gain > 40f && ForwardRoomForTeam(actor.Team, actor.Position) > 105f && IsPassLaneClear(_ball.Holder.Position, actor.Position, actor.Team))
+            return true;
+        // Also raise hand when in a shooting position with a clear pass lane —
+        // this triggers pass requests from goal-mouth runners and near-post runs.
+        if (CanActorShoot(actor) && GetPressure(actor) < 0.50f && IsPassLaneClear(_ball.Holder.Position, actor.Position, actor.Team))
+            return true;
+        return false;
     }
 
     public bool TryFindThroughPass(MatchActor actor, out Vector2 targetPoint, out MatchActor? runner)
@@ -625,7 +632,10 @@ public partial class NeighborhoodMatchController : Node2D
     private Vector2 AdvancedSupportPosition(MatchActor actor, float forward, float laneOffset)
     {
         Vector2 basePosition = _ball?.Holder?.Position ?? actor.HomePosition;
-        Vector2 target = basePosition + GetAttackDirection(actor.Team) * forward + new Vector2(0f, laneOffset);
+        // Mirror lane direction based on the actor's home side so support players
+        // fan out to both wings rather than clustering on the same side.
+        float lane = actor.HomePosition.Y < GoalCenterY() ? -laneOffset : laneOffset;
+        Vector2 target = basePosition + GetAttackDirection(actor.Team) * forward + new Vector2(0f, lane);
         return ClampToField(target, 36f);
     }
 
@@ -645,9 +655,24 @@ public partial class NeighborhoodMatchController : Node2D
 
     private Vector2 RunBehindTarget(MatchActor actor)
     {
+        Vector2 attack = GetAttackDirection(actor.Team);
         Vector2 basePosition = _ball?.Holder?.Position ?? actor.HomePosition;
         float lane = actor.HomePosition.Y < GoalCenterY() ? -92f : 92f;
-        Vector2 target = basePosition + GetAttackDirection(actor.Team) * 285f + new Vector2(0f, lane);
+
+        // When inside the final third, peel off toward the near post —
+        // creates a realistic cross-reception / tap-in position.
+        float forwardRoom = ForwardRoomForTeam(actor.Team, actor.Position);
+        if (forwardRoom < 280f)
+        {
+            float nearPostY = actor.HomePosition.Y < GoalCenterY()
+                ? GoalY.X + 20f
+                : GoalY.Y - 20f;
+            Vector2 nearPost = new(GoalXForTeam(actor.Team) - attack.X * 30f, nearPostY);
+            return ClampToField(nearPost, 36f);
+        }
+
+        // Default: diagonal run behind the defensive line.
+        Vector2 target = basePosition + attack * 285f + new Vector2(0f, lane);
         return ClampToField(target, 36f);
     }
 
@@ -1275,6 +1300,7 @@ public partial class NeighborhoodMatchController : Node2D
     private void BuildPitch()
     {
         AddFieldBackdrop();
+        AddFieldGrass();       // solid green bands — hides backdrop's baked-in lines
         AddFieldLines();       // white pitch markings
         AddGoalPosts(true);    // left goal frame
         AddGoalPosts(false);   // right goal frame
@@ -1298,6 +1324,30 @@ public partial class NeighborhoodMatchController : Node2D
             ZIndex = -25
         };
         AddChild(sprite);
+    }
+
+    private void AddFieldGrass()
+    {
+        // Alternating grass-green strips fill the whole playing area at ZIndex -24.
+        // They sit above the backdrop (-25) so they cover the baked-in lines on the
+        // backdrop image, then the procedural field markings (-15) are drawn on top
+        // of these clean green strips — no more doubled or offset line artefacts.
+        float x  = FieldBounds.Position.X;
+        float w  = FieldBounds.Size.X;
+        float y0 = FieldBounds.Position.Y;
+        float y1 = FieldBounds.End.Y;
+
+        const float stripH    = 46f;
+        var lightGreen = new Color(0.20f, 0.54f, 0.22f);
+        var darkGreen  = new Color(0.16f, 0.46f, 0.18f);
+
+        int band = 0;
+        for (float y = y0; y < y1; y += stripH, band++)
+        {
+            float h = Mathf.Min(stripH, y1 - y);
+            Color c = band % 2 == 0 ? lightGreen : darkGreen;
+            Rect(new Vector2(x, y), new Vector2(w, h), c, $"GrassBand{band}", -24);
+        }
     }
 
     private void AddPitchTexture()

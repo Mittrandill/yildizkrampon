@@ -274,10 +274,15 @@ public partial class MatchActor : Node2D
 		}
 
 		MatchActor? requestedTarget = _controller.GetPassRequestTarget(Team);
-		if (requestedTarget != null && TryKick(requestedTarget.Position - Position, PassPowerTo(requestedTarget) * RatingFactor(PassingRating, 0.92f, 1.12f), 0.07f, true))
+		if (requestedTarget != null)
 		{
-			_controller.ShowRefereeMessage("Pas");
-			return;
+			// Small lead so the ball arrives ahead of the receiver, not underfoot.
+			Vector2 reqLead = _controller.GetAttackDirection(Team) * 16f;
+			if (TryKick(requestedTarget.Position + reqLead - Position, PassPowerTo(requestedTarget) * RatingFactor(PassingRating, 0.92f, 1.12f), 0.07f, true))
+			{
+				_controller.ShowRefereeMessage("Pas");
+				return;
+			}
 		}
 
 		MatchActor? passTarget = _controller.FindBestPassTarget(this);
@@ -289,11 +294,15 @@ public partial class MatchActor : Node2D
 		float goalDistance = Position.DistanceTo(new Vector2(_controller.GoalXForTeam(Team), _controller.GoalCenterY()));
 		float selfPressure = _controller.GetPressure(this);
 
-		if (selfPressure > 0.68f && passTarget != null && passScore > 0.24f && TryKick(passTarget.Position - Position, PassPowerTo(passTarget) * RatingFactor(PassingRating, 0.94f, 1.12f), 0.10f, true))
+		if (selfPressure > 0.68f && passTarget != null && passScore > 0.24f)
 		{
-			_controller.ShowRefereeMessage("Baski altinda pas");
-			_aiDecisionTimer = 0.18f;
-			return;
+			Vector2 pressLead = _controller.GetAttackDirection(Team) * 12f;
+			if (TryKick(passTarget.Position + pressLead - Position, PassPowerTo(passTarget) * RatingFactor(PassingRating, 0.94f, 1.12f), 0.10f, true))
+			{
+				_controller.ShowRefereeMessage("Baski altinda pas");
+				_aiDecisionTimer = 0.18f;
+				return;
+			}
 		}
 
 		if (!IsGoalkeeper && _controller.CanActorShoot(this) && goalDistance < 390f && shotScore > 0.28f && shotScore >= Mathf.Max(passScore - 0.08f, carryScore - 0.12f))
@@ -308,7 +317,9 @@ public partial class MatchActor : Node2D
 		else if (passTarget != null && passScore > Mathf.Max(0.42f, carryScore + 0.02f))
 		{
 			float lift = selfPressure > 0.62f || !_controller.IsPassLaneClear(Position, passTarget.Position, Team) ? 0.22f : 0.08f;
-			TryKick(passTarget.Position - Position, PassPowerTo(passTarget) * RatingFactor(PassingRating, 0.9f, 1.12f), lift, true);
+			// Lead the receiver — pass to where they're running, not where they stand.
+			Vector2 passLead = _controller.GetAttackDirection(Team) * 22f;
+			TryKick(passTarget.Position + passLead - Position, PassPowerTo(passTarget) * RatingFactor(PassingRating, 0.9f, 1.12f), lift, true);
 		}
 		else
 		{
