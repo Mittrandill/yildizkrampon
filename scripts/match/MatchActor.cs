@@ -789,8 +789,20 @@ public partial class MatchActor : Node2D
 			ZIndex = 4
 		};
 		_anim.SpriteFrames = BuildFrames();
-		var bgShader = GD.Load<Shader>("res://shaders/remove_white_bg.gdshader");
-		if (bgShader != null) _anim.Material = new ShaderMaterial { Shader = bgShader };
+		// Use the kit-recolor shader to give each team its own jersey colour.
+		// Falls back to the plain white-bg-removal shader if the new one is missing.
+		var kitShader = GD.Load<Shader>("res://shaders/kit_color.gdshader");
+		if (kitShader != null)
+		{
+			var mat = new ShaderMaterial { Shader = kitShader };
+			mat.SetShaderParameter("kit_color", _bodyColor);
+			_anim.Material = mat;
+		}
+		else
+		{
+			var bgShader = GD.Load<Shader>("res://shaders/remove_white_bg.gdshader");
+			if (bgShader != null) _anim.Material = new ShaderMaterial { Shader = bgShader };
+		}
 		AddChild(_anim);
 		_anim.Play("idle_down");
 
@@ -804,18 +816,7 @@ public partial class MatchActor : Node2D
 		};
 		AddChild(_actionTrail);
 
-		if (!Controlled)
-		{
-			_kitPatch = new ColorRect
-			{
-				Name = "KitPatch",
-				Position = new Vector2(-8, -44),
-				Size = new Vector2(16, 13),
-				Color = new Color(_bodyColor.R, _bodyColor.G, _bodyColor.B, 0.90f),
-				ZIndex = 6
-			};
-			AddChild(_kitPatch);
-		}
+		// Kit patch is no longer needed — the shader handles jersey colouring.
 
 		_celebrationMark = new ColorRect
 		{

@@ -20,6 +20,17 @@ GameManager="*res://scripts/GameManager.cs"
 WorldManager="*res://scripts/WorldManager.cs"
 DialogueManager="*res://scripts/DialogueManager.cs"
 
+[debug]
+
+shapes/navigation/3d/edge_connection_color=Color(0, 0, 0, 0)
+shapes/navigation/2d/edge_connection_color=Color(0, 0, 0, 0)
+shapes/collision/shape_color=Color(0, 0, 0, 0)
+shapes/collision/contact_color=Color(0, 0, 0, 0)
+shapes/paths/geometry_color=Color(0, 0, 0, 0)
+shapes/collision/geometry_color=Color(0, 0, 0, 0)
+shapes/collision/area_color=Color(0, 0, 0, 0)
+shapes/navigation/geometry_color=Color(0, 0, 0, 0)
+
 [display]
 
 window/size/viewport_width=1280
@@ -93,16 +104,6 @@ request_pass={
 2d_physics/layer_1="player"
 2d_physics/layer_2="npc"
 2d_physics/layer_4="walls"
-
-[debug]
-
-shapes/collision/shape_color=Color(0, 0, 0, 0)
-shapes/collision/contact_color=Color(0, 0, 0, 0)
-shapes/collision/geometry_color=Color(0, 0, 0, 0)
-shapes/collision/area_color=Color(0, 0, 0, 0)
-shapes/navigation/edge_connection_color=Color(0, 0, 0, 0)
-shapes/navigation/geometry_color=Color(0, 0, 0, 0)
-shapes/paths/geometry_color=Color(0, 0, 0, 0)
 
 [rendering]
 

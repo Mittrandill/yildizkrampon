@@ -7,8 +7,8 @@ script = ExtResource("1_j8hwu")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=939797952]
 position = Vector2(560, 340)
-zoom = Vector2(1.06, 1.06)
-limit_left = 0
-limit_top = 0
-limit_right = 1120
-limit_bottom = 680
+zoom = Vector2(1.6, 1.6)
+limit_left = 80
+limit_top = 70
+limit_right = 1040
+limit_bottom = 590

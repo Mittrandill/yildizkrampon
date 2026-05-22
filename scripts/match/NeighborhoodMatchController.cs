@@ -44,10 +44,18 @@ public partial class NeighborhoodMatchController : Node2D
     private int _kickoffTeam;
     private bool _finished;
 
+    // Camera follow + goal effects
+    private Camera2D? _camera;
+    private bool _cameraInitialized;
+    private float _cameraShakeTimer;
+    private ColorRect? _goalFlash;
+    private float _goalFlashTimer;
+
     public override void _Ready()
     {
         GD.Randomize();
-        GetNodeOrNull<Camera2D>("Camera")?.MakeCurrent();
+        _camera = GetNodeOrNull<Camera2D>("Camera");
+        _camera?.MakeCurrent();
         BuildPitch();
         SpawnBall();
         SpawnTeams();
@@ -61,6 +69,11 @@ public partial class NeighborhoodMatchController : Node2D
             return;
 
         float dt = (float)delta;
+
+        // Always update camera and visual effects (even during pause/goal celebration).
+        UpdateCamera(dt);
+        UpdateGoalFlash(dt);
+
         if (_goalPause > 0f)
         {
             _goalPause = Mathf.Max(_goalPause - dt, 0f);
@@ -90,6 +103,64 @@ public partial class NeighborhoodMatchController : Node2D
 
         if (_elapsed >= MatchDuration)
             FinishMatch();
+    }
+
+    private void UpdateCamera(float dt)
+    {
+        if (_camera == null || _ball == null)
+            return;
+
+        // Camera target: blend ball position toward the controlled player.
+        Vector2 focusTarget = _ball.Position;
+        MatchActor? controlled = Actors.Find(a => a.Controlled);
+        if (controlled != null)
+            focusTarget = _ball.Position.Lerp(controlled.Position, 0.28f);
+
+        // Quirk: snap on first frame to avoid camera swooping from (0,0).
+        if (!_cameraInitialized)
+        {
+            _camera.Position = focusTarget;
+            _cameraInitialized = true;
+        }
+        else
+        {
+            _camera.Position = _camera.Position.Lerp(focusTarget, 6.5f * dt);
+        }
+
+        // Camera shake decays and then resets offset.
+        if (_cameraShakeTimer > 0f)
+        {
+            _cameraShakeTimer -= dt;
+            float strength = Mathf.Clamp(_cameraShakeTimer * 9f, 0f, 5.5f);
+            _camera.Offset = new Vector2(
+                (float)GD.RandRange(-strength, strength),
+                (float)GD.RandRange(-strength, strength)
+            );
+        }
+        else if (_camera.Offset != Vector2.Zero)
+        {
+            _camera.Offset = Vector2.Zero;
+        }
+    }
+
+    private void UpdateGoalFlash(float dt)
+    {
+        if (_goalFlashTimer > 0f)
+        {
+            _goalFlashTimer -= dt;
+            float alpha = Mathf.Clamp(_goalFlashTimer * 2.5f, 0f, 0.88f);
+            if (_goalFlash != null) _goalFlash.Color = new Color(1f, 1f, 1f, alpha);
+        }
+        else if (_goalFlash != null && _goalFlash.Color.A > 0.01f)
+        {
+            _goalFlash.Color = new Color(1f, 1f, 1f, 0f);
+        }
+    }
+
+    private void TriggerGoalEffects()
+    {
+        _goalFlashTimer = 0.45f;
+        _cameraShakeTimer = 0.65f;
     }
 
     public bool IsMatchPaused() => _finished || _goalPause > 0f;
@@ -990,6 +1061,7 @@ public partial class NeighborhoodMatchController : Node2D
             if (actor.Team == team)
                 actor.StartGoalCelebration();
         ShowRefereeMessage($"GOOOL! {TeamName(team)} seviniyor");
+        TriggerGoalEffects();
     }
 
     private void FinishGoalSequence()
@@ -1054,6 +1126,19 @@ public partial class NeighborhoodMatchController : Node2D
     {
         var canvas = new CanvasLayer { Name = "HUD", Layer = 10 };
         AddChild(canvas);
+
+        // Full-screen white flash for goal celebrations (starts transparent).
+        _goalFlash = new ColorRect
+        {
+            Name = "GoalFlash",
+            Position = Vector2.Zero,
+            Size = new Vector2(1280, 720),
+            Color = new Color(1f, 1f, 1f, 0f),
+            ZIndex = 200,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+        canvas.AddChild(_goalFlash);
+
         _scoreLabel = HudLabel(canvas, new Vector2(730, 84), new Vector2(360, 34), 16, HorizontalAlignment.Right);
         _refereeLabel = HudLabel(canvas, new Vector2(730, 118), new Vector2(360, 32), 14, HorizontalAlignment.Right);
         _helpLabel = HudLabel(canvas, new Vector2(285, 648), new Vector2(500, 42), 13, HorizontalAlignment.Center);

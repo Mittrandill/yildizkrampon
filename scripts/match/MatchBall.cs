@@ -19,6 +19,7 @@ public partial class MatchBall : Node2D
     private Sprite2D? _shadow;
     private Sprite2D? _visual;
     private Line2D? _trail;
+    private float _spinAngle;
 
     public override void _Ready()
     {
@@ -73,6 +74,9 @@ public partial class MatchBall : Node2D
             float newSpeed = Mathf.Max(speed - Friction * dt, 0f);
             Velocity = speed > 0.01f ? Velocity.Normalized() * newSpeed : Vector2.Zero;
         }
+        // Spin the ball visual proportional to ground speed (direction mirrors X movement).
+        if (speed > 18f)
+            _spinAngle += speed * 0.007f * (Velocity.X >= 0f ? 1f : -1f) * dt;
         UpdateVisualHeight();
         UpdateTrail();
     }
@@ -156,6 +160,7 @@ public partial class MatchBall : Node2D
         Velocity = Vector2.Zero;
         Height = 0f;
         VerticalVelocity = 0f;
+        _spinAngle = 0f;
         UpdateVisualHeight();
     }
 
@@ -204,10 +209,15 @@ public partial class MatchBall : Node2D
             return;
 
         _visual.Position = new Vector2(0f, -Height);
-        float shadowScale = Mathf.Clamp(1f - Height / 90f, 0.45f, 1f);
-        _shadow.Scale = new Vector2(shadowScale, shadowScale);
+        _visual.Rotation = _spinAngle;
+        // Ball grows very slightly when airborne (perspective illusion of height).
+        float airScale = 1f + Mathf.Clamp(Height / 160f, 0f, 0.28f);
+        _visual.Scale = new Vector2(airScale, airScale);
+
+        float shadowScale = Mathf.Clamp(1f - Height / 90f, 0.40f, 1f);
+        _shadow.Scale = new Vector2(shadowScale, shadowScale * 0.5f);
         _shadow.Position = new Vector2(0f, Radius - 1f);
-        _shadow.Modulate = new Color(1f, 1f, 1f, Mathf.Clamp(1f - Height / 145f, 0.32f, 1f));
+        _shadow.Modulate = new Color(1f, 1f, 1f, Mathf.Clamp(1f - Height / 145f, 0.28f, 1f));
     }
 
     private static Texture2D MakeBallTexture()
