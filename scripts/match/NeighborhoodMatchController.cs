@@ -1437,9 +1437,9 @@ public partial class NeighborhoodMatchController : Node2D
         switch (season)
         {
             case TimeManager.Season.Summer:
-                // Slightly yellower — dry summer grass.
-                lightA = new Color(0.212f, 0.522f, 0.196f); lightB = new Color(0.190f, 0.486f, 0.176f);
-                darkA  = new Color(0.157f, 0.435f, 0.157f); darkB  = new Color(0.141f, 0.396f, 0.141f);
+                // Richer warm green — Stardew summer.
+                lightA = new Color(0.345f, 0.651f, 0.129f); lightB = new Color(0.310f, 0.588f, 0.110f);
+                darkA  = new Color(0.255f, 0.506f, 0.086f); darkB  = new Color(0.220f, 0.455f, 0.071f);
                 break;
             case TimeManager.Season.Autumn:
                 // Yellow-brown — dying grass and fallen leaves.
@@ -1451,9 +1451,9 @@ public partial class NeighborhoodMatchController : Node2D
                 lightA = new Color(0.824f, 0.855f, 0.835f); lightB = new Color(0.792f, 0.824f, 0.804f);
                 darkA  = new Color(0.761f, 0.792f, 0.773f); darkB  = new Color(0.729f, 0.761f, 0.741f);
                 break;
-            default: // Spring — fresh green (original palette).
-                lightA = new Color(0.224f, 0.553f, 0.235f); lightB = new Color(0.200f, 0.514f, 0.216f);
-                darkA  = new Color(0.161f, 0.455f, 0.173f); darkB  = new Color(0.145f, 0.412f, 0.153f);
+            default: // Spring — Stardew Valley vivid lush green.
+                lightA = new Color(0.353f, 0.710f, 0.141f); lightB = new Color(0.318f, 0.643f, 0.122f);
+                darkA  = new Color(0.255f, 0.569f, 0.094f); darkB  = new Color(0.220f, 0.510f, 0.078f);
                 break;
         }
 
