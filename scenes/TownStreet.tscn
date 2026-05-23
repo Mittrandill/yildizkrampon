@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://town_street"]
+
+[ext_resource type="Script" path="res://scripts/town/TownStreetController.cs" id="1_ctrl"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="2_player"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(16, 12)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
+radius = 8.0
+height = 14.0
+
+[node name="TownStreet" type="Node2D"]
+script = ExtResource("1_ctrl")
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["player"]]
+unique_name_in_owner = true
+position = Vector2(640, 480)
+collision_layer = 1
+collision_mask = 6
+script = ExtResource("2_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 8)
+shape = SubResource("CapsuleShape2D_player")
+
+[node name="Camera" type="Camera2D" parent="Player"]
+unique_name_in_owner = true
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+limit_left = 0
+limit_top = 0
+limit_right = 1280
+limit_bottom = 960
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HintLabel" type="Label" parent="HUD"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 390.0
+offset_top = 620.0
+offset_right = 890.0
+offset_bottom = 660.0
+text = "[E] Gir"
+horizontal_alignment = 1
+vertical_alignment = 1

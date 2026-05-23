@@ -6,7 +6,11 @@ public partial class WorldScene : Node2D
     private Label?  _pitchHint;
 
     // Sync with BuildWorld.PitchGateWorld
+    // ── Interaction hotspots ──────────────────────────────────────────────────
+    // PitchGate: entrance on south fence of the stadium (world 1375, 524).
+    // TownGate:  north-east area of map leading to town street (world 200, 200).
     private static readonly Vector2 PitchGate = new Vector2(1375f, 524f);
+    private static readonly Vector2 TownGate  = new Vector2(200f,  200f);
     private const float INTERACT_DIST = 64f;
 
     public override void _Ready()
@@ -35,8 +39,15 @@ public partial class WorldScene : Node2D
     public override void _Process(double delta)
     {
         if (_player == null) return;
-        bool near = _player.GlobalPosition.DistanceTo(PitchGate) < INTERACT_DIST;
-        if (_pitchHint != null) _pitchHint.Visible = near;
+        bool nearPitch = _player.GlobalPosition.DistanceTo(PitchGate) < INTERACT_DIST;
+        bool nearTown  = _player.GlobalPosition.DistanceTo(TownGate)  < INTERACT_DIST;
+        bool near = nearPitch || nearTown;
+        if (_pitchHint != null)
+        {
+            _pitchHint.Visible = near;
+            if (nearPitch) _pitchHint.Text = "[E] Mahalle Stadı";
+            else if (nearTown) _pitchHint.Text = "[E] Kasaba Caddesi";
+        }
     }
 
     private void _OnInteract()
@@ -44,6 +55,8 @@ public partial class WorldScene : Node2D
         if (_player == null) return;
         if (_player.GlobalPosition.DistanceTo(PitchGate) < INTERACT_DIST)
             WorldManager.Instance?.GoTo("NeighborhoodMatch");
+        else if (_player.GlobalPosition.DistanceTo(TownGate) < INTERACT_DIST)
+            WorldManager.Instance?.GoTo("TownStreet");
     }
 
     // ── Helper: hide the old non-pixel-art pitch sprite ──────────────────────
@@ -173,6 +186,9 @@ public partial class WorldScene : Node2D
         //   North fence: world y ≈ 184-194    → art y ≈ 23
         //   Gate  entry: world (1375, 524)     → art (172, 65)  [south opening]
         PaintStadiumZone(img, season, dL, dD);
+
+        // ── Town gate marker (north-west area, world 200,200 → art 25,25) ─────
+        PaintTownGate(img, dL, dD);
 
         var tex = ImageTexture.CreateFromImage(img);
         AddChild(new Sprite2D
@@ -322,5 +338,46 @@ public partial class WorldScene : Node2D
                 img.SetPixel(ax, ay, ck ? cCobL : cCobD);
             }
         }
+    }
+
+    // ── Town gate painter ─────────────────────────────────────────────────────
+    // Draws a small cobblestone arch/gate at art (25, 25) — world (200, 200).
+    // This marks the entrance to TownStreet on the world map.
+    private static void PaintTownGate(Image img, Color dirtL, Color dirtD)
+    {
+        // Art-pixel centre: 200/8=25, 200/8=25
+        const int gx = 22, gy = 22; // top-left of 8×8 gate art
+        var cWall  = new Color(0.549f, 0.537f, 0.518f); // cobble pillars
+        var cArch  = new Color(0.400f, 0.380f, 0.357f); // arch shadow
+        var cSign  = new Color(0.157f, 0.318f, 0.682f); // blue accent
+        var cPath  = dirtL;
+        var cPathD = dirtD;
+
+        // Dirt approach path leading south from gate
+        for (int ay = gy + 6; ay < gy + 12 && ay < img.GetHeight(); ay++)
+            for (int ax = gx + 2; ax < gx + 6 && ax < img.GetWidth(); ax++)
+                img.SetPixel(ax, ay, (ax + ay) % 2 == 0 ? cPath : cPathD);
+
+        // Gate pillars (2 px wide each side)
+        for (int ay = gy; ay < gy + 7 && ay < img.GetHeight(); ay++)
+        {
+            if (gx < img.GetWidth())     img.SetPixel(gx,   ay, cWall);
+            if (gx+1 < img.GetWidth())   img.SetPixel(gx+1, ay, cWall);
+            if (gx+6 < img.GetWidth())   img.SetPixel(gx+6, ay, cWall);
+            if (gx+7 < img.GetWidth())   img.SetPixel(gx+7, ay, cWall);
+        }
+
+        // Gate arch top (3 px bar)
+        for (int ax = gx; ax < gx + 8 && ax < img.GetWidth(); ax++)
+        {
+            if (gy   < img.GetHeight()) img.SetPixel(ax, gy,   cArch);
+            if (gy+1 < img.GetHeight()) img.SetPixel(ax, gy+1, cSign);
+            if (gy+2 < img.GetHeight()) img.SetPixel(ax, gy+2, cArch);
+        }
+
+        // Gate opening interior (lighter dirt)
+        for (int ay = gy + 3; ay < gy + 6 && ay < img.GetHeight(); ay++)
+            for (int ax = gx + 2; ax < gx + 6 && ax < img.GetWidth(); ax++)
+                img.SetPixel(ax, ay, cPath.Lightened(0.15f));
     }
 }
