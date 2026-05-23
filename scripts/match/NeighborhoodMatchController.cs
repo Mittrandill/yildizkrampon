@@ -4,9 +4,16 @@ using System.Collections.Generic;
 public partial class NeighborhoodMatchController : Node2D
 {
     public Rect2 FieldBounds { get; } = new(new Vector2(80, 70), new Vector2(960, 520));
-    public Vector2 GoalY { get; } = new(260, 420);
-    public float LeftGoalX { get; } = 80f;
-    public float RightGoalX { get; } = 1040f;
+    // GoalY and GoalX calibrated to match field_bg.png goal posts in world space.
+    // Image goal frame: x ≈ 279(L)/1162(R), y ≈ 397–524  (image px)
+    // Calibration: posX=-84 scaleX=0.889 | posY=-205 scaleY=1.020
+    //   LeftGoalX  = -84 + 279*0.889 ≈ 164  (front/field-facing post, left goal)
+    //   RightGoalX = -84 + 1162*0.889 ≈ 948  (front/field-facing post, right goal)
+    //   GoalY.X    = -205 + 397*1.020 ≈ 200  (top goal post in NMC world)
+    //   GoalY.Y    = -205 + 524*1.020 ≈ 330  (bottom goal post in NMC world)
+    public Vector2 GoalY { get; } = new(200, 330);
+    public float LeftGoalX  { get; } = 164f;
+    public float RightGoalX { get; } = 948f;
     public List<MatchActor> Actors { get; } = new();
     public string LastRestartReason { get; private set; } = "";
     public int CurrentHalf { get; private set; } = 1;
@@ -889,14 +896,17 @@ public partial class NeighborhoodMatchController : Node2D
 
     private void SpawnTeams()
     {
-        AddActor(0, new Vector2(122, 340), HomeKitColor.Darkened(0.12f), true, false, "goalkeeper", "Kirmizi Kaleci");
-        AddActor(0, new Vector2(316, 340), HomeKitColor, false, true, "support", GameManager.Instance.PlayerName);
-        AddActor(0, new Vector2(420, 456), HomeKitColor, false, false, "defender", "Eren");
-        AddActor(0, new Vector2(504, 224), HomeKitColor, false, false, "forward", "Mert");
-        AddActor(1, new Vector2(998, 340), AwayKitColor.Darkened(0.12f), true, false, "goalkeeper", "Mavi Kaleci");
-        AddActor(1, new Vector2(804, 340), AwayKitColor, false, false, "support", "Baran");
-        AddActor(1, new Vector2(700, 456), AwayKitColor, false, false, "defender", "Can");
-        AddActor(1, new Vector2(616, 224), AwayKitColor, false, false, "forward", "Ali");
+        // Keeper home = LeftGoalX + 42 (in front of goal), GoalCenterY = (GoalY.X+GoalY.Y)/2 = 265
+        float gcy = GoalCenterY();   // 265 — vertical centre of the visual goal opening
+        float cy  = FieldBounds.GetCenter().Y; // 330 — vertical centre of the playable field
+        AddActor(0, new Vector2(LeftGoalX  + 42f, gcy), HomeKitColor.Darkened(0.12f), true,  false, "goalkeeper", "Kirmizi Kaleci");
+        AddActor(0, new Vector2(316f, cy),          HomeKitColor, false, true,  "support",    GameManager.Instance.PlayerName);
+        AddActor(0, new Vector2(420f, cy + 100f),   HomeKitColor, false, false, "defender",   "Eren");
+        AddActor(0, new Vector2(504f, cy - 100f),   HomeKitColor, false, false, "forward",    "Mert");
+        AddActor(1, new Vector2(RightGoalX - 42f, gcy), AwayKitColor.Darkened(0.12f), true,  false, "goalkeeper", "Mavi Kaleci");
+        AddActor(1, new Vector2(804f, cy),          AwayKitColor, false, false, "support",    "Baran");
+        AddActor(1, new Vector2(700f, cy + 100f),   AwayKitColor, false, false, "defender",   "Can");
+        AddActor(1, new Vector2(616f, cy - 100f),   AwayKitColor, false, false, "forward",    "Ali");
     }
 
     private void AddActor(int team, Vector2 home, Color color, bool goalkeeper, bool human, string role, string displayName)
@@ -1390,22 +1400,31 @@ public partial class NeighborhoodMatchController : Node2D
 
     private void BuildPitch()
     {
-        LoadFieldBackground();  // field_bg.png scaled + positioned to align with FieldBounds
-        AddGoalPosts(true);    // left goal frame
-        AddGoalPosts(false);   // right goal frame
-        AddGoalNet(true);      // left net
-        AddGoalNet(false);     // right net
-        AddCornerFlags();      // corner flags
+        // field_bg.png already contains the goals, corner flags, and field markings.
+        // We load the image and skip all procedural overlays that would conflict.
+        LoadFieldBackground();
     }
 
     // ── Field background image ────────────────────────────────────────────────
-    // field_bg.png (1448×1086) contains the full stadium view.
-    // The inner playable area inside the fence is approximately:
-    //   x: 185–1265 (1080 px wide)  →  scaleX = 960/1080 ≈ 0.889
-    //   y: 235–835  (600 px tall)   →  scaleY = 520/600  ≈ 0.867
-    // Position so the inner-field top-left corner lands at FieldBounds.Position (80, 70):
-    //   posX = 80 − 185 × 0.889 ≈ −84
-    //   posY = 70 − 235 × 0.867 ≈ −134
+    // field_bg.png (1448×1086) — pixel-scanned calibration (PIL analysis):
+    //
+    //   X axis — fence-to-fence at image x = 185..1265 (1080 px)
+    //     scaleX = 960/1080 = 0.889
+    //     posX   = 80 − 185×0.889 = −84   (left fence → FieldBounds.X = 80)
+    //
+    //   Y axis — green-field top/bottom at image y ≈ 270..780 (510 px)
+    //     scaleY = 520/510 = 1.020
+    //     posY   = 70 − 270×1.020 = −205  (top grass → FieldBounds.Y = 70)
+    //
+    //   Verification: center circle detected at image (726, 523)
+    //     NMC x = −84 + 726×0.889 = 561 ≈ FieldCenter.X (560) ✓
+    //     NMC y = −205 + 523×1.020 = 329 ≈ FieldCenter.Y (330) ✓
+    //
+    //   Goal posts detected at:
+    //     Left  front post: image x = 279 → NMC x = −84 + 279×0.889 = 164 ≈ LeftGoalX
+    //     Right front post: image x = 1162 → NMC x = −84 + 1162×0.889 = 949 ≈ RightGoalX
+    //     Top   post:       image y = 397 → NMC y = −205 + 397×1.020 = 200 ≈ GoalY.X
+    //     Bottom post:      image y = 524 → NMC y = −205 + 524×1.020 = 330 ≈ GoalY.Y
     private void LoadFieldBackground()
     {
         const string BG_PATH = "res://assets/match/field_bg.png";
@@ -1422,18 +1441,13 @@ public partial class NeighborhoodMatchController : Node2D
             return;
         }
 
-        var sz = tex.GetSize();
-        float scaleX = sz.X > 0 ? FieldBounds.Size.X / (sz.X * (1080f / 1448f)) : 1f;
-        float scaleY = sz.Y > 0 ? FieldBounds.Size.Y / (sz.Y * (600f  / 1086f)) : 1f;
-
-        // Use the hard-coded calibrated values for pixel-perfect alignment.
         var spr = new Sprite2D
         {
             Name          = "FieldBg",
             Texture       = tex,
             Centered      = false,
-            Position      = new Vector2(-84f, -134f),
-            Scale         = new Vector2(0.889f, 0.867f),
+            Position      = new Vector2(-84f, -205f),  // posX=-84, posY=-205
+            Scale         = new Vector2(0.889f, 1.020f), // scaleX=0.889, scaleY=1.020
             TextureFilter = CanvasItem.TextureFilterEnum.Nearest,
             ZIndex        = -25,
         };
