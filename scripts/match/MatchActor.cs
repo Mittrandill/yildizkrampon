@@ -173,6 +173,15 @@ public partial class MatchActor : Node2D
 		}
 
 		TryHeaderBall(Input.IsActionJustPressed("shoot"), Input.IsActionJustPressed("kick_pass"));
+
+		// Volley: tap shoot on a low-to-mid airborne ball (Height 3-15).
+		if (Input.IsActionJustPressed("shoot") && _ball != null && _ball.Holder == null
+			&& _ball.Height >= 3f && _ball.Height <= 15f
+			&& Position.DistanceTo(_ball.Position) <= 32f)
+		{
+			TryVolley();
+		}
+
 		TryClaimBall();
 
 		if (Input.IsActionJustPressed("shoot") && CanReachBall())
@@ -197,6 +206,14 @@ public partial class MatchActor : Node2D
 
 		if (Input.IsActionJustPressed("kick_pass") && CanReachBall())
 			TryHumanPass();
+
+		// Ara pas (W key): quick through pass forward while holding the ball.
+		if (Input.IsActionJustPressed("move_up") && _ball?.Holder == this)
+			TryQuickPass();
+
+		// Orta (D key): lofted cross toward goal while holding the ball.
+		if (Input.IsActionJustPressed("move_right") && _ball?.Holder == this)
+			TryCross();
 
 		if (Input.IsActionJustPressed("slide"))
 			TryStandingTackle(true);
@@ -584,6 +601,83 @@ public partial class MatchActor : Node2D
 		{
 			_controller.ShowRefereeMessage("Havadan pas");
 		}
+	}
+
+	// ── Ara pas (Quick through pass) — W key while holding ball ─────────────────
+	// Fires a sharp ground-level through pass in the attack direction, trying to
+	// find a runner ahead of the defence.  Uses TryFindThroughPass if available,
+	// otherwise shoots a straight ball forward at medium power.
+	private void TryQuickPass()
+	{
+		if (_controller == null || _ball == null || _kickCooldown > 0f)
+			return;
+
+		Vector2 attackDir = _controller.GetAttackDirection(Team);
+
+		// If a through-pass runner exists, lead them.
+		if (_controller.TryFindThroughPass(this, out Vector2 throughTarget, out _))
+		{
+			Vector2 dir = (throughTarget - Position).Normalized();
+			float power = PassPowerToPoint(throughTarget) * RatingFactor(PassingRating, 0.92f, 1.14f);
+			if (TryKick(dir, power, 0.06f, true))
+			{
+				_controller.ShowRefereeMessage("Ara pas");
+				return;
+			}
+		}
+
+		// Fallback: flat forward ball with a slight lead distance.
+		Vector2 leadPoint = Position + attackDir * 260f;
+		if (TryKick(attackDir, PassPowerToPoint(leadPoint) * RatingFactor(PassingRating, 0.90f, 1.12f), 0.06f, true))
+			_controller.ShowRefereeMessage("İleri pas");
+	}
+
+	// ── Orta (Cross) — D key while holding ball ───────────────────────────────
+	// Lofted cross toward the far-post area of the opponent goal.
+	// The ball travels high so teammates can attempt a header.
+	private void TryCross()
+	{
+		if (_controller == null || _ball == null || _kickCooldown > 0f)
+			return;
+
+		// Target: far-post area at goal height, offset from centre to create angle.
+		float goalX   = _controller.GoalXForTeam(Team);
+		float goalCY  = _controller.GoalCenterY();
+		// Send to the far post side relative to the actor's current Y position.
+		float sideOffset = Position.Y < goalCY ? 38f : -38f;
+		Vector2 crossTarget = new(goalX, goalCY + sideOffset);
+
+		Vector2 dir    = (crossTarget - Position).Normalized();
+		float   dist   = Position.DistanceTo(crossTarget);
+		float   power  = Mathf.Clamp(dist * 1.05f + 210f, 370f, 580f)
+		                 * RatingFactor(PassingRating, 0.90f, 1.15f);
+
+		if (TryKick(dir, power, 0.38f, true))   // high lift → header opportunity
+			_controller.ShowRefereeMessage("Orta");
+	}
+
+	// ── Vole (Volley) — Space on a low airborne ball (Height 3-15) ───────────
+	// Snappy instinctive strike on a dropping or rising ball.
+	// Higher power than a ground shot but lower than a charged effort.
+	private void TryVolley()
+	{
+		if (_controller == null || _ball == null || _kickCooldown > 0f || _headerCooldown > 0f)
+			return;
+		if (_ball.Height < 3f || _ball.Height > 15f)
+			return;
+		if (Position.DistanceTo(_ball.Position) > 32f)
+			return;
+
+		Vector2 aim   = HumanAimDirection();
+		float   power = 520f * RatingFactor(ShootingRating, 0.90f, 1.18f) * StaminaPowerFactor();
+		// Keep the ball low — a volley that sails over the bar isn't useful.
+		float   lift  = 0.10f;
+
+		_ball.Kick(aim, power, this, Team, lift);
+		_kickCooldown  = 0.32f;
+		_kickAnimTimer = 0.26f;
+		UseStamina(4f);
+		_controller.ShowRefereeMessage("Vole!");
 	}
 
 	private float PassPowerTo(MatchActor target)

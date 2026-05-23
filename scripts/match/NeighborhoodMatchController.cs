@@ -1301,7 +1301,7 @@ public partial class NeighborhoodMatchController : Node2D
         _scoreLabel = HudLabel(canvas, new Vector2(730, 84), new Vector2(360, 34), 16, HorizontalAlignment.Right);
         _refereeLabel = HudLabel(canvas, new Vector2(730, 118), new Vector2(360, 32), 14, HorizontalAlignment.Right);
         _helpLabel = HudLabel(canvas, new Vector2(285, 648), new Vector2(500, 42), 13, HorizontalAlignment.Center);
-        _helpLabel.Text = "WASD: hareket | Shift: sprint | Space: sut | Q: pas | Shift+Q: havadan pas | R: pas iste | F: top kap";
+        _helpLabel.Text = "WASD: hareket | Shift: sprint | Space: şut | Q: pas | W(topla): ara pas | D(topla): orta | R: pas iste | F: top kap";
 
         // Condition bar: shows time of day, season, and active weather effects.
         var condBg = new ColorRect
@@ -1390,9 +1390,7 @@ public partial class NeighborhoodMatchController : Node2D
 
     private void BuildPitch()
     {
-        AddFieldBackdrop();
-        AddFieldGrass();       // solid green bands — hides backdrop's baked-in lines
-        AddFieldLines();       // white pitch markings
+        LoadFieldBackground();  // field_bg.png scaled + positioned to align with FieldBounds
         AddGoalPosts(true);    // left goal frame
         AddGoalPosts(false);   // right goal frame
         AddGoalNet(true);      // left net
@@ -1400,21 +1398,46 @@ public partial class NeighborhoodMatchController : Node2D
         AddCornerFlags();      // corner flags
     }
 
-    private void AddFieldBackdrop()
+    // ── Field background image ────────────────────────────────────────────────
+    // field_bg.png (1448×1086) contains the full stadium view.
+    // The inner playable area inside the fence is approximately:
+    //   x: 185–1265 (1080 px wide)  →  scaleX = 960/1080 ≈ 0.889
+    //   y: 235–835  (600 px tall)   →  scaleY = 520/600  ≈ 0.867
+    // Position so the inner-field top-left corner lands at FieldBounds.Position (80, 70):
+    //   posX = 80 − 185 × 0.889 ≈ −84
+    //   posY = 70 − 235 × 0.867 ≈ −134
+    private void LoadFieldBackground()
     {
-        Texture2D? texture = GD.Load<Texture2D>("res://assets/places/match_field_backdrop.png");
-        if (texture == null)
-            return;
+        const string BG_PATH = "res://assets/match/field_bg.png";
+        Texture2D? tex = ResourceLoader.Exists(BG_PATH)
+            ? GD.Load<Texture2D>(BG_PATH)
+            : null;
 
-        var sprite = new Sprite2D
+        if (tex == null)
         {
-            Name = "MatchFieldBackdrop",
-            Texture = texture,
-            Centered = false,
-            Position = Vector2.Zero,
-            ZIndex = -25
+            // Fallback: procedural green field if the image is missing.
+            GD.PushWarning("[NMC] field_bg.png not found — using procedural fallback");
+            AddFieldGrass();
+            AddFieldLines();
+            return;
+        }
+
+        var sz = tex.GetSize();
+        float scaleX = sz.X > 0 ? FieldBounds.Size.X / (sz.X * (1080f / 1448f)) : 1f;
+        float scaleY = sz.Y > 0 ? FieldBounds.Size.Y / (sz.Y * (600f  / 1086f)) : 1f;
+
+        // Use the hard-coded calibrated values for pixel-perfect alignment.
+        var spr = new Sprite2D
+        {
+            Name          = "FieldBg",
+            Texture       = tex,
+            Centered      = false,
+            Position      = new Vector2(-84f, -134f),
+            Scale         = new Vector2(0.889f, 0.867f),
+            TextureFilter = CanvasItem.TextureFilterEnum.Nearest,
+            ZIndex        = -25,
         };
-        AddChild(sprite);
+        AddChild(spr);
     }
 
     private void AddFieldGrass()

@@ -31,6 +31,10 @@ public partial class WorldScene : Node2D
         // (ZIndex -8) from the scene still show correctly above the terrain.
         BuildPixelArtWorld();
 
+        // Stadium overlay at ZIndex=2 so it sits ABOVE the scene's grass-stripe
+        // and dirt-path ColorRects (ZIndex -9 / -8) that would otherwise cover it.
+        BuildStadiumOverlay();
+
         // Day/night visual layer (sky strip + CanvasModulate + clock).
         var dayNight = new DayNightLayer { ShowSky = true };
         AddChild(dayNight);
@@ -338,6 +342,58 @@ public partial class WorldScene : Node2D
                 img.SetPixel(ax, ay, ck ? cCobL : cCobD);
             }
         }
+    }
+
+    // ── Stadium overlay ───────────────────────────────────────────────────────
+    // Generates an isolated 66×43 art-pixel image for just the stadium zone,
+    // placed at world (1112, 184) at ZIndex=2 so it draws above all scene overlays.
+    private void BuildStadiumOverlay()
+    {
+        const int blockSz = 8;
+        const int fX0 = 139, fX1 = 204;
+        const int fY0 = 23,  fY1 = 65;
+        int artW = fX1 - fX0 + 1; // 66
+        int artH = fY1 - fY0 + 1; // 43
+
+        var season = TimeManager.Instance?.CurrentSeason ?? TimeManager.Season.Spring;
+
+        // Reuse the same dirt colours as the world terrain
+        Color dL, dD;
+        switch (season)
+        {
+            case TimeManager.Season.Autumn:
+                dL = new Color(0.635f, 0.510f, 0.318f); dD = new Color(0.549f, 0.427f, 0.255f); break;
+            case TimeManager.Season.Winter:
+                dL = new Color(0.710f, 0.718f, 0.729f); dD = new Color(0.647f, 0.655f, 0.667f); break;
+            default:
+                dL = new Color(0.635f, 0.510f, 0.318f); dD = new Color(0.549f, 0.427f, 0.255f); break;
+        }
+
+        // Create a small image and paint the stadium into it.
+        // PaintStadiumZone works on the full 240×160 image, so we create a
+        // temporary full-size image, paint the zone, then crop the result.
+        var full = Image.CreateEmpty(240, 160, false, Image.Format.Rgba8);
+        full.Fill(Colors.Transparent);
+        PaintStadiumZone(full, season, dL, dD);
+
+        // Crop to just the stadium rect
+        var img = Image.CreateEmpty(artW, artH, false, Image.Format.Rgba8);
+        img.Fill(Colors.Transparent);
+        for (int ay = 0; ay < artH; ay++)
+            for (int ax = 0; ax < artW; ax++)
+                img.SetPixel(ax, ay, full.GetPixel(fX0 + ax, fY0 + ay));
+
+        var tex = ImageTexture.CreateFromImage(img);
+        AddChild(new Sprite2D
+        {
+            Name          = "StadiumOverlay",
+            Texture       = tex,
+            Centered      = false,
+            Position      = new Vector2(fX0 * blockSz, fY0 * blockSz), // (1112, 184)
+            Scale         = new Vector2(blockSz, blockSz),
+            TextureFilter = CanvasItem.TextureFilterEnum.Nearest,
+            ZIndex        = 2, // above scene grass/dirt overlays (-9,-8), below player (5+)
+        });
     }
 
     // ── Town gate painter ─────────────────────────────────────────────────────
