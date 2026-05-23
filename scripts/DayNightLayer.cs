@@ -31,6 +31,11 @@ public partial class DayNightLayer : Node2D
     private Node2D?     _stars;
     private Node2D?     _cloudRoot;
 
+    // Sky gradient fade (shortens the solid skyBg and adds α-blended strips below it
+    // so the world terrain shows through, creating a smooth sky→ground transition).
+    private readonly ColorRect[] _skyFade       = new ColorRect[4];
+    private static readonly float[] SkyFadeAlphas = { 0.82f, 0.56f, 0.28f, 0.07f };
+
     // Clouds
     private readonly List<ColorRect> _clouds = new();
     private readonly float[]         _cloudX     = new float[4];
@@ -130,20 +135,51 @@ public partial class DayNightLayer : Node2D
     // ── Sky background ────────────────────────────────────────────────────────
     private void BuildSkyBg()
     {
+        // The solid sky background stops 20 px before the bottom of SkyRect.
+        // The last 20 px are covered by the gradient fade strips below so the
+        // world terrain shows through at the horizon, blending sky into ground.
+        const float fadeH = 20f;
+        float stripeH = fadeH / _skyFade.Length;  // 5 px per strip
+
         _skyBg = new ColorRect
         {
             Name     = "SkyBg",
             Position = SkyRect.Position,
-            Size     = SkyRect.Size,
+            Size     = new Vector2(SkyRect.Size.X, SkyRect.Size.Y - fadeH),
             Color    = new Color(0.408f, 0.682f, 0.847f)
         };
         _hud!.AddChild(_skyBg);
+
+        // Four gradient fade strips — each rendered over the transparent area
+        // below the solid sky.  Because the CanvasLayer composites over the world,
+        // alpha < 1 here lets the world show through proportionally.
+        float fadeY0 = _skyBg.Position.Y + _skyBg.Size.Y;
+        for (int i = 0; i < _skyFade.Length; i++)
+        {
+            _skyFade[i] = new ColorRect
+            {
+                Name     = $"SkyFade{i}",
+                Position = new Vector2(SkyRect.Position.X, fadeY0 + i * stripeH),
+                Size     = new Vector2(SkyRect.Size.X, stripeH),
+                Color    = new Color(0.408f, 0.682f, 0.847f, SkyFadeAlphas[i])
+            };
+            _hud!.AddChild(_skyFade[i]);
+        }
     }
 
     private void UpdateSkyBg(float t)
     {
         if (_skyBg == null) return;
-        _skyBg.Color = _skyBg.Color.Lerp(SampleCurve(SkyCurve, t), 0.02f);
+        Color target = SampleCurve(SkyCurve, t);
+        _skyBg.Color = _skyBg.Color.Lerp(target, 0.02f);
+
+        // Keep fade strips in sync with the current sky colour (only alpha varies).
+        for (int i = 0; i < _skyFade.Length; i++)
+        {
+            if (_skyFade[i] == null) continue;
+            _skyFade[i].Color = new Color(
+                _skyBg.Color.R, _skyBg.Color.G, _skyBg.Color.B, SkyFadeAlphas[i]);
+        }
     }
 
     // ── Clouds ────────────────────────────────────────────────────────────────
