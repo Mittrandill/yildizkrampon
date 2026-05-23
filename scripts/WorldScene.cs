@@ -16,6 +16,10 @@ public partial class WorldScene : Node2D
 
         if (_player != null)
             _player.Interacted += _OnInteract;
+
+        // Add the day/night visual layer (sky strip + CanvasModulate + clock).
+        var dayNight = new DayNightLayer { ShowSky = true };
+        AddChild(dayNight);
     }
 
     public override void _Process(double delta)

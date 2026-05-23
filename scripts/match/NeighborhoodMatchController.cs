@@ -51,6 +51,12 @@ public partial class NeighborhoodMatchController : Node2D
     private ColorRect? _goalFlash;
     private float _goalFlashTimer;
 
+    // Day/night + seasonal state
+    private CanvasModulate? _dayNightMod;
+    private Label?          _conditionLabel;
+    private float           _windTimer;
+    private Vector2         _windForce = Vector2.Zero;
+
     public override void _Ready()
     {
         GD.Randomize();
@@ -67,8 +73,17 @@ public partial class NeighborhoodMatchController : Node2D
             _camera.LimitBottom = (int)(FieldBounds.End.Y     + 20f);
         }
 
+        // Day/night ambient modulate (tints the match world; HUD CanvasLayers are unaffected).
+        _dayNightMod = new CanvasModulate { Name = "DayNightMod", Color = Colors.White };
+        AddChild(_dayNightMod);
+
         BuildPitch();
         SpawnBall();
+
+        // Apply condition-based ball friction immediately after spawning.
+        if (_ball != null && TimeManager.Instance != null)
+            _ball.Friction *= TimeManager.Instance.BallFrictionMultiplier;
+
         SpawnTeams();
         BuildUi();
         ResetForKickoff("Baslama");
@@ -84,6 +99,7 @@ public partial class NeighborhoodMatchController : Node2D
         // Always update camera and visual effects (even during pause/goal celebration).
         UpdateCamera(dt);
         UpdateGoalFlash(dt);
+        UpdateDayNight(dt);
 
         if (_goalPause > 0f)
         {
@@ -183,6 +199,59 @@ public partial class NeighborhoodMatchController : Node2D
     {
         _goalFlashTimer = 0.45f;
         _cameraShakeTimer = 0.65f;
+    }
+
+    private void UpdateDayNight(float dt)
+    {
+        if (TimeManager.Instance == null) return;
+        var tm = TimeManager.Instance;
+
+        // Smooth ambient colour on the match canvas.
+        if (_dayNightMod != null)
+            _dayNightMod.Color = _dayNightMod.Color.Lerp(tm.CombinedColor(), 1.8f * dt);
+
+        // Wind simulation (Autumn + Evening).
+        if (tm.HasWind && _ball != null && _ball.Holder == null)
+        {
+            _windTimer -= dt;
+            if (_windTimer <= 0f)
+            {
+                // New wind gust every 3-5 seconds.
+                _windTimer = (float)GD.RandRange(3.0, 5.0);
+                float angle    = (float)GD.RandRange(0.0, Mathf.Tau);
+                float strength = (float)GD.RandRange(22.0, 60.0);
+                // Autumn = stronger gusts; Evening = lighter breeze.
+                if (tm.CurrentSeason == TimeManager.Season.Autumn) strength *= 1.4f;
+                _windForce = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * strength;
+            }
+            _ball.Velocity += _windForce * dt;
+        }
+        else if (!tm.HasWind)
+        {
+            _windForce = Vector2.Zero;
+            _windTimer = 0f;
+        }
+
+        // Update condition label if it exists.
+        UpdateConditionLabel(tm);
+    }
+
+    private void UpdateConditionLabel(TimeManager tm)
+    {
+        if (_conditionLabel == null) return;
+        var parts = new System.Collections.Generic.List<string>();
+        parts.Add($"{TimeManager.SeasonEmoji(tm.CurrentSeason)} {tm.SeasonName()}  ⏰ {tm.TimeString()}  {tm.TimeOfDayName()}");
+
+        if (tm.StaminaDrainMultiplier > 1.1f)
+            parts.Add("🔥 Sıcak");
+        if (tm.BallFrictionMultiplier < 0.7f)
+            parts.Add("🧊 Buzlu Zemin");
+        if (tm.BallFrictionMultiplier > 1.1f)
+            parts.Add("💧 Çimli Çiy");
+        if (tm.HasWind)
+            parts.Add("💨 Rüzgar");
+
+        _conditionLabel.Text = string.Join("  ", parts);
     }
 
     public bool IsMatchPaused() => _finished || _goalPause > 0f;
@@ -1233,6 +1302,17 @@ public partial class NeighborhoodMatchController : Node2D
         _refereeLabel = HudLabel(canvas, new Vector2(730, 118), new Vector2(360, 32), 14, HorizontalAlignment.Right);
         _helpLabel = HudLabel(canvas, new Vector2(285, 648), new Vector2(500, 42), 13, HorizontalAlignment.Center);
         _helpLabel.Text = "WASD: hareket | Shift: sprint | Space: sut | Q: pas | Shift+Q: havadan pas | R: pas iste | F: top kap";
+
+        // Condition bar: shows time of day, season, and active weather effects.
+        var condBg = new ColorRect
+        {
+            Position = new Vector2(8f, 84f),
+            Size     = new Vector2(360f, 22f),
+            Color    = new Color(0.04f, 0.05f, 0.04f, 0.70f),
+            ZIndex   = 18
+        };
+        canvas.AddChild(condBg);
+        _conditionLabel = HudLabel(canvas, new Vector2(12f, 86f), new Vector2(354f, 18f), 11, HorizontalAlignment.Left);
         var left = BuildInfoPanel(canvas, new Vector2(96, 548));
         _leftInfoLabel = left.label;
         _leftStaminaFill = left.stamina;
@@ -1351,11 +1431,31 @@ public partial class NeighborhoodMatchController : Node2D
         int   fw = (int)(FieldBounds.Size.X + xPad * 2f);
         int   fh = (int) FieldBounds.Size.Y;
 
-        // Mow-stripe palette: two bands, each with a 2-colour checker micro-detail.
-        var lightA = new Color(0.224f, 0.553f, 0.235f);
-        var lightB = new Color(0.200f, 0.514f, 0.216f);
-        var darkA  = new Color(0.161f, 0.455f, 0.173f);
-        var darkB  = new Color(0.145f, 0.412f, 0.153f);
+        // Seasonal grass colour palette.
+        Color lightA, lightB, darkA, darkB;
+        var season = TimeManager.Instance?.CurrentSeason ?? TimeManager.Season.Spring;
+        switch (season)
+        {
+            case TimeManager.Season.Summer:
+                // Slightly yellower — dry summer grass.
+                lightA = new Color(0.212f, 0.522f, 0.196f); lightB = new Color(0.190f, 0.486f, 0.176f);
+                darkA  = new Color(0.157f, 0.435f, 0.157f); darkB  = new Color(0.141f, 0.396f, 0.141f);
+                break;
+            case TimeManager.Season.Autumn:
+                // Yellow-brown — dying grass and fallen leaves.
+                lightA = new Color(0.522f, 0.463f, 0.137f); lightB = new Color(0.482f, 0.427f, 0.118f);
+                darkA  = new Color(0.435f, 0.376f, 0.098f); darkB  = new Color(0.396f, 0.341f, 0.082f);
+                break;
+            case TimeManager.Season.Winter:
+                // Snow-covered — pale gray-white with blue tint.
+                lightA = new Color(0.824f, 0.855f, 0.835f); lightB = new Color(0.792f, 0.824f, 0.804f);
+                darkA  = new Color(0.761f, 0.792f, 0.773f); darkB  = new Color(0.729f, 0.761f, 0.741f);
+                break;
+            default: // Spring — fresh green (original palette).
+                lightA = new Color(0.224f, 0.553f, 0.235f); lightB = new Color(0.200f, 0.514f, 0.216f);
+                darkA  = new Color(0.161f, 0.455f, 0.173f); darkB  = new Color(0.145f, 0.412f, 0.153f);
+                break;
+        }
 
         const float stripPx = 46f;   // mow-band height in screen pixels
 

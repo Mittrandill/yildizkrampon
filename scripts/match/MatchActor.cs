@@ -217,10 +217,14 @@ public partial class MatchActor : Node2D
 
 		// Higher blend → faster reaction. Pressing and ball-carrying actors
 		// need snappier tracking; off-ball positioning can be smoother.
-		float blend = shouldPress       ? 0.42f
+		// At night the AI reacts slower (reduced visibility simulation).
+		bool isNight   = TimeManager.Instance?.CurrentTimeOfDay == TimeManager.TimeOfDay.Night;
+		float nightMul = isNight ? 0.72f : 1f;
+
+		float blend = (shouldPress         ? 0.42f
 		            : _ball.Holder == this ? 0.52f
 		            : _ball.Holder != null && _ball.Holder.Team == Team ? 0.28f
-		            : 0.16f;
+		            : 0.16f) * nightMul;
 		_aiTargetMemory = _aiTargetMemory.Lerp(rawTarget, blend);
 		Vector2 target = IsGoalkeeper ? _controller.GetGoalkeeperTarget(this) : _aiTargetMemory;
 
@@ -351,7 +355,9 @@ public partial class MatchActor : Node2D
 			CarryBall();
 		}
 
-		_aiDecisionTimer = GD.Randf() * 0.22f + 0.22f;
+		// At night: add extra decision delay (poor visibility).
+		float nightDelay = TimeManager.Instance?.CurrentTimeOfDay == TimeManager.TimeOfDay.Night ? 0.14f : 0f;
+		_aiDecisionTimer = GD.Randf() * 0.22f + 0.22f + nightDelay;
 	}
 
 	private bool TryGoalkeeperDistribution()
@@ -776,8 +782,11 @@ public partial class MatchActor : Node2D
 
 	private void UseStamina(float amount)
 	{
-		Stamina = Mathf.Max(Stamina - amount, 0f);
-		MaxStamina = Mathf.Max(MaxStamina - amount * 0.008f, 78f);
+		// Scale drain by time-of-day / season conditions (midday heat, summer, etc.).
+		float conditionMult = TimeManager.Instance?.StaminaDrainMultiplier ?? 1f;
+		float scaled = amount * conditionMult;
+		Stamina    = Mathf.Max(Stamina    - scaled,          0f);
+		MaxStamina = Mathf.Max(MaxStamina - scaled * 0.008f, 78f);
 	}
 
 	private void RecoverStamina(float dt)

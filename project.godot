@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 GameManager="*res://scripts/GameManager.cs"
 WorldManager="*res://scripts/WorldManager.cs"
 DialogueManager="*res://scripts/DialogueManager.cs"
+TimeManager="*res://scripts/TimeManager.cs"
 
 [debug]
 
